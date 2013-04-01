@@ -2062,6 +2062,12 @@ public final class Launcher extends Activity
         }
     }
 
+    private void sendIsAllAppsIntent(int value) {
+        Intent mIntent = new Intent("mokee.launcher.status");
+        mIntent.putExtra("status", value);
+        sendBroadcast(mIntent);
+    }
+
     /**
      * Launches the intent referred by the clicked shortcut.
      *
@@ -2081,6 +2087,7 @@ public final class Launcher extends Activity
         Object tag = v.getTag();
         if (tag instanceof ShortcutInfo) {
             if (((ShortcutInfo) tag).itemType == LauncherSettings.Favorites.ITEM_TYPE_ALLAPPS) {
+                sendIsAllAppsIntent(1);
                 showAllApps(true);
             } else {
                 // Open shortcut
@@ -3014,6 +3021,7 @@ public final class Launcher extends Activity
 
     void showWorkspace(boolean animated, Runnable onCompleteRunnable) {
         if (mState != State.WORKSPACE) {
+            sendIsAllAppsIntent(0);
             boolean wasInSpringLoadedMode = (mState == State.APPS_CUSTOMIZE_SPRING_LOADED);
             mWorkspace.setVisibility(View.VISIBLE);
             hideAppsCustomizeHelper(State.WORKSPACE, animated, onCompleteRunnable);

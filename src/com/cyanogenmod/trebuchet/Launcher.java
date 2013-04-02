@@ -2063,7 +2063,7 @@ public final class Launcher extends Activity
     }
 
     private void sendIsAllAppsIntent(int value) {
-        Intent mIntent = new Intent("mokee.launcher.status");
+        Intent mIntent = new Intent("mokee.alpha.status.changed");
         mIntent.putExtra("status", value);
         sendBroadcast(mIntent);
     }

@@ -95,6 +95,7 @@ public class Workspace extends PagedView
 
     // Pivot point for rotate anim
     private float mRotatePivotPoint = -1;
+    private static final int MAX_HOMESCREENS = 9;
 
     // These animators are used to fade the children's outlines
     private ObjectAnimator mChildrenOutlineFadeInAnimation;
@@ -2125,22 +2126,22 @@ public class Workspace extends PagedView
     private void initAnimationArrays() {
         final int childCount = getChildCount();
         if (mOldTranslationXs != null) return;
-        mOldTranslationXs = new float[childCount];
-        mOldTranslationYs = new float[childCount];
-        mOldScaleXs = new float[childCount];
-        mOldScaleYs = new float[childCount];
-        mOldBackgroundAlphas = new float[childCount];
-        mOldAlphas = new float[childCount];
-        mOldRotations = new float[childCount];
-        mOldRotationYs = new float[childCount];
-        mNewTranslationXs = new float[childCount];
-        mNewTranslationYs = new float[childCount];
-        mNewScaleXs = new float[childCount];
-        mNewScaleYs = new float[childCount];
-        mNewBackgroundAlphas = new float[childCount];
-        mNewAlphas = new float[childCount];
-        mNewRotations = new float[childCount];
-        mNewRotationYs = new float[childCount];
+        mOldTranslationXs = new float[MAX_HOMESCREENS];
+        mOldTranslationYs = new float[MAX_HOMESCREENS];
+        mOldScaleXs = new float[MAX_HOMESCREENS];
+        mOldScaleYs = new float[MAX_HOMESCREENS];
+        mOldBackgroundAlphas = new float[MAX_HOMESCREENS];
+        mOldAlphas = new float[MAX_HOMESCREENS];
+        mOldRotations = new float[MAX_HOMESCREENS];
+        mOldRotationYs = new float[MAX_HOMESCREENS];
+        mNewTranslationXs = new float[MAX_HOMESCREENS];
+        mNewTranslationYs = new float[MAX_HOMESCREENS];
+        mNewScaleXs = new float[MAX_HOMESCREENS];
+        mNewScaleYs = new float[MAX_HOMESCREENS];
+        mNewBackgroundAlphas = new float[MAX_HOMESCREENS];
+        mNewAlphas = new float[MAX_HOMESCREENS];
+        mNewRotations = new float[MAX_HOMESCREENS];
+        mNewRotationYs = new float[MAX_HOMESCREENS];
     }
 
     Animator getChangeStateAnimation(final State state, boolean animated) {

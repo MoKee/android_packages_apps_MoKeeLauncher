@@ -39,4 +39,8 @@
     <dimen name="workspace_divider_padding_bottom">12dp</dimen>
     <dimen name="workspace_divider_padding_left">0dp</dimen>
     <dimen name="workspace_divider_padding_right">0dp</dimen>
+
+<!-- Preview cell size -->
+    <dimen name="preview_cell_width">@dimen/preview_cell_width_land</dimen>
+    <dimen name="preview_cell_height">@dimen/preview_cell_height_land</dimen>
 </resources>

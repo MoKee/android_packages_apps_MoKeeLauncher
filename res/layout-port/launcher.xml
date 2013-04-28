@@ -92,6 +92,12 @@
             android:layout_height="match_parent"
             android:visibility="gone" />
 
+        <include  layout="@layout/preview_layout"
+            android:id="@+id/preview_pane"
+            android:visibility="invisible"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
         <include layout="@layout/folder_cling"
             android:id="@+id/folder_cling"
             android:layout_width="match_parent"

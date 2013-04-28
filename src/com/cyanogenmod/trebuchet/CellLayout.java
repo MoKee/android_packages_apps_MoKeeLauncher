@@ -201,6 +201,7 @@ public class CellLayout extends ViewGroup {
         a.recycle();
 
         setAlwaysDrawnWithCacheEnabled(false);
+        setDrawingCacheEnabled(true);
 
         final Resources res = getResources();
         mNormalBackground = res.getDrawable(R.drawable.homescreen_blue_normal_holo);

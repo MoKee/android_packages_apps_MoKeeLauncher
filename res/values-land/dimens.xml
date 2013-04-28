@@ -86,4 +86,10 @@
     <dimen name="workspace_cell_height">@dimen/workspace_cell_height_land</dimen>
     <dimen name="workspace_width_gap">@dimen/workspace_width_gap_land</dimen>
     <dimen name="workspace_height_gap">@dimen/workspace_height_gap_land</dimen>
+
+<!-- Preview cell size -->
+    <dimen name="preview_cell_width">@dimen/preview_cell_width_land</dimen>
+    <dimen name="preview_cell_height">@dimen/preview_cell_height_land</dimen>
+    <dimen name="preview_gap_width">@dimen/preview_gap_width_land</dimen>
+    <dimen name="preview_gap_height">@dimen/preview_gap_height_land</dimen>
 </resources>

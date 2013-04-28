@@ -18,6 +18,7 @@ package com.cyanogenmod.trebuchet.preference;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 
 import com.cyanogenmod.trebuchet.LauncherApplication;
 import com.cyanogenmod.trebuchet.Workspace;
@@ -57,8 +58,20 @@ public final class PreferencesProvider {
             public static int getNumberHomescreens() {
                 return getInt("ui_homescreen_screens", 5);
             }
+            public static void setNumberHomescreens(Context context, int count) {
+                final SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, 0);
+                Editor editor = preferences.edit();
+                editor.putInt("ui_homescreen_screens", count);
+                editor.commit();
+            }
             public static int getDefaultHomescreen(int def) {
                 return getInt("ui_homescreen_default_screen", def + 1) - 1;
+            }
+            public static void setDefaultHomescreen(Context context, int def) {
+                final SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, 0);
+                Editor editor = preferences.edit();
+                editor.putInt("ui_homescreen_default_screen", def);
+                editor.commit();
             }
             public static int getCellCountX(int def) {
                 String[] values = getString("ui_homescreen_grid", "0|" + def).split("\\|");

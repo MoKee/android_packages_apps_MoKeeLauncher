@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.cyanogenmod.trebuchet.PreviewLayout
+    android:padding="5.0dip"
+    launcher:cellCountX="3"
+    launcher:cellCountY="3"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:launcher="http://schemas.android.com/apk/res/com.cyanogenmod.trebuchet"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <com.cyanogenmod.trebuchet.DragLayer
+        android:id="@+id/preview_drag_layer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <com.cyanogenmod.trebuchet.CellLayout
+            android:layout_gravity="center"
+            android:id="@+id/preview"
+            android:padding="10.0dip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            launcher:cellWidth="@dimen/preview_cell_width"
+            launcher:cellHeight="@dimen/preview_cell_height"
+            launcher:widthGap="@dimen/preview_gap_width"
+            launcher:heightGap="@dimen/preview_gap_height"
+            launcher:maxGap="20.0dip"
+            />
+
+    </com.cyanogenmod.trebuchet.DragLayer>
+
+</com.cyanogenmod.trebuchet.PreviewLayout>

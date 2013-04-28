@@ -171,4 +171,14 @@
 
 <!-- Preferences -->
     <dimen name="header_icon_width">28dp</dimen>
+
+<!-- Preview cell size -->
+    <dimen name="preview_cell_width_port">110dip</dimen>
+    <dimen name="preview_cell_height_port">163dip</dimen>
+    <dimen name="preview_cell_width_land">163dip</dimen>
+    <dimen name="preview_cell_height_land">110dip</dimen>
+    <dimen name="preview_gap_width_port">10dip</dimen>
+    <dimen name="preview_gap_height_port">10dip</dimen>
+    <dimen name="preview_gap_width_land">10dip</dimen>
+    <dimen name="preview_gap_height_land">0dip</dimen>
 </resources>

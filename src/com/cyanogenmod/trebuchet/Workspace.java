@@ -68,6 +68,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -4495,5 +4496,136 @@ public class Workspace extends PagedView
         if (qsbDivider != null && mShowSearchBar) qsbDivider.setAlpha(reducedFade);
         if (dockDivider != null && mShowDockDivider) dockDivider.setAlpha(reducedFade);
         if (scrollIndicator != null && mShowScrollingIndicator) scrollIndicator.setAlpha(1 - fade);
+    }
+    public int getDefaultHomescreen() {
+        return mDefaultHomescreen;
+    }
+
+    void setDefaultScreenTo(int index) {
+        if (index <= getChildCount() - 1) {
+            mDefaultHomescreen = index;
+            //Launcher.setScreen(index);
+        }
+    }
+
+    public void addScreen(int index) {
+        if (index <= getChildCount()) {
+            LayoutInflater inflater = (LayoutInflater)getContext()
+            .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+            CellLayout screen = (CellLayout)inflater.inflate(R.layout.workspace_screen, null);
+            if (mStretchScreens) {
+                screen.setCellGaps(-1, -1);
+            }
+            addView(screen, index);
+            mNumberHomescreens++;
+        }
+    }
+
+    public void moveScreen(int from, int to) {
+        ViewGroup cl = (ViewGroup)getChildAt(from);
+        removeViewAt(from);
+        addView(cl, to);
+        if (from > to) {
+            if (mDefaultHomescreen >= to && mDefaultHomescreen <= from)
+                if (mDefaultHomescreen == from)
+                    mDefaultHomescreen = to;
+                else
+                    mDefaultHomescreen++;
+            if (mCurrentPage >= to && mCurrentPage <= from)
+                if (mCurrentPage == from)
+                    mCurrentPage = to;
+                else
+                    mCurrentPage++;
+        } else {
+            if (mDefaultHomescreen >= from && mDefaultHomescreen <= to)
+                if (mDefaultHomescreen == from)
+                    mDefaultHomescreen = to;
+                else
+                    mDefaultHomescreen--;
+            if (mCurrentPage >= from && mCurrentPage <= to)
+                if (mCurrentPage == from)
+                    mCurrentPage = to;
+                else
+                    mCurrentPage--;
+        }
+
+        updateScreenIndexForItemsInOtherScreens(from, to);
+        // store the defualt homescreen in case it changed position
+        PreferencesProvider.Interface.Homescreen.setDefaultHomescreen(getContext(), mDefaultHomescreen + 1);
+        // in case the current page moved during this, reposition to the new current
+        setCurrentPage(mCurrentPage);
+    }
+
+    public void removeScreen(int index) {
+        if (index < getChildCount()) {
+            if (getChildCount() <= 2)
+                return;
+            ViewGroup cl = (ViewGroup)getChildAt(index);
+            if (((cl instanceof CellLayout)) && (((CellLayout)cl).getShortcutsAndWidgets().getChildCount() == 0)) {
+                removeViewAt(index);
+                resetDefaultHomeScreen(index);
+                resetCurrentScreen(index);
+                updateScreenIndexForItemsInOtherScreens(index);
+            }
+        }
+    }
+
+    private void resetDefaultHomeScreen(int index)
+    {
+        if (index < mDefaultHomescreen)
+            mDefaultHomescreen--;
+        if (mDefaultHomescreen >= getPageCount()) {
+            if (getPageCount() <= 0)
+                mDefaultHomescreen = 0;
+            else
+                mDefaultHomescreen = getPageCount() - 1;
+        }
+        PreferencesProvider.Interface.Homescreen.setDefaultHomescreen(mLauncher, mDefaultHomescreen);
+    }
+
+    private void resetCurrentScreen(int index) {
+        if (index < mCurrentPage)
+            mCurrentPage--;
+        if (mCurrentPage >= getPageCount())
+            if (getPageCount() <= 0)
+                mCurrentPage = 0;
+            else
+                mCurrentPage = getPageCount() - 1;
+    }
+
+    private void updateScreenIndexForItemsInOtherScreens(int index) {
+        Iterator localIterator = LauncherModel.sBgItemsIdMap.entrySet().iterator();
+        while (localIterator.hasNext()) {
+            ItemInfo itemInfo = (ItemInfo)((Map.Entry)localIterator.next()).getValue();
+            if ((itemInfo.container == LauncherSettings.Favorites.CONTAINER_DESKTOP)
+                    && (itemInfo.screen > index))
+                LauncherModel.moveItemInDatabase(mLauncher, itemInfo, itemInfo.container,
+                        itemInfo.screen - 1, itemInfo.cellX, itemInfo.cellY);
+        }
+    }
+
+    private void updateScreenIndexForItemsInOtherScreens(int from, int to) {
+        Iterator localIterator = LauncherModel.sBgItemsIdMap.entrySet().iterator();
+        while (localIterator.hasNext()) {
+            ItemInfo itemInfo = (ItemInfo)((Map.Entry)localIterator.next()).getValue();
+            if (itemInfo.container == LauncherSettings.Favorites.CONTAINER_DESKTOP) {
+                if (from < to && (itemInfo.screen >= from && itemInfo.screen <= to)) {
+                    if (itemInfo.screen == from)
+                        LauncherModel.moveItemInDatabase(mLauncher, itemInfo, itemInfo.container,
+                                to, itemInfo.cellX, itemInfo.cellY);
+                    else
+                        LauncherModel.moveItemInDatabase(mLauncher, itemInfo, itemInfo.container,
+                                itemInfo.screen - 1, itemInfo.cellX, itemInfo.cellY);
+                } else if(itemInfo.screen >= to && itemInfo.screen <= from) {
+                    if (itemInfo.screen == from)
+                        LauncherModel.moveItemInDatabase(mLauncher, itemInfo, itemInfo.container,
+                                to, itemInfo.cellX, itemInfo.cellY);
+                    else
+                        LauncherModel.moveItemInDatabase(mLauncher, itemInfo, itemInfo.container,
+                                itemInfo.screen + 1, itemInfo.cellX, itemInfo.cellY);
+                }
+            }
+        }
     }
 }

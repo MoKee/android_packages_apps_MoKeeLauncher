@@ -39,7 +39,7 @@
     <!-- Which default transition effect to use on the workspace -->
     <string name="config_workspaceDefaultTransitionEffect">ZoomIn</string>
     <!-- Whether or not to fade the side pages -->
-    <bool name="config_workspaceDefualtFadeInAdjacentScreens">false</bool>
+    <bool name="config_workspaceDefualtFadeInAdjacentScreens">true</bool>
     <!-- Whether to show outlines on the screens when scrolling -->
     <bool name="config_workspaceDefaultShowOutlines">false</bool>
 

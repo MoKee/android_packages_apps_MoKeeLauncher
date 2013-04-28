@@ -172,7 +172,7 @@ public final class PreferencesProvider {
                     return AppsCustomizePagedView.TransitionEffect.Standard;
                 }
                 public static boolean getFadeInAdjacentScreens() {
-                    return getBoolean("ui_drawer_scrolling_fade_adjacent_screens", false);
+                    return getBoolean("ui_drawer_scrolling_fade_adjacent_screens", true);
                 }
             }
             public static class Indicator {

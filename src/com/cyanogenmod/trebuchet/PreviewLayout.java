@@ -243,6 +243,8 @@ public class PreviewLayout extends FrameLayout
                 break;
             default:
                 j = mLauncher.getWorkspace().getPageCount();
+				if (i == null)
+				return;
                 if ((j < 9) && ((int)i.id == j)) {
                     Log.v(TAG, "add new screen");
                     addScreen((int)i.id);

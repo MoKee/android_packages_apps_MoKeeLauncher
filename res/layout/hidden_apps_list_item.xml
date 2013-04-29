@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.cyanogenmod.trebuchet.widget.CheckableLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.mokee.launcher.widget.CheckableLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="48dp"
@@ -25,10 +25,10 @@
         android:ellipsize="marquee"
         android:fadingEdge="horizontal"/>
 
-    <com.cyanogenmod.trebuchet.widget.InertCheckBox android:id="@+id/checkbox"
+    <com.mokee.launcher.widget.InertCheckBox android:id="@+id/checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center_vertical"/>
 
-</com.cyanogenmod.trebuchet.widget.CheckableLinearLayout>
+</com.mokee.launcher.widget.CheckableLinearLayout>

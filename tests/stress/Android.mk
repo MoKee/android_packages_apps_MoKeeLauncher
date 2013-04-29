@@ -22,10 +22,10 @@ LOCAL_JAVA_LIBRARIES := android.test.runner
 
 LOCAL_SRC_FILES := $(call all-java-files-under, src)
 
-LOCAL_PACKAGE_NAME := TrebuchetRotationStressTest
+LOCAL_PACKAGE_NAME := MoKeeLauncherRotationStressTest
 
 LOCAL_CERTIFICATE := shared
 
-LOCAL_INSTRUMENTATION_FOR := Trebuchet
+LOCAL_INSTRUMENTATION_FOR := MoKeeLauncher
 
 include $(BUILD_PACKAGE)

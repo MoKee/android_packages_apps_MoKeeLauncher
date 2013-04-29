@@ -1,4 +1,4 @@
--keep class com.cyanogenmod.trebuchet.Launcher {
+-keep class com.mokee.launcher.Launcher {
   public void previousScreen(android.view.View);
   public void nextScreen(android.view.View);
   public void launchHotSeat(android.view.View);
@@ -13,7 +13,7 @@
   public void dismissAllAppsSortCling(android.view.View);
 }
 
--keep class com.cyanogenmod.trebuchet.CellLayout {
+-keep class com.mokee.launcher.CellLayout {
   public float getBackgroundAlpha();
   public void setBackgroundAlpha(float);
   public float getDimmableProgress();
@@ -24,7 +24,7 @@
   public void setHoverAlpha(float);
 }
 
--keep class com.cyanogenmod.trebuchet.DragLayer$LayoutParams {
+-keep class com.mokee.launcher.DragLayer$LayoutParams {
   public void setWidth(int);
   public int getWidth();
   public void setHeight(int);
@@ -35,7 +35,7 @@
   public int getY();
 }
 
--keep class com.cyanogenmod.trebuchet.CellLayout$LayoutParams {
+-keep class com.mokee.launcher.CellLayout$LayoutParams {
   public void setWidth(int);
   public int getWidth();
   public void setHeight(int);
@@ -46,7 +46,7 @@
   public int getY();
 }
 
--keep class com.cyanogenmod.trebuchet.Workspace {
+-keep class com.mokee.launcher.Workspace {
   public float getBackgroundAlpha();
   public void setBackgroundAlpha(float);
   public float getChildrenOutlineAlpha();
@@ -57,4 +57,4 @@
   public float getHorizontalWallpaperOffset();
 }
 
--keep class com.cyanogenmod.trebuchet.preference.Preferences$*Fragment
+-keep class com.mokee.launcher.preference.Preferences$*Fragment

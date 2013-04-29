@@ -72,7 +72,7 @@
     <string name="menu_notifications" msgid="6424587053194766192">"Értesítések"</string>
     <string name="menu_settings" msgid="3946232973327980394">"Rendszerbeállítások"</string>
     <!-- Noun, menu item used to show the launcher preferences -->
-    <string name="menu_preferences">Trebuchet beállítások</string>
+    <string name="menu_preferences">MoKeeLauncher beállítások</string>
     <string name="menu_help" msgid="4901160661634590633">"Súgó"</string>
     <!-- Noun, menu item used to sort apps by name -->
     <string name="menu_apps_sort_title">Név</string>

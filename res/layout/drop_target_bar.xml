@@ -19,7 +19,7 @@
         style="@style/DropTargetButtonContainer"
         android:layout_weight="1">
         <!-- Delete target -->
-        <com.cyanogenmod.trebuchet.DeleteDropTarget
+        <com.mokee.launcher.DeleteDropTarget
             style="@style/DropTargetButton"
             android:id="@+id/delete_target_text"
             android:text="@string/delete_zone_label_workspace"
@@ -30,7 +30,7 @@
         style="@style/DropTargetButtonContainer"
         android:layout_weight="1">
         <!-- Info target -->
-        <com.cyanogenmod.trebuchet.InfoDropTarget
+        <com.mokee.launcher.InfoDropTarget
             style="@style/DropTargetButton"
             android:id="@+id/info_target_text"
             android:text="@string/info_target_label"
@@ -41,7 +41,7 @@
         style="@style/DropTargetButtonContainer"
         android:layout_weight="1">
         <!-- Edit target -->
-        <com.cyanogenmod.trebuchet.EditDropTarget
+        <com.mokee.launcher.EditDropTarget
             style="@style/DropTargetButton"
             android:id="@+id/edit_target_text"
             android:text="@string/edit_target_label"

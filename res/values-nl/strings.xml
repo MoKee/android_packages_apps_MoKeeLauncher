@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright (C) 2008 The Android Open Source Project
-     Copyright (C) 2012 The CyanogenMod Project
+     Copyright (C) 2012 The MoKee OpenSource Project
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -111,13 +111,13 @@
     <!-- CYANOGENMOD EDITS -->
 
     <!-- Application copyright -->
-    <string name="application_copyright">Copyright \u00A9 2012 CyanogenMod</string>
+    <string name="application_copyright">Copyright \u00A9 2012 MoKee OpenSource</string>
 
     <!-- Label for cancel drop target. [CHAR_LIMIT=30] -->
     <string name="cancel_target_label">Annuleren</string>
 
     <!-- Noun, menu item used to show the launcher preferences -->
-    <string name="menu_preferences">Trebuchet-instellingen</string>
+    <string name="menu_preferences">MoKeeLauncher-instellingen</string>
 
     <!-- Noun, menu item used to sort apps by name -->
     <string name="menu_apps_sort_title">Naam</string>

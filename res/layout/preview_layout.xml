@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.cyanogenmod.trebuchet.PreviewLayout
+<com.mokee.launcher.PreviewLayout
     android:padding="5.0dip"
     launcher:cellCountX="3"
     launcher:cellCountY="3"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:launcher="http://schemas.android.com/apk/res/com.cyanogenmod.trebuchet"
+    xmlns:launcher="http://schemas.android.com/apk/res/com.mokee.launcher"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
 
-    <com.cyanogenmod.trebuchet.DragLayer
+    <com.mokee.launcher.DragLayer
         android:id="@+id/preview_drag_layer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
 
-        <com.cyanogenmod.trebuchet.CellLayout
+        <com.mokee.launcher.CellLayout
             android:layout_gravity="center"
             android:id="@+id/preview"
             android:padding="10.0dip"
@@ -28,6 +28,6 @@
             launcher:maxGap="20.0dip"
             />
 
-    </com.cyanogenmod.trebuchet.DragLayer>
+    </com.mokee.launcher.DragLayer>
 
-</com.cyanogenmod.trebuchet.PreviewLayout>
+</com.mokee.launcher.PreviewLayout>

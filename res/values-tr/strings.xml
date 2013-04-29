@@ -68,7 +68,7 @@
     <string name="menu_search" msgid="4826514464423239041">"Ara"</string>
     <string name="menu_notifications" msgid="6424587053194766192">"Bildirimler"</string>
     <string name="menu_settings" msgid="3946232973327980394">"Sistem ayarları"</string>
-    <string name="menu_preferences">Trebuchet ayarları</string>
+    <string name="menu_preferences">MoKeeLauncher ayarları</string>
     <string name="menu_help" msgid="4901160661634590633">"Yardım"</string>
     <string name="menu_apps_sort_title">Ad</string>
     <string name="menu_apps_sort_install_date">Kurulum Tarihi</string>

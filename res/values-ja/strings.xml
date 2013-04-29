@@ -126,7 +126,7 @@
     <string name="hidden_apps_title">Hidden Apps</string>
 
     <string name="cancel_target_label">キャンセル</string>
-    <string name="menu_preferences">Trebuchet設定</string>
+    <string name="menu_preferences">MoKee桌面設定</string>
     <string name="menu_apps_sort_title">名前</string>
     <string name="menu_apps_sort_install_date">インストール日時</string>
     <string name="all_apps_sort_cling_title">アプリの並び替え</string>

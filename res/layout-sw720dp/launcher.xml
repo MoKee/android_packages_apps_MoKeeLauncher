@@ -17,21 +17,21 @@
 <!-- Full screen view projects under the status bar and contains the background -->
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:launcher="http://schemas.android.com/apk/res/com.cyanogenmod.trebuchet"
+    xmlns:launcher="http://schemas.android.com/apk/res/com.mokee.launcher"
 
     android:id="@+id/launcher"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/workspace_bg">
 
-    <com.cyanogenmod.trebuchet.DragLayer
+    <com.mokee.launcher.DragLayer
         android:id="@+id/drag_layer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
 
         <!-- The workspace contains 5 screens of cells -->
-        <com.cyanogenmod.trebuchet.Workspace
+        <com.mokee.launcher.Workspace
             android:id="@+id/workspace"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -105,7 +105,7 @@
             android:layout_height="match_parent"
             android:visibility="gone" />
 
-        <com.cyanogenmod.trebuchet.DrawableStateProxyView
+        <com.mokee.launcher.DrawableStateProxyView
             android:id="@+id/voice_button_proxy"
             android:layout_width="80dp"
             android:layout_height="@dimen/qsb_bar_height"
@@ -121,5 +121,5 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="invisible" />
-    </com.cyanogenmod.trebuchet.DragLayer>
+    </com.mokee.launcher.DragLayer>
 </FrameLayout>

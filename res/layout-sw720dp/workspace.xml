@@ -16,9 +16,9 @@
 
 <!-- The workspace contains 5 screens of cells -->
 
-<com.cyanogenmod.trebuchet.Workspace
+<com.mokee.launcher.Workspace
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:launcher="http://schemas.android.com/apk/res/com.cyanogenmod.trebuchet"
+    xmlns:launcher="http://schemas.android.com/apk/res/com.mokee.launcher"
     android:paddingLeft="@dimen/workspace_left_padding"
     android:paddingRight="@dimen/workspace_right_padding"
     android:paddingTop="@dimen/workspace_top_padding"

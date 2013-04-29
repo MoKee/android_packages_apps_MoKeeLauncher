@@ -14,15 +14,15 @@
      limitations under the License.
 -->
 
-<com.cyanogenmod.trebuchet.Folder
+<com.mokee.launcher.Folder
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:launcher="http://schemas.android.com/apk/res/com.cyanogenmod.trebuchet"
+    xmlns:launcher="http://schemas.android.com/apk/res/com.mokee.launcher"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="@drawable/portal_container_holo">
 
-    <com.cyanogenmod.trebuchet.CellLayout
+    <com.mokee.launcher.CellLayout
         android:id="@+id/folder_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
         launcher:cellWidth="@dimen/folder_cell_width"
         launcher:cellHeight="@dimen/folder_cell_height" />
 
-    <com.cyanogenmod.trebuchet.FolderEditText
+    <com.mokee.launcher.FolderEditText
         android:id="@+id/folder_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -52,4 +52,4 @@
         android:gravity="center_horizontal"
         android:singleLine="true"
         android:imeOptions="flagNoExtractUi"/>
-</com.cyanogenmod.trebuchet.Folder>
+</com.mokee.launcher.Folder>

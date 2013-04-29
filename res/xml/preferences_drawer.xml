@@ -15,7 +15,7 @@
 -->
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:launcher="http://schemas.android.com/apk/res/com.cyanogenmod.trebuchet"
+    xmlns:launcher="http://schemas.android.com/apk/res/com.mokee.launcher"
     android:key="ui_drawer"
     android:title="@string/preferences_interface_drawer_title">
     <ListPreference android:key="ui_drawer_orientation"
@@ -28,8 +28,8 @@
         android:title="@string/preferences_interface_drawer_hidden_apps_title"
         android:summary="@string/preferences_interface_drawer_hidden_apps_summary">
         <intent
-            android:targetPackage="com.cyanogenmod.trebuchet"
-            android:targetClass="com.cyanogenmod.trebuchet.preference.HiddenAppsActivity"/>
+            android:targetPackage="com.mokee.launcher"
+            android:targetClass="com.mokee.launcher.preference.HiddenAppsActivity"/>
     </Preference>
     <PreferenceCategory android:title="@string/preferences_interface_drawer_widgets_category">
         <CheckBoxPreference android:key="ui_drawer_widgets_join_apps"

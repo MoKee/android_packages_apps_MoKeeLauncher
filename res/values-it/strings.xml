@@ -70,7 +70,7 @@
     <string name="menu_search" msgid="4826514464423239041">"Cerca"</string>
     <string name="menu_notifications" msgid="6424587053194766192">"Notifiche"</string>
     <string name="menu_settings" msgid="3946232973327980394">"Impostazioni sistema"</string>
-    <string name="menu_preferences">Impostazioni Trebuchet</string>
+    <string name="menu_preferences">Impostazioni MoKeeLauncher</string>
     <string name="menu_help" msgid="4901160661634590633">"Guida"</string>
     <string name="menu_apps_sort_title">Nome</string>
     <string name="menu_apps_sort_install_date">Data Installazione</string>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2013 The CyanogenMod Project
+<!-- Copyright (C) 2013 The MoKee OpenSource Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="menu">Menú</string>
     <string name="cancel_target_label">Cancelar</string>
-    <string name="menu_preferences">Ajustes de Trebuchet</string>
+    <string name="menu_preferences">Ajustes de MoKeeLauncher</string>
     <string name="menu_apps_sort_title">Nombre</string>
     <string name="menu_apps_sort_install_date">Fecha</string>
     <string name="menu_apps_filter_system">Sistema</string>

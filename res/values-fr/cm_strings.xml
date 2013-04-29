@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright (C) 2013 The CyanogenMod Project
+<!-- Copyright (C) 2013 The MoKee OpenSource Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@
     <string name="menu_apps_filter_system">Système</string>
     <string name="menu_apps_filter_downloaded">Téléchargé</string>
     <string name="menu_hidden_apps_delete">Réinitialiser</string>
-    <string name="menu_preferences">Paramètres de Trebuchet</string>
+    <string name="menu_preferences">Paramètres de MoKeeLauncher</string>
     <string name="edit_target_label">Éditer</string>
     <string name="cancel_target_label">Annuler</string>
     <string name="all_apps_sort_cling_title">Triez vos applications</string>

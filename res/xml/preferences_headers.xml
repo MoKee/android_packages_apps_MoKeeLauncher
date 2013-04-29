@@ -17,21 +17,21 @@
 <preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
 
     <header android:id="@+id/preferences_homescreen_section"
-            android:fragment="com.cyanogenmod.trebuchet.preference.Preferences$HomescreenFragment"
+            android:fragment="com.mokee.launcher.preference.Preferences$HomescreenFragment"
             android:title="@string/preferences_interface_homescreen_title"
             android:summary="@string/preferences_interface_homescreen_summary" />
 
     <header android:id="@+id/preferences_drawer_section"
-            android:fragment="com.cyanogenmod.trebuchet.preference.Preferences$DrawerFragment"
+            android:fragment="com.mokee.launcher.preference.Preferences$DrawerFragment"
             android:title="@string/preferences_interface_drawer_title"
             android:summary="@string/preferences_interface_drawer_summary" />
 
     <header android:id="@+id/preferences_dock_section"
-            android:fragment="com.cyanogenmod.trebuchet.preference.Preferences$DockFragment"
+            android:fragment="com.mokee.launcher.preference.Preferences$DockFragment"
             android:title="@string/preferences_interface_dock_title" />
 
     <header android:id="@+id/preferences_general_section"
-            android:fragment="com.cyanogenmod.trebuchet.preference.Preferences$GeneralFragment"
+            android:fragment="com.mokee.launcher.preference.Preferences$GeneralFragment"
             android:title="@string/preferences_interface_general_title" />
 
     <header android:id="@+id/preferences_application_section"

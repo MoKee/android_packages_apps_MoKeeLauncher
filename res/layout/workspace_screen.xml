@@ -14,9 +14,9 @@
      limitations under the License.
 -->
 
-<com.cyanogenmod.trebuchet.CellLayout
+<com.mokee.launcher.CellLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:launcher="http://schemas.android.com/apk/res/com.cyanogenmod.trebuchet"
+    xmlns:launcher="http://schemas.android.com/apk/res/com.mokee.launcher"
 
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"

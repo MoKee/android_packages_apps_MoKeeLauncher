@@ -14,6 +14,6 @@
      limitations under the License.
 -->
 
-<com.cyanogenmod.trebuchet.AccessibleTabView
+<com.mokee.launcher.AccessibleTabView
     xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/TabIndicator.AppsCustomize" />

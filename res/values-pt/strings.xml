@@ -115,7 +115,7 @@
     <string name="menu_apps_sort_install_date">Dia de Instalação</string>
     <string name="all_apps_sort_cling_title">Ordenar seus aplicativos</string>
     <string name="all_apps_sort_cling_add_item">Toque &amp; segure a aba Aplicativos para selecionar o modo de ordenação</string>
-    <string name="menu_preferences">Configurações Trebuchet</string>
+    <string name="menu_preferences">Configurações MoKeeLauncher</string>
     <string name="preferences_title">Preferências</string>
     <string name="preferences_interface_title">Interface</string>
     <string name="preferences_application_title">Aplicação</string>

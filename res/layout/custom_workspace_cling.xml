@@ -14,9 +14,9 @@
      limitations under the License.
 -->
 <!-- dummy layout, to be replaced in overlays -->
-<com.cyanogenmod.trebuchet.Cling
+<com.mokee.launcher.Cling
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:launcher="http://schemas.android.com/apk/res/com.cyanogenmod.trebuchet"
+    xmlns:launcher="http://schemas.android.com/apk/res/com.mokee.launcher"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     launcher:drawIdentifier="workspace_custom">
@@ -29,4 +29,4 @@
         android:gravity="left"
         android:layout_gravity="bottom|left"
     />
-</com.cyanogenmod.trebuchet.Cling>
+</com.mokee.launcher.Cling>

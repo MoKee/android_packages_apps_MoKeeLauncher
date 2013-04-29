@@ -1569,6 +1569,13 @@ public final class Launcher extends Activity
                         mOnResumeState = State.WORKSPACE;
                     }
 
+		    // If showPreview, will gone view
+		    if (mShowDockDivider && !isPreviewsVisible()) {
+		        mDockDivider.setVisibility(View.VISIBLE);
+		    } else {
+		        mDockDivider.setVisibility(View.GONE);
+		    }
+
                     final View v = getWindow().peekDecorView();
                     if (v != null && v.getWindowToken() != null) {
                         InputMethodManager imm = (InputMethodManager)getSystemService(
@@ -3088,9 +3095,11 @@ public final class Launcher extends Activity
             sendIsAllAppsIntent(0);
             boolean wasInSpringLoadedMode = (mState == State.APPS_CUSTOMIZE_SPRING_LOADED);
             mWorkspace.setVisibility(View.VISIBLE);
-            if (isPreviewsVisible())
+            if (isPreviewsVisible()) {
                 hideWorkspacePreviews(animated);
-            else
+		if (mShowDockDivider)
+		mDockDivider.setVisibility(View.VISIBLE);
+            } else
                 hideAppsCustomizeHelper(State.WORKSPACE, animated, onCompleteRunnable);
 
             // Show the search bar (only animate if we were showing the drop target bar in spring

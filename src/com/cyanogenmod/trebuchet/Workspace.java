@@ -2361,8 +2361,12 @@ public class Workspace extends PagedView
                     cl.setBackgroundAlpha(mNewBackgroundAlphas[i]);
                     // because previews need the workspaces to be visible and opaque
 					// we won't adjust their alpha if Launcher.mState is State.PREVIEW
-					if (mLauncher.mState != Launcher.State.PREVIEW)
+					if (mLauncher.mState != Launcher.State.PREVIEW) {
 						cl.setShortcutAndWidgetAlpha(mNewAlphas[i]);
+					} else {
+						cl.setShortcutAndWidgetAlpha(1f);
+					}
+
                     cl.setRotation(mNewRotations[i]);
                     cl.setRotationY(mNewRotationYs[i]);
                 } else {

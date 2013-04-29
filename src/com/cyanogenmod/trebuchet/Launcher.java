@@ -199,7 +199,7 @@ public final class Launcher extends Activity
 
     /** The different states that Launcher can be in. */
     public enum State { NONE, WORKSPACE, APPS_CUSTOMIZE, APPS_CUSTOMIZE_SPRING_LOADED, PREVIEW };
-    State mState = State.WORKSPACE;
+    static State mState = State.WORKSPACE;
     private AnimatorSet mStateAnimation;
     private AnimatorSet mDividerAnimator;
 
@@ -2621,7 +2621,7 @@ public final class Launcher extends Activity
     }
 
     // Now a part of LauncherModel.Callbacks. Used to reorder loading steps.
-    public boolean isPreviewsVisible() {
+    public static boolean isPreviewsVisible() {
         return (mState == State.PREVIEW);
     }
 

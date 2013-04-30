@@ -1834,6 +1834,7 @@ public class Workspace extends PagedView
     protected void onSizeChanged (int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
 
+        setupWallpaper();
         getLocationOnScreen(mWallpaperOffsets);
     }
 
@@ -4020,12 +4021,16 @@ public class Workspace extends PagedView
         // hardware layers on children are enabled on startup, but should be disabled until
         // needed
         updateChildrenLayersEnabled(false);
+        setupWallpaper();
+
+        mIsLandscape = LauncherApplication.isScreenLandscape(mLauncher);
+    }
+
+    void setupWallpaper() {
         setWallpaperDimension();
         if (!mScrollWallpaper) {
             centerWallpaperOffset();
         }
-
-        mIsLandscape = LauncherApplication.isScreenLandscape(mLauncher);
     }
 
     /**

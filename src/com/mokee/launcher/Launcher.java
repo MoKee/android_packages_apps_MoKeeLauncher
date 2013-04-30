@@ -136,8 +136,8 @@ public final class Launcher extends Activity
     private static final int MENU_WALLPAPER_SETTINGS = Menu.FIRST + 1;
     private static final int MENU_LOCK_WORKSPACE = MENU_WALLPAPER_SETTINGS + 1;
     private static final int MENU_MANAGE_APPS = MENU_LOCK_WORKSPACE + 1;
-    private static final int MENU_PREFERENCES = MENU_PREVIEWS + 1;
-    private static final int MENU_PREVIEWS = MENU_MANAGE_APPS + 1;
+    private static final int MENU_PREFERENCES = MENU_MANAGE_APPS + 1;
+    private static final int MENU_PREVIEWS = MENU_PREFERENCES + 1;
     private static final int MENU_SYSTEM_SETTINGS = MENU_PREFERENCES + 1;
     private static final int MENU_HELP = MENU_SYSTEM_SETTINGS + 1;
 
@@ -3119,8 +3119,8 @@ public final class Launcher extends Activity
             mWorkspace.setVisibility(View.VISIBLE);
             if (isPreviewsVisible()) {
                 hideWorkspacePreviews(animated);
-		if (mShowDockDivider)
-		mDockDivider.setVisibility(View.VISIBLE);
+                if (mShowDockDivider)
+                mDockDivider.setVisibility(View.VISIBLE);
             } else
                 hideAppsCustomizeHelper(State.WORKSPACE, animated, onCompleteRunnable);
 

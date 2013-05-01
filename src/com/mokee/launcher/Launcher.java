@@ -138,7 +138,7 @@ public final class Launcher extends Activity
     private static final int MENU_MANAGE_APPS = MENU_LOCK_WORKSPACE + 1;
     private static final int MENU_PREFERENCES = MENU_MANAGE_APPS + 1;
     private static final int MENU_PREVIEWS = MENU_PREFERENCES + 1;
-    private static final int MENU_SYSTEM_SETTINGS = MENU_PREFERENCES + 1;
+    private static final int MENU_SYSTEM_SETTINGS = MENU_PREVIEWS + 1;
     private static final int MENU_HELP = MENU_SYSTEM_SETTINGS + 1;
 
     private static final int REQUEST_CREATE_SHORTCUT = 1;
@@ -1857,7 +1857,7 @@ public final class Launcher extends Activity
         switch (item.getItemId()) {
             case MENU_WALLPAPER_SETTINGS:
                 startWallpaper();
-            return true;
+                return true;
             case MENU_LOCK_WORKSPACE:
                 mLockWorkspace = !mLockWorkspace;
                 PreferencesProvider.Interface.General.setLockWorkspace(this, mLockWorkspace);

@@ -1564,20 +1564,25 @@ public final class Launcher extends Activity
                         if (mState == State.WORKSPACE) {
                             if (mWorkspace.getCurrentPage() == mWorkspace.getDefaultHomescreen())
                                 showPreviewLayout(true);
-                            else
+                            else {
                                 mWorkspace.moveToDefaultScreen(true);
+                                mHotseat.moveToDefaultScreen(true);
+                            }
                         } else
                             showWorkspace(true);
                     } else {
                         mOnResumeState = State.WORKSPACE;
                     }
 
-		    // If showPreview, will gone view
-		    if (mShowDockDivider && !isPreviewsVisible()) {
-		        mDockDivider.setVisibility(View.VISIBLE);
-		    } else {
-		        mDockDivider.setVisibility(View.GONE);
-		    }
+                    // If showPreview, will gone view
+                    if (mShowDockDivider && !isPreviewsVisible()) {
+                        mDockDivider.setVisibility(View.VISIBLE);
+                        if(mShowHotseat)
+                        mHotseat.setVisibility(View.VISIBLE);
+                    } else {
+                        mDockDivider.setVisibility(View.GONE);
+                        mHotseat.setVisibility(View.GONE);
+                    }
 
                     final View v = getWindow().peekDecorView();
                     if (v != null && v.getWindowToken() != null) {
@@ -3119,6 +3124,8 @@ public final class Launcher extends Activity
                 hideWorkspacePreviews(animated);
                 if (mShowDockDivider)
                 mDockDivider.setVisibility(View.VISIBLE);
+                if(mShowHotseat)
+                mHotseat.setVisibility(View.VISIBLE);
             } else
                 hideAppsCustomizeHelper(State.WORKSPACE, animated, onCompleteRunnable);
 

@@ -1,9 +1,14 @@
 package com.mokee.launcher;
 
+import com.mokee.launcher.preference.PreferencesProvider;
+
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
-import android.graphics.*;
+import android.graphics.Bitmap;
+import android.graphics.Point;
+import android.graphics.PointF;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -12,8 +17,6 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-
-import com.mokee.launcher.preference.PreferencesProvider;
 
 public class PreviewLayout extends FrameLayout
     implements View.OnClickListener, View.OnLongClickListener,
@@ -219,6 +222,8 @@ public class PreviewLayout extends FrameLayout
     }
 
     public void onClick(View v) {
+        if(!Launcher.isPreviewsVisible())
+        return;
         View view = null;
         if (!(v instanceof RelativeLayout))
             view = (View)v.getParent();

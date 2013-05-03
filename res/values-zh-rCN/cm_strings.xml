@@ -105,6 +105,8 @@
     <string name="preferences_interface_general_orientation_title">自动旋转屏幕</string>
     <string name="preferences_interface_general_fullscreen_title">全屏模式</string>
     <string name="preferences_interface_general_fullscreen_summary">隐藏状态栏以便扩展主屏幕</string>
+    <string name="preferences_interface_general_lock_workspace_title">锁定主屏幕</string>
+    <string name="preferences_interface_general_lock_workspace_summary">锁定主屏幕上的快捷方式与文件夹, 以及底座、应用和控件。</string>
     <string name="effects_standard">标准</string>
     <string name="effects_tablet">平板</string>
     <string name="effects_zoom_in">放大</string>
@@ -119,6 +121,8 @@
     <string name="effects_flip">翻动</string>
     <string name="effects_stack">堆叠</string>
     <string name="effects_accordion">手风琴</string>
+    <string name="effects_carousel_left">向左旋转</string>
+    <string name="effects_carousel_right">向右旋转</string>
     <string name="menu_lock_workspace">锁定主屏幕</string>
     <string name="menu_unlock_workspace">解锁主屏幕</string>
     <string name="workspace_locked">主屏幕已锁定，请解除锁定后重试。</string>

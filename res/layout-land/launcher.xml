@@ -83,7 +83,7 @@
             android:layout_height="match_parent"
             android:visibility="gone" />
 
-        <include  layout="@layout/preview_layout"
+        <include layout="@layout/preview_layout"
             android:id="@+id/preview_pane"
             android:visibility="invisible"
             android:layout_width="match_parent"

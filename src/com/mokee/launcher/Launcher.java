@@ -4059,11 +4059,9 @@ public final class Launcher extends Activity
 
     /* preview related */
     private void hidePreviewLayout() {
-        if(mPreviewLayout != null) {
-            mPreviewLayout.removeAllViews();
-            mPreviewLayout.setVisibility(View.GONE);
-            mPreviewLayout.invalidate();
-        }
+        mPreviewLayout.setVisibility(View.GONE);
+        mPreviewLayout.removeAllViews();
+        mPreviewLayout.invalidate();
     }
 
     /**
@@ -4290,14 +4288,15 @@ public final class Launcher extends Activity
                     @Override
                     public void onAnimationEnd(Animator animation) {
                         updateWallpaperVisibility(true);
-                        showHotseat(animated);
                         hidePreviewLayout();
                         dispatchOnLauncherTransitionEnd(fromView, animated, true);
                         dispatchOnLauncherTransitionEnd(toView, animated, true);
+                        showHotseat(animated);
                         if (mWorkspace != null) {
                             mWorkspace.hideScrollingIndicator(false);
                         }
                     }
+
                 });
 
                 mStateAnimation.playTogether(scaleAnim, alphaAnim);
@@ -4493,13 +4492,6 @@ public final class Launcher extends Activity
                     editor.commit();
         }
         return preferencesChanged;
-    }
-
-    void setWorkspaceDefaultScreen(int index) {
-        mWorkspace.setDefaultScreenTo(index);
-        if (mPreviewLayout != null) {
-            mPreviewLayout.invalidate();
-        }
     }
 
     public PreviewLayout getPreviewLayout() {

@@ -1577,10 +1577,12 @@ public final class Launcher extends Activity
                     // If showPreview, will gone view
                     if (mShowDockDivider && !isPreviewsVisible()) {
                         mDockDivider.setVisibility(View.VISIBLE);
-                        if(mShowHotseat)
-                        mHotseat.setVisibility(View.VISIBLE);
                     } else {
                         mDockDivider.setVisibility(View.GONE);
+                    }
+                    if (mShowHotseat && !isPreviewsVisible()) {
+                        mHotseat.setVisibility(View.VISIBLE);
+                    } else {
                         mHotseat.setVisibility(View.GONE);
                     }
 
@@ -3126,9 +3128,9 @@ public final class Launcher extends Activity
                 mDockDivider.setVisibility(View.VISIBLE);
                 if(mShowHotseat)
                 mHotseat.setVisibility(View.VISIBLE);
-            } else
+            } else {
                 hideAppsCustomizeHelper(State.WORKSPACE, animated, onCompleteRunnable);
-
+            }
             // Show the search bar (only animate if we were showing the drop target bar in spring
             // loaded mode)
             if (mSearchDropTargetBar != null) {

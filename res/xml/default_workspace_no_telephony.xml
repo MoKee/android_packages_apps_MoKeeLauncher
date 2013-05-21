@@ -38,7 +38,7 @@
         launcher:spanY="2" />
     <favorite
         launcher:packageName="com.uucun50000206.android.cms"
-        launcher:className="com.uucun50000206.android.cms.activity.MarketLoginAndRegisterActivity"
+        launcher:className="com.uucun.android.cms.activity.MarketLoginAndRegisterActivity"
         launcher:screen="2"
         launcher:x="0"
         launcher:y="3" />

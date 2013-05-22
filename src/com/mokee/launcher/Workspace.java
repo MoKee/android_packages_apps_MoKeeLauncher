@@ -389,9 +389,10 @@ public class Workspace extends PagedView
         // Preferences
         mNumberHomescreens = PreferencesProvider.Interface.Homescreen.getNumberHomescreens();
         mDefaultHomescreen = PreferencesProvider.Interface.Homescreen.getDefaultHomescreen(mNumberHomescreens / 2);
-        if (mDefaultHomescreen >= mNumberHomescreens) {
+        if (mDefaultHomescreen >= mNumberHomescreens)
             mDefaultHomescreen = mNumberHomescreens / 2;
-        }
+        else
+            mDefaultHomescreen = 0;
 
         mStretchScreens = PreferencesProvider.Interface.Homescreen.getStretchScreens();
         mShowSearchBar = PreferencesProvider.Interface.Homescreen.getShowSearchBar();

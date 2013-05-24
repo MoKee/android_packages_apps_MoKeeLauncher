@@ -1582,7 +1582,7 @@ public final class Launcher extends Activity
                     // if we are not on it, otherwise we show the previews
                     if (alreadyOnHome) {
                         if (mState == State.WORKSPACE) {
-                            if (mWorkspace.getCurrentPage() == mWorkspace.getDefaultHomescreen())
+                            if (mWorkspace.getCurrentPage() == mWorkspace.getDefaultHomescreen() && mWorkspace.hasWindowFocus())
                                 showPreviewLayout(true);
                             else {
                                 mWorkspace.moveToDefaultScreen(true);

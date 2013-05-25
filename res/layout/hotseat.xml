@@ -16,4 +16,5 @@
 <com.mokee.launcher.Hotseat
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:launcher="http://schemas.android.com/apk/res/com.mokee.launcher"
+    launcher:pageSpacing="@dimen/workspace_page_spacing"
     launcher:cellCount="@integer/hotseat_cell_count" />

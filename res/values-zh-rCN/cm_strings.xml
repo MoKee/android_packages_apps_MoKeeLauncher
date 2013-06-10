@@ -14,7 +14,7 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="application_copyright">版权所有 \u00A9 2013 CyanogenMod 项目</string>
+    <string name="application_copyright">Copyright \u00A9 2013 The MoKee OpenSource Project</string>
     <string name="menu">菜单</string>
     <string name="cancel_target_label">取消</string>
     <string name="edit_target_label">编辑</string>

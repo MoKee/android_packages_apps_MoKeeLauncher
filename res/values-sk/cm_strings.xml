@@ -14,7 +14,7 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="application_copyright">Autorské práva \u00A9 2013 The CyanogenMod Project</string>
+    <string name="application_copyright">Autorské práva \u00A9 2013 The MoKee OpenSource Project</string>
     <string name="menu">Ponuka</string>
     <string name="cancel_target_label">Zrušiť</string>
     <string name="edit_target_label">Upraviť</string>

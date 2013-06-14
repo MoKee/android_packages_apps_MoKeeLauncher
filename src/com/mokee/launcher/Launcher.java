@@ -1585,6 +1585,10 @@ public final class Launcher extends Activity
                             if (mWorkspace.getCurrentPage() == mWorkspace.getDefaultHomescreen() && mWorkspace.hasWindowFocus())
                                 showPreviewLayout(true);
                             else {
+                                if (mStateAnimation != null) {
+                                    mStateAnimation.end();
+                                    mStateAnimation = null;
+                                }
                                 mWorkspace.moveToDefaultScreen(true);
                                 mHotseat.moveToDefaultScreen(true);
                             }

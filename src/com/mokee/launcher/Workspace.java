@@ -1581,6 +1581,9 @@ public class Workspace extends PagedView
                 } else if (cl.getVisibility() != VISIBLE) {
                     cl.setVisibility(VISIBLE);
                 }
+                if (mFadeInAdjacentScreens && !isSmall()) {
+                    setCellLayoutFadeAdjacent(cl, scrollProgress);
+                }
             }
         }
         invalidate();

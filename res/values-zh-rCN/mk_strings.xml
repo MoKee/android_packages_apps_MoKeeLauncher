@@ -14,6 +14,8 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Application name -->
+    <string name="application_name">魔趣桌面</string>
     <!-- Noun, menu item used to show the system settings -->
     <string name="menu_preview">桌面缩略图</string>
 </resources>

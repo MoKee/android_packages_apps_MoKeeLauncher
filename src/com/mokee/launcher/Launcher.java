@@ -137,9 +137,9 @@ public final class Launcher extends Activity
     private static final int MENU_WALLPAPER_SETTINGS = Menu.FIRST + 1;
     private static final int MENU_LOCK_WORKSPACE = MENU_WALLPAPER_SETTINGS + 1;
     private static final int MENU_MANAGE_APPS = MENU_LOCK_WORKSPACE + 1;
-    private static final int MENU_PREFERENCES = MENU_MANAGE_APPS + 1;
-    private static final int MENU_PREVIEWS = MENU_PREFERENCES + 1;
-    private static final int MENU_SYSTEM_SETTINGS = MENU_PREVIEWS + 1;
+    private static final int MENU_PREVIEWS = MENU_MANAGE_APPS + 1;
+    private static final int MENU_PREFERENCES = MENU_PREVIEWS + 1;
+    private static final int MENU_SYSTEM_SETTINGS = MENU_PREFERENCES + 1;
     private static final int MENU_HELP = MENU_SYSTEM_SETTINGS + 1;
 
     private static final int REQUEST_CREATE_SHORTCUT = 1;
@@ -1458,7 +1458,6 @@ public final class Launcher extends Activity
             updateAppMarketIcon();
             // When Launcher comes back to foreground, a different Launcher might be made default
             // so refresh the icon
-            updateOverflowMenuButton();
             clearTypedText();
         }
     }
@@ -1574,39 +1573,24 @@ public final class Launcher extends Activity
                     Folder openFolder = mWorkspace.getOpenFolder();
                     // In all these cases, only animate if we're already on home
                     mWorkspace.exitWidgetResizeMode();
+                    if (alreadyOnHome && mState == State.WORKSPACE && !mWorkspace.isTouchActive() &&
+                            openFolder == null) {
+                        if (mStateAnimation != null) {
+                            mStateAnimation = null;
+                        }
+                        mWorkspace.moveToDefaultScreen(true);
+                        mHotseat.moveToDefaultScreen(true);
+                    }
 
                     closeFolder();
                     exitSpringLoadedDragMode();
 
-                    // If we are already on home, then we animate to the default homescreen,
-                    // if we are not on it, otherwise we show the previews
+                    // If we are already on home, then just animate back to the workspace,
+                    // otherwise, just wait until onResume to set the state back to Workspace
                     if (alreadyOnHome) {
-                        if (mState == State.WORKSPACE) {
-                            if (mWorkspace.getCurrentPage() == mWorkspace.getDefaultHomescreen() && mWorkspace.hasWindowFocus())
-                                showPreviewLayout(true);
-                            else {
-                                if (mStateAnimation != null) {
-                                    mStateAnimation = null;
-                                }
-                                mWorkspace.moveToDefaultScreen(true);
-                                mHotseat.moveToDefaultScreen(true);
-                            }
-                        } else
-                            showWorkspace(true);
+                        showWorkspace(true);
                     } else {
                         mOnResumeState = State.WORKSPACE;
-                    }
-
-                    // If showPreview, will gone view
-                    if (mShowDockDivider && !isPreviewsVisible()) {
-                        mDockDivider.setVisibility(View.VISIBLE);
-                    } else {
-                        mDockDivider.setVisibility(View.GONE);
-                    }
-                    if (mShowHotseat && !isPreviewsVisible()) {
-                        mHotseat.setVisibility(View.VISIBLE);
-                    } else {
-                        mHotseat.setVisibility(View.GONE);
                     }
 
                     final View v = getWindow().peekDecorView();
@@ -1832,15 +1816,15 @@ public final class Launcher extends Activity
             .setIcon(android.R.drawable.ic_menu_manage)
             .setIntent(manageApps)
             .setAlphabeticShortcut('A');
+			
+        menu.add(0, MENU_PREVIEWS, 0, R.string.menu_preview)
+                .setIcon(R.drawable.ic_home_all_apps_holo_dark)
+                .setAlphabeticShortcut('V');
 
         menu.add(0, MENU_PREFERENCES, 0, R.string.menu_preferences)
             .setIcon(android.R.drawable.ic_menu_preferences)
             .setIntent(preferences)
             .setAlphabeticShortcut('P');
-
-        menu.add(0, MENU_PREVIEWS, 0, R.string.menu_preview)
-                .setIcon(R.drawable.ic_home_all_apps_holo_dark)
-                .setAlphabeticShortcut('V');
 
         menu.add(0, MENU_SYSTEM_SETTINGS, 0, R.string.menu_settings)
             .setIcon(android.R.drawable.ic_menu_preferences)
@@ -1858,12 +1842,11 @@ public final class Launcher extends Activity
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
+        boolean allAppsVisible = (mAppsCustomizeTabHost.getVisibility() == View.VISIBLE);
 
-        if (mAppsCustomizeTabHost.isTransitioning()) {
+        if (mAppsCustomizeTabHost.isTransitioning() || allAppsVisible) {
             return false;
         }
-        boolean allAppsVisible = (mAppsCustomizeTabHost.getVisibility() == View.VISIBLE);
-        menu.setGroupVisible(MENU_GROUP_WALLPAPER, !allAppsVisible);
 
         menu.findItem(MENU_LOCK_WORKSPACE).setTitle(!mLockWorkspace ? R.string.menu_lock_workspace : R.string.menu_unlock_workspace);
 
@@ -1876,8 +1859,8 @@ public final class Launcher extends Activity
         boolean preferencesVisible = !getPackageManager().hasSystemFeature("com.mokee.android") ||
                 !defaultLauncher.packageName.equals(getClass().getPackage().getName());
         menu.findItem(MENU_PREFERENCES).setVisible(preferencesVisible);
-		// only show the previews option if on the workspace
-		boolean previewsVisible =  mState == State.WORKSPACE;
+		// only show the option if on the workspace
+		boolean previewsVisible = mState == State.WORKSPACE;
 		menu.findItem(MENU_PREVIEWS).setVisible(previewsVisible);
         return true;
     }
@@ -1893,6 +1876,9 @@ public final class Launcher extends Activity
                 PreferencesProvider.Interface.General.setLockWorkspace(this, mLockWorkspace);
                 return true;
             case MENU_PREVIEWS:
+                // If showPreview, will gone view
+                mDockDivider.setVisibility(View.GONE);
+                mHotseat.setVisibility(View.GONE);
                 showPreviewLayout(true);
                 return true;
         }
@@ -2296,15 +2282,6 @@ public final class Launcher extends Activity
         });
         popupMenu.show();
     }
-
-    public void onClickOverflowMenuButton(View v) {
-        final PopupMenu popupMenu = new PopupMenu(this, v);
-        final Menu menu = popupMenu.getMenu();
-        onCreateOptionsMenu(menu);
-        onPrepareOptionsMenu(menu);
-        popupMenu.show();
-    }
-
 
     void startApplicationDetailsActivity(ComponentName componentName) {
         String packageName = componentName.getPackageName();
@@ -2899,7 +2876,7 @@ public final class Launcher extends Activity
                     String settingValue = Settings.System.getString(resolver, Settings.System.NAVIGATION_BAR_ALPHA_CONFIG);
                     if (settingValue != null) {
                         String alphas[] = settingValue.split(";");
-                        if(Float.parseFloat(alphas[0]) == 1) {
+                        if (Float.parseFloat(alphas[0]) == 1) {
                             // remove the nasty backdrops!
                             return;
                         }
@@ -3152,7 +3129,7 @@ public final class Launcher extends Activity
                 hideWorkspacePreviews(animated);
                 if (mShowDockDivider)
                 mDockDivider.setVisibility(View.VISIBLE);
-                if(mShowHotseat)
+                if (mShowHotseat)
                 mHotseat.setVisibility(View.VISIBLE);
             } else {
                 hideAppsCustomizeHelper(State.WORKSPACE, animated, onCompleteRunnable);
@@ -3587,22 +3564,6 @@ public final class Launcher extends Activity
         return result;
     }
 
-    private void updateOverflowMenuButton() {
-        final View overflowMenuButton = findViewById(R.id.overflow_menu_button);
-        Intent launcherIntent = new Intent(Intent.ACTION_MAIN);
-        launcherIntent.addCategory(Intent.CATEGORY_HOME);
-        launcherIntent.addCategory(Intent.CATEGORY_DEFAULT);
-        ActivityInfo defaultLauncher = getPackageManager().resolveActivity(launcherIntent, PackageManager.MATCH_DEFAULT_ONLY).activityInfo;
-        // Hide preferences if not on MoKee or not default launcher
-        // (in which case preferences don't get shown in system settings)
-        boolean preferencesVisible = !getPackageManager().hasSystemFeature("com.mokee.android") ||
-                !defaultLauncher.packageName.equals(getClass().getPackage().getName());
-
-        boolean disabled = ViewConfiguration.get(this).hasPermanentMenuKey() || !preferencesVisible;
-        overflowMenuButton.setVisibility(disabled ? View.GONE : View.VISIBLE);
-        overflowMenuButton.setEnabled(!disabled);
-    }
-
     /**
      * Receives notifications when system dialogs are to be closed.
      */
@@ -3964,8 +3925,6 @@ public final class Launcher extends Activity
             setAllAppsRunnable.run();
         }
 
-        // Hide overflow menu on devices with a hardkey
-        updateOverflowMenuButton();
     }
 
     /**

@@ -1811,21 +1811,18 @@ public final class Launcher extends Activity
             .setIcon(android.R.drawable.ic_menu_gallery)
             .setAlphabeticShortcut('W');
         menu.add(0, MENU_LOCK_WORKSPACE, 0, !mLockWorkspace ? R.string.menu_lock_workspace : R.string.menu_unlock_workspace)
-            .setAlphabeticShortcut('L');
+            .setAlphabeticShortcut('L');	
+        menu.add(0, MENU_PREVIEWS, 0, R.string.menu_preview)
+                .setIcon(R.drawable.ic_home_all_apps_holo_dark)
+                .setAlphabeticShortcut('V');
         menu.add(0, MENU_MANAGE_APPS, 0, R.string.menu_manage_apps)
             .setIcon(android.R.drawable.ic_menu_manage)
             .setIntent(manageApps)
             .setAlphabeticShortcut('A');
-			
-        menu.add(0, MENU_PREVIEWS, 0, R.string.menu_preview)
-                .setIcon(R.drawable.ic_home_all_apps_holo_dark)
-                .setAlphabeticShortcut('V');
-
         menu.add(0, MENU_PREFERENCES, 0, R.string.menu_preferences)
             .setIcon(android.R.drawable.ic_menu_preferences)
             .setIntent(preferences)
             .setAlphabeticShortcut('P');
-
         menu.add(0, MENU_SYSTEM_SETTINGS, 0, R.string.menu_settings)
             .setIcon(android.R.drawable.ic_menu_preferences)
             .setIntent(settings)

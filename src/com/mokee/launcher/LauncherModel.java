@@ -46,7 +46,7 @@ import android.os.RemoteException;
 import android.os.SystemClock;
 import android.util.Log;
 
-import com.cyanogenmod.trebuchet.preference.PreferencesProvider;
+import com.mokee.launcher.preference.PreferencesProvider;
 
 import java.lang.ref.WeakReference;
 import java.net.URISyntaxException;

@@ -160,10 +160,10 @@ public final class PreferencesProvider {
                 return getString("ui_drawer_hidden_apps", "");
             }
             public static boolean getRemoveShortcutsOfHiddenApps() {
-                return getBoolean("ui_drawer_remove_hidden_apps_shortcuts", true);
+                return getBoolean("ui_drawer_remove_hidden_apps_shortcuts", false);
             }
             public static boolean getRemoveWidgetsOfHiddenApps() {
-                return getBoolean("ui_drawer_remove_hidden_apps_widgets", true);
+                return getBoolean("ui_drawer_remove_hidden_apps_widgets", false);
             }
             public static boolean getJoinWidgetsApps() {
                 return getBoolean("ui_drawer_widgets_join_apps", true);

@@ -78,9 +78,9 @@
     <string name="preferences_interface_drawer_hidden_apps_title">隐藏应用</string>
     <string name="preferences_interface_drawer_hidden_apps_summary">从抽屉里隐藏应用程序</string>
     <string name="preferences_interface_drawer_hidden_apps_shortcuts_title">隐藏快捷方式</string>
-    <string name="preferences_interface_drawer_hidden_apps_shortcuts_summary">从抽屉里隐藏应用快捷方式</string>
+    <string name="preferences_interface_drawer_hidden_apps_shortcuts_summary">同时隐藏在桌面的应用程序快捷方式</string>
     <string name="preferences_interface_drawer_hidden_apps_widgets_title">隐藏小部件</string>
-    <string name="preferences_interface_drawer_hidden_apps_widgets_summary">从抽屉里隐藏应用小部件</string>
+    <string name="preferences_interface_drawer_hidden_apps_widgets_summary">同时隐藏在桌面的应用程序小部件</string>
     <string name="preferences_interface_drawer_widgets_category">小部件</string>
     <string name="preferences_interface_drawer_widgets_join_apps_title">与应用关联</string>
     <string name="preferences_interface_drawer_widgets_join_apps_summary">从应用程序菜单直接滑动到小部件菜单</string>

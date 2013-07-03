@@ -293,7 +293,6 @@ public final class Launcher extends Activity
     private static Drawable.ConstantState[] sAppMarketIcon = new Drawable.ConstantState[2];
 
     private Drawable mWorkspaceBackgroundDrawable;
-    private Drawable mBlackBackgroundDrawable;
 
     private final ArrayList<Integer> mSynchronouslyBoundPages = new ArrayList<Integer>();
 
@@ -961,7 +960,6 @@ public final class Launcher extends Activity
 
         mLauncherView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         mWorkspaceBackgroundDrawable = getResources().getDrawable(R.drawable.workspace_bg);
-        mBlackBackgroundDrawable = new ColorDrawable(Color.BLACK);
 
         // Setup the drag layer
         mDragLayer.setup(this, dragController);
@@ -2136,12 +2134,6 @@ public final class Launcher extends Activity
         }
     }
 
-    private void sendIsAllAppsIntent(int value) {
-        Intent mIntent = new Intent("mokee.alpha.status.changed");
-        mIntent.putExtra("status", value);
-        sendBroadcast(mIntent);
-    }
-
     /**
      * Launches the intent referred by the clicked shortcut.
      *
@@ -2161,7 +2153,6 @@ public final class Launcher extends Activity
         Object tag = v.getTag();
         if (tag instanceof ShortcutInfo) {
             if (((ShortcutInfo) tag).itemType == LauncherSettings.Favorites.ITEM_TYPE_ALLAPPS) {
-                sendIsAllAppsIntent(1);
                 showAllApps(true);
             } else {
                 // Open shortcut
@@ -2686,13 +2677,12 @@ public final class Launcher extends Activity
 
     private void setWorkspaceBackground(boolean workspace) {
         if (mLauncherView != null) {
-            mLauncherView.setBackground(workspace ?
-                    mWorkspaceBackgroundDrawable : mBlackBackgroundDrawable);
+            mLauncherView.setBackground(mWorkspaceBackgroundDrawable);
         }
     }
 
     void updateWallpaperVisibility(boolean visible) {
-        int wpflags = visible && mWallpaperVisible ? WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER : 0;
+        int wpflags = WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER;
         int curflags = getWindow().getAttributes().flags
                 & WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER;
         if (wpflags != curflags) {
@@ -3119,7 +3109,6 @@ public final class Launcher extends Activity
 
     void showWorkspace(boolean animated, Runnable onCompleteRunnable) {
         if (mState != State.WORKSPACE) {
-            sendIsAllAppsIntent(0);
             boolean wasInSpringLoadedMode = (mState == State.APPS_CUSTOMIZE_SPRING_LOADED);
             mWorkspace.setVisibility(View.VISIBLE);
             if (isPreviewsVisible()) {

@@ -16,7 +16,7 @@
 <com.mokee.launcher.AppsCustomizeTabHost
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:launcher="http://schemas.android.com/apk/res/com.mokee.launcher"
-    android:background="#FF000000">
+    android:background="#00000000">
     <LinearLayout
         android:id="@+id/apps_customize_content"
         android:orientation="vertical"
@@ -81,7 +81,7 @@
                 android:id="@+id/animation_buffer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#FF000000"
+                android:background="#00000000"
                 android:visibility="gone" />
 
             <include

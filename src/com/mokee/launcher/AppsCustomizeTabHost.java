@@ -22,6 +22,7 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.res.Resources;
+import android.provider.Settings;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -51,6 +52,8 @@ public class AppsCustomizeTabHost extends TabHost implements LauncherTransitiona
     private AppsCustomizePagedView mAppsCustomizePane;
     private FrameLayout mAnimationBuffer;
     private LinearLayout mContent;
+    
+    private Context mContext;
 
     private boolean mInTransition;
     private boolean mTransitioningToWorkspace;
@@ -63,6 +66,7 @@ public class AppsCustomizeTabHost extends TabHost implements LauncherTransitiona
 
     public AppsCustomizeTabHost(Context context, AttributeSet attrs) {
         super(context, attrs);
+        mContext = context;
         mLayoutInflater = LayoutInflater.from(context);
         mRelayoutAndMakeVisible = new Runnable() {
                 public void run() {
@@ -156,6 +160,8 @@ public class AppsCustomizeTabHost extends TabHost implements LauncherTransitiona
 
         // Hide the tab bar until we measure
         mTabsContainer.setAlpha(0f);
+        //Smart Alpha
+        updateAppsCustomizeTabHostAlpha();
     }
 
     @Override
@@ -483,6 +489,7 @@ public class AppsCustomizeTabHost extends TabHost implements LauncherTransitiona
             mAppsCustomizePane.loadAssociatedPages(mAppsCustomizePane.getCurrentPage(), true);
             mAppsCustomizePane.loadAssociatedPages(mAppsCustomizePane.getCurrentPage());
         }
+        updateAppsCustomizeTabHostAlpha();
     }
 
     public void onTrimMemory() {
@@ -494,5 +501,21 @@ public class AppsCustomizeTabHost extends TabHost implements LauncherTransitiona
 
     boolean isTransitioning() {
         return mInTransition;
+    }
+
+    private void updateAppsCustomizeTabHostAlpha() {
+        final String sbConfig = Settings.System.getString(mContext
+                .getContentResolver(),
+                Settings.System.NAVIGATION_BAR_ALPHA_CONFIG);
+        if (sbConfig != null) {
+            String split[] = sbConfig.split(";");
+            float tmpAlphaValue = Integer.parseInt(split[0]) / 255;
+            int statusbarAlpha = Math.round(tmpAlphaValue * 255);
+            getBackground().setAlpha(statusbarAlpha);
+            mAnimationBuffer.getBackground().setAlpha(statusbarAlpha);
+        } else {
+            getBackground().setAlpha(0);
+            mAnimationBuffer.getBackground().setAlpha(0);
+        }
     }
 }

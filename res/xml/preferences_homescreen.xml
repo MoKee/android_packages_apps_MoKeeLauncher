@@ -55,13 +55,13 @@
                 android:summary=""
                 android:entries="@array/gesture_target_names"
                 android:entryValues="@array/gesture_target_values"
-                android:defaultValue="0" />
+                android:defaultValue="3" />
             <ListPreference android:key="ui_homescreen_down_gesture"
                 android:title="@string/preferences_interface_homescreen_gestures_down_gesture_title"
                 android:summary=""
                 android:entries="@array/gesture_target_names"
                 android:entryValues="@array/gesture_target_values"
-                android:defaultValue="0" />
+                android:defaultValue="1" />
             <ListPreference android:key="ui_homescreen_pinch_gesture"
                 android:title="@string/preferences_interface_homescreen_gestures_pinch_gesture_title"
                 android:summary=""

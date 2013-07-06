@@ -153,10 +153,10 @@ public final class PreferencesProvider {
 
             public static class Gestures {
                 public static String getUpGestureAction() {
-                    return getString("ui_homescreen_up_gesture", "0");
+                    return getString("ui_homescreen_up_gesture", "3");
                 }
                 public static String getDownGestureAction() {
-                    return getString("ui_homescreen_down_gesture", "0");
+                    return getString("ui_homescreen_down_gesture", "1");
                 }
                 public static String getPinchGestureAction() {
                     return getString("ui_homescreen_pinch_gesture", "4");

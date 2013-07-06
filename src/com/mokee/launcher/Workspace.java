@@ -1987,7 +1987,7 @@ public class Workspace extends PagedView
         }
     }
 
-    private void enableHwLayersOnVisiblePages() {
+    void enableHwLayersOnVisiblePages() {
         if (mChildrenLayersEnabled) {
             final int screenCount = getChildCount();
             getVisiblePages(mTempVisiblePagesRange);
@@ -2160,10 +2160,6 @@ public class Workspace extends PagedView
     }
 
     Animator getChangeStateAnimation(final State state, boolean animated, int delay) {
-        if (mState == state) {
-            return null;
-        }
-
         // Initialize animation arrays for the first time if necessary
         initAnimationArrays();
 
@@ -4660,5 +4656,17 @@ public class Workspace extends PagedView
                 }
             }
         }
+    }
+
+    public void snapToScreen(int index) {
+        ViewGroup cl = (ViewGroup)getChildAt(index);
+        cl.setTranslationX(0f);
+        cl.setTranslationY(0f);
+        cl.setRotationX(0f);
+        cl.setRotationY(0f);
+        cl.setScaleX(1f);
+        cl.setScaleY(1f);
+        cl.setAlpha(1f);
+        setCurrentPage(index);
     }
 }

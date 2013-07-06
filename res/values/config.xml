@@ -27,6 +27,13 @@
     <integer name="config_appsCustomizeWorkspaceAnimationStagger">40</integer>
     <integer name="config_workspaceAppsCustomizeAnimationStagger">100</integer>
 
+    <!-- Fade/zoom in duration PreviewLayout transition. -->
+    <integer name="config_previewsZoomInTime">350</integer>
+    <integer name="config_previewsZoomOutTime">600</integer>
+    <integer name="config_previewsZoomScaleFactor">7</integer>
+    <integer name="config_previewsFadeInTime">250</integer>
+    <integer name="config_previewsFadeOutTime">200</integer>
+
     <!-- Tab transition animation duration -->
     <integer name="config_tabTransitionDuration">250</integer>
 

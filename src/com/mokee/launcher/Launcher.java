@@ -2837,6 +2837,22 @@ public final class Launcher extends Activity
                     toView.setTranslationY(0.0f);
                     toView.setVisibility(View.VISIBLE);
                     toView.bringToFront();
+
+
+
+                if (!springLoaded && !LauncherApplication.isScreenLarge()) {
+                    // Hide the workspace scrollbar
+                    mWorkspace.hideScrollingIndicator(true);
+                    hideDockDivider();
+                    mDockDivider.setVisibility(View.GONE);
+
+                    // Hide the search bar
+                    if (mSearchDropTargetBar != null) {
+                        mSearchDropTargetBar.hideSearchBar(false);
+                    }
+                }
+
+                    hideHotseat(animated);
                 }
                 @Override
                 public void onAnimationEnd(Animator animation) {
@@ -2852,10 +2868,6 @@ public final class Launcher extends Activity
                         updateWallpaperVisibility(false);
                     }
 
-                    // Hide the search bar
-                    if (mSearchDropTargetBar != null) {
-                        mSearchDropTargetBar.hideSearchBar(false);
-                    }
                     ContentResolver resolver = getContentResolver();
                     String settingValue = Settings.System.getString(resolver, Settings.System.NAVIGATION_BAR_ALPHA_CONFIG);
                     if (settingValue != null) {
@@ -2992,6 +3004,7 @@ public final class Launcher extends Activity
         setPivotsForZoom(fromView);
         updateWallpaperVisibility(true);
         showHotseat(animated);
+        mDockDivider.setVisibility(View.VISIBLE);
         if (animated) {
             final LauncherViewPropertyAnimator scaleAnim =
                     new LauncherViewPropertyAnimator(fromView);
@@ -3038,9 +3051,13 @@ public final class Launcher extends Activity
             });
 
             mStateAnimation.playTogether(scaleAnim, alphaAnim);
-            if (workspaceAnim != null) {
-                mStateAnimation.play(workspaceAnim);
-            }
+
+            final ObjectAnimator workspaceAlphaAnim = ObjectAnimator
+                .ofFloat(toView, "alpha", 0f, 1f)
+                .setDuration(fadeOutDuration);
+            alphaAnim.setInterpolator(new DecelerateInterpolator(1.0f));
+            mStateAnimation.play(workspaceAlphaAnim);
+
             dispatchOnLauncherTransitionStart(fromView, animated, true);
             dispatchOnLauncherTransitionStart(toView, animated, true);
             final Animator stateAnimation = mStateAnimation;

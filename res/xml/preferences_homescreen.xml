@@ -48,6 +48,33 @@
         <CheckBoxPreference android:key="ui_homescreen_general_hide_icon_labels"
             android:title="@string/preferences_interface_homescreen_general_hide_icon_labels_title"
             android:summary="@string/preferences_interface_homescreen_general_hide_icon_labels_summary" />
+        <PreferenceScreen android:title="@string/preferences_interface_homescreen_gestures_title"
+                android:summary="@string/preferences_interface_homescreen_gestures_summary" >
+            <ListPreference android:key="ui_homescreen_up_gesture"
+                android:title="@string/preferences_interface_homescreen_gestures_up_gesture_title"
+                android:summary=""
+                android:entries="@array/gesture_target_names"
+                android:entryValues="@array/gesture_target_values"
+                android:defaultValue="0" />
+            <ListPreference android:key="ui_homescreen_down_gesture"
+                android:title="@string/preferences_interface_homescreen_gestures_down_gesture_title"
+                android:summary=""
+                android:entries="@array/gesture_target_names"
+                android:entryValues="@array/gesture_target_values"
+                android:defaultValue="0" />
+            <ListPreference android:key="ui_homescreen_pinch_gesture"
+                android:title="@string/preferences_interface_homescreen_gestures_pinch_gesture_title"
+                android:summary=""
+                android:entries="@array/gesture_target_names"
+                android:entryValues="@array/gesture_target_values"
+                android:defaultValue="4" />
+            <ListPreference android:key="ui_homescreen_spread_gesture"
+                android:title="@string/preferences_interface_homescreen_gestures_spread_gesture_title"
+                android:summary=""
+                android:entries="@array/gesture_target_names"
+                android:entryValues="@array/gesture_target_values"
+                android:defaultValue="0" />
+        </PreferenceScreen>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/preferences_interface_homescreen_scrolling_category">
         <ListPreference android:key="ui_homescreen_scrolling_transition_effect"

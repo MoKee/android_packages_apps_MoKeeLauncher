@@ -19,6 +19,7 @@ package com.mokee.launcher.preference;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
@@ -118,7 +119,8 @@ public class Preferences extends PreferenceActivity
         editor.commit();
     }
 
-    public static class HomescreenFragment extends PreferenceFragment {
+    public static class HomescreenFragment extends PreferenceFragment
+            implements Preference.OnPreferenceChangeListener {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -139,6 +141,34 @@ public class Preferences extends PreferenceActivity
                     }
                 }
             }
+
+            initGesturePreference("ui_homescreen_up_gesture",
+                    PreferencesProvider.Interface.Homescreen.Gestures.getUpGestureAction());
+            initGesturePreference("ui_homescreen_down_gesture",
+                    PreferencesProvider.Interface.Homescreen.Gestures.getDownGestureAction());
+            initGesturePreference("ui_homescreen_pinch_gesture",
+                    PreferencesProvider.Interface.Homescreen.Gestures.getPinchGestureAction());
+            initGesturePreference("ui_homescreen_spread_gesture",
+                    PreferencesProvider.Interface.Homescreen.Gestures.getSpreadGestureAction());
+        }
+
+        @Override
+        public boolean onPreferenceChange(Preference preference, Object o) {
+            String key = preference.getKey();
+            if (key.equals("ui_homescreen_up_gesture") || key.equals("ui_homescreen_down_gesture") ||
+                    key.equals("ui_homescreen_pinch_gesture") || key.equals("ui_homescreen_spread_gesture")) {
+                ListPreference gesturePref = (ListPreference)preference;
+                gesturePref.setSummary(gesturePref.getEntries()[gesturePref.findIndexOfValue((String)o)]);
+                return true;
+            }
+            return false;
+        }
+
+        private void initGesturePreference(String key, String action) {
+            ListPreference pref;
+            pref = (ListPreference)getPreferenceScreen().findPreference(key);
+            pref.setOnPreferenceChangeListener(this);
+            pref.setSummary(pref.getEntries()[pref.findIndexOfValue(action)]);
         }
     }
 

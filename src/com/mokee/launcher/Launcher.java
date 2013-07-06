@@ -4075,6 +4075,10 @@ public final class Launcher extends Activity
 
         setPivotsForZoom(toView);
 
+        // preview when config_workspaceDefualtFadeInAdjacentScreens is true
+        Animator workspaceAnim =
+                mWorkspace.getChangeStateAnimation(Workspace.State.PREVIEW, animated);
+
         mWorkspace.buildPageHardwareLayers();
 
         mPreviewLayout.snapDrawingCacheToImageViews();

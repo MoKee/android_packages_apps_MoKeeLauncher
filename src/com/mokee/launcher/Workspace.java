@@ -192,7 +192,7 @@ public class Workspace extends PagedView
     // State variable that indicates whether the pages are small (ie when you're
     // in all apps or customize mode)
 
-    enum State { NORMAL, SPRING_LOADED, SMALL }
+    enum State { NORMAL, SPRING_LOADED, SMALL, PREVIEW }
     private State mState = State.NORMAL;
     private boolean mIsSwitchingState = false;
 
@@ -2427,11 +2427,11 @@ public class Workspace extends PagedView
                     cl.setBackgroundAlpha(mNewBackgroundAlphas[i]);
                     // because previews need the workspaces to be visible and opaque
 					// we won't adjust their alpha if Launcher.mState is State.PREVIEW
-					if (mLauncher.mState != Launcher.State.PREVIEW) {
-						cl.setShortcutAndWidgetAlpha(mNewAlphas[i]);
-					} else {
-						cl.setShortcutAndWidgetAlpha(1f);
-					}
+                    if (mLauncher.mState != Launcher.State.PREVIEW) {
+                        cl.setShortcutAndWidgetAlpha(mNewAlphas[i]);
+                    } else {
+                        cl.setShortcutAndWidgetAlpha(1f);
+                    }
 
                     cl.setRotation(mNewRotations[i]);
                     cl.setRotationY(mNewRotationYs[i]);

@@ -192,7 +192,7 @@ public class Workspace extends PagedView
     // State variable that indicates whether the pages are small (ie when you're
     // in all apps or customize mode)
 
-    enum State { NORMAL, SPRING_LOADED, SMALL, PREVIEW }
+    enum State { NORMAL, SPRING_LOADED, SMALL }
     private State mState = State.NORMAL;
     private boolean mIsSwitchingState = false;
 

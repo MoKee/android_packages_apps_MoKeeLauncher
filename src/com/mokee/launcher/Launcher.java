@@ -1872,8 +1872,6 @@ public final class Launcher extends Activity
                 return true;
             case MENU_PREVIEWS:
                 // If showPreview, will gone view
-                mDockDivider.setVisibility(View.GONE);
-                mHotseat.setVisibility(View.GONE);
                 showPreviewLayout(true);
                 return true;
         }
@@ -2846,14 +2844,13 @@ public final class Launcher extends Activity
                     if (mWorkspace != null && !springLoaded && !LauncherApplication.isScreenLarge()) {
                         // Hide the workspace scrollbar
                         mWorkspace.hideScrollingIndicator(true);
-                        hideDockDivider();
                         mDockDivider.setVisibility(View.GONE);
+                        // Hide the search bar
+                        if (mSearchDropTargetBar != null) {
+                            mSearchDropTargetBar.hideSearchBar(false);
+                        }
+                        hideHotseat(animated);
                     }
-                    // Hide the search bar
-                    if (mSearchDropTargetBar != null) {
-                        mSearchDropTargetBar.hideSearchBar(false);
-                    }
-                    hideHotseat(animated);
 
                 }
                 @Override
@@ -3009,7 +3006,6 @@ public final class Launcher extends Activity
         setPivotsForZoom(fromView);
         updateWallpaperVisibility(true);
         showHotseat(animated);
-        mDockDivider.setVisibility(View.VISIBLE);
         if (animated) {
             final LauncherViewPropertyAnimator scaleAnim =
                     new LauncherViewPropertyAnimator(fromView);
@@ -3038,6 +3034,12 @@ public final class Launcher extends Activity
             mAppsCustomizeContent.pauseScrolling();
 
             mStateAnimation.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+                    showHotseat(false);
+                    mDockDivider.setVisibility(View.VISIBLE);
+                }
+				
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     updateWallpaperVisibility(true);
@@ -3118,7 +3120,9 @@ public final class Launcher extends Activity
     void showPreviewLayout(boolean animated) {
         if(mState == State.WORKSPACE) {
             mState = State.PREVIEW;
-            showWorkspacePreviews(animated);
+            showWorkspacePreviews(animated);	
+            mDockDivider.setVisibility(View.GONE);
+            hideHotseat(false);
             mPreviewLayout.requestFocus();
             mSearchDropTargetBar.hideSearchBar(animated);
             closeFolder();
@@ -3135,10 +3139,7 @@ public final class Launcher extends Activity
             mWorkspace.setVisibility(View.VISIBLE);
             if (isPreviewsVisible()) {
                 hideWorkspacePreviews(animated);
-                if (mShowDockDivider)
-                    mDockDivider.setVisibility(View.VISIBLE);
-                if (mShowHotseat)
-                    mHotseat.setVisibility(View.VISIBLE);
+                mDockDivider.setVisibility(View.VISIBLE);
             } else {
                 hideAppsCustomizeHelper(State.WORKSPACE, animated, onCompleteRunnable);
             }
@@ -4287,7 +4288,6 @@ public final class Launcher extends Activity
                         hidePreviewLayout();
                         dispatchOnLauncherTransitionEnd(fromView, animated, true);
                         dispatchOnLauncherTransitionEnd(toView, animated, true);
-                        showHotseat(animated);
                         if (mWorkspace != null) {
                             mWorkspace.hideScrollingIndicator(false);
                         }

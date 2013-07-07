@@ -2848,13 +2848,6 @@ public final class Launcher extends Activity
                         mWorkspace.hideScrollingIndicator(true);
                         hideDockDivider();
                         mDockDivider.setVisibility(View.GONE);
-						
-                        mWorkspace.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                toView.setVisibility(View.VISIBLE);
-                            }
-                        }, 200);
                     }
                     // Hide the search bar
                     if (mSearchDropTargetBar != null) {

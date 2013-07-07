@@ -2857,7 +2857,7 @@ public final class Launcher extends Activity
                 public void onAnimationEnd(Animator animation) {
                     dispatchOnLauncherTransitionEnd(fromView, animated, false);
                     dispatchOnLauncherTransitionEnd(toView, animated, false);
-
+                    toView.setVisibility(View.VISIBLE);
                     if (mWorkspace != null && !springLoaded && !LauncherApplication.isScreenLarge()) {
                         // Hide the workspace scrollbar
                         mWorkspace.hideScrollingIndicator(true);
@@ -4153,7 +4153,7 @@ public final class Launcher extends Activity
                 final ObjectAnimator workspaceAlphaAnim = ObjectAnimator
                     .ofFloat(fromView, "alpha", 1f, 0f)
                     .setDuration(fadeDuration);
-                alphaAnim.setInterpolator(new DecelerateInterpolator(1.0f));
+                alphaAnim.setInterpolator(new DecelerateInterpolator(1.5f));
                 mStateAnimation.playTogether(workspaceAnim, workspaceAlphaAnim);
             }
 

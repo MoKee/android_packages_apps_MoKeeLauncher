@@ -197,7 +197,6 @@ public class Workspace extends PagedView
     private boolean mIsSwitchingState = false;
 
     boolean mAnimatingViewIntoPlace = false;
-    boolean mIsDragOccuring = false;
     boolean mChildrenLayersEnabled = true;
 
     /** Is the user is dragging an item near the edge of a page? */

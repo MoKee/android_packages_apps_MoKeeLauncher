@@ -79,7 +79,7 @@ public class DragLayer extends FrameLayout {
         super(context, attrs);
 
         // Disable multitouch across the workspace/all apps/customize tray
-        setMotionEventSplittingEnabled(false);
+        setMotionEventSplittingEnabled(true);
         setChildrenDrawingOrderEnabled(true);
 
         mLeftHoverDrawable = getResources().getDrawable(R.drawable.page_hover_left_holo);

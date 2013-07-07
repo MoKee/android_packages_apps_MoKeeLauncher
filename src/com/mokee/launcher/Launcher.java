@@ -3037,7 +3037,7 @@ public final class Launcher extends Activity
                 @Override
                 public void onAnimationStart(Animator animation) {
                     showHotseat(false);
-                    mDockDivider.setVisibility(View.VISIBLE);
+                    mDockDivider.setVisibility(mShowDockDivider ? View.VISIBLE : View.GONE);
                 }
 				
                 @Override
@@ -3139,10 +3139,10 @@ public final class Launcher extends Activity
             mWorkspace.setVisibility(View.VISIBLE);
             if (isPreviewsVisible()) {
                 hideWorkspacePreviews(animated);
-                mDockDivider.setVisibility(View.VISIBLE);
             } else {
                 hideAppsCustomizeHelper(State.WORKSPACE, animated, onCompleteRunnable);
             }
+            mDockDivider.setVisibility(mShowDockDivider ? View.VISIBLE : View.GONE);
             // Show the search bar (only animate if we were showing the drop target bar in spring
             // loaded mode)
             if (mSearchDropTargetBar != null) {

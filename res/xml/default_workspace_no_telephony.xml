@@ -37,6 +37,12 @@
         launcher:spanX="2"
         launcher:spanY="2" />
     <favorite
+        launcher:packageName="com.joloplay.gamecenter"
+        launcher:className="com.socogame.ppc.PlayPlusClientActivity"
+        launcher:screen="2"
+        launcher:x="0"
+        launcher:y="2" />
+    <favorite
         launcher:packageName="com.uucun50000206.android.cms"
         launcher:className="com.uucun.android.cms.activity.MarketLoginAndRegisterActivity"
         launcher:screen="2"

@@ -28,6 +28,7 @@ import android.app.WallpaperManager;
 import android.appwidget.AppWidgetHostView;
 import android.appwidget.AppWidgetProviderInfo;
 import android.content.ComponentName;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -47,6 +48,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.IBinder;
 import android.os.Parcelable;
+import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -4753,8 +4755,20 @@ public class Workspace extends PagedView
     }
 
     private void expandeStatusBar() {
-        StatusBarManager sbm = (StatusBarManager)mLauncher.getSystemService(Context.STATUS_BAR_SERVICE);
-        sbm.expandNotificationsPanel();
+        ContentResolver resolver = mContext.getContentResolver();
+        boolean mExpDisabled = Settings.System.getInt(resolver,
+                Settings.System.EXPANDED_DESKTOP_STATE, 0) == 0;
+        boolean mPieDisabled = Settings.System.getInt(resolver,
+                Settings.System.PIE_CONTROLS, 0) == 0;
+        int mExpStyle = Settings.System.getInt(resolver,
+                Settings.System.EXPANDED_DESKTOP_STYLE, 0);
+        if(mExpDisabled || !mExpDisabled && mExpStyle == 1) {
+            StatusBarManager sbm = (StatusBarManager)mLauncher.getSystemService(Context.STATUS_BAR_SERVICE);
+            sbm.expandNotificationsPanel();
+        } else if(!mExpDisabled && !mPieDisabled) {
+            Intent mIntent = new Intent("com.mokee.show_pie_expand");
+            mContext.sendBroadcast(mIntent);
+        }
     }
 
     private void performGestureAction(String gestureAction) {

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.cyanogenmod.trebuchet;
+package com.mokee.launcher;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;

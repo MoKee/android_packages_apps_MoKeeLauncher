@@ -657,6 +657,7 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
         Intent shortcutsIntent = new Intent(Intent.ACTION_CREATE_SHORTCUT);
         List<ResolveInfo> shortcuts = mPackageManager.queryIntentActivities(shortcutsIntent, 0);
         for (AppWidgetProviderInfo widget : widgets) {
+            widget.label = widget.label.trim();
             if (widget.minWidth > 0 && widget.minHeight > 0) {
                 // Ensure that all widgets we show can be added on a workspace of this size
                 int[] spanXY = Launcher.getSpanForWidget(mLauncher, widget);
@@ -1264,7 +1265,7 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
             layout.addViewToCellLayout(icon, -1, i, new PagedViewCellLayout.LayoutParams(x, y, 1, 1));
         }
 
-        layout.createHardwareLayers();
+        enableHwLayersOnVisiblePages();
     }
 
     /**
@@ -1737,8 +1738,7 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
                 }
             }
 
-            layout.createHardwareLayer();
-            invalidate();
+            enableHwLayersOnVisiblePages();
 
             // Update all thread priorities
             for (AppsCustomizeAsyncTask task : mRunningTasks) {
@@ -1988,6 +1988,50 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
                     v.setVisibility(INVISIBLE);
                 } else if (v.getVisibility() != VISIBLE) {
                     v.setVisibility(VISIBLE);
+                }
+            }
+        }
+
+        enableHwLayersOnVisiblePages();
+    }
+
+    private void enableHwLayersOnVisiblePages() {
+        final int screenCount = getChildCount();
+
+        getVisiblePages(mTempVisiblePagesRange);
+        int leftScreen = mTempVisiblePagesRange[0];
+        int rightScreen = mTempVisiblePagesRange[1];
+        int forceDrawScreen = -1;
+        if (leftScreen == rightScreen) {
+            // make sure we're caching at least two pages always
+            if (rightScreen < screenCount - 1) {
+                rightScreen++;
+                forceDrawScreen = rightScreen;
+            } else if (leftScreen > 0) {
+                leftScreen--;
+                forceDrawScreen = leftScreen;
+            }
+        } else {
+            forceDrawScreen = leftScreen + 1;
+        }
+
+        for (int i = 0; i < screenCount; i++) {
+            final View layout = (View) getPageAt(i);
+            if (!(leftScreen <= i && i <= rightScreen &&
+                    (i == forceDrawScreen || shouldDrawChild(layout)))) {
+                layout.setLayerType(LAYER_TYPE_NONE, null);
+            }
+        }
+
+        int newLeft = -1;
+        int newRight = -1;
+        for (int i = 0; i < screenCount; i++) {
+            final View layout = (View) getPageAt(i);
+
+            if (leftScreen <= i && i <= rightScreen &&
+                    (i == forceDrawScreen || shouldDrawChild(layout))) {
+                if (layout.getLayerType() != LAYER_TYPE_HARDWARE) {
+                    layout.setLayerType(LAYER_TYPE_HARDWARE, null);
                 }
             }
         }

@@ -182,6 +182,7 @@ public class CellLayout extends ViewGroup {
         // A ViewGroup usually does not draw, but CellLayout needs to draw a rectangle to show
         // the user where a dragged item will land when dropped.
         setWillNotDraw(false);
+        setClipToPadding(false);
         mLauncher = (Launcher) context;
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CellLayout, defStyle, 0);
@@ -240,7 +241,7 @@ public class CellLayout extends ViewGroup {
 
         for (int i = 0; i < mDragOutlineAnims.length; i++) {
             final InterruptibleInOutAnimator anim =
-                new InterruptibleInOutAnimator(duration, fromAlphaValue, toAlphaValue);
+                new InterruptibleInOutAnimator(this, duration, fromAlphaValue, toAlphaValue);
             anim.getAnimator().setInterpolator(mEaseOutInterpolator);
             final int thisIndex = i;
             anim.getAnimator().addUpdateListener(new AnimatorUpdateListener() {
@@ -1147,7 +1148,7 @@ public class CellLayout extends ViewGroup {
                 return true;
             }
 
-            ValueAnimator va = LauncherAnimUtils.ofFloat(0f, 1f);
+            ValueAnimator va = LauncherAnimUtils.ofFloat(child, 0f, 1f);
             va.setDuration(duration);
             mReorderAnimators.put(lp, va);
 
@@ -2337,7 +2338,7 @@ public class CellLayout extends ViewGroup {
             if (finalDeltaX == 0 && finalDeltaY == 0) {
                 return;
             }
-            ValueAnimator va = LauncherAnimUtils.ofFloat(0f, 1f);
+            ValueAnimator va = LauncherAnimUtils.ofFloat(child, 0f, 1f);
             a = va;
             va.setRepeatMode(ValueAnimator.REVERSE);
             va.setRepeatCount(ValueAnimator.INFINITE);

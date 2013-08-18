@@ -175,16 +175,18 @@ public class DragController {
      *          Makes dragging feel more precise, e.g. you can clip out a transparent border
      */
     public void startDrag(View v, Bitmap bmp, DragSource source, Object dragInfo, int dragAction,
-            Rect dragRegion, float initialDragViewScale) {
+            Point extraPadding, float initialDragViewScale) {
         int[] loc = mCoordinatesTemp;
         mLauncher.getDragLayer().getLocationInDragLayer(v, loc);
-        int dragLayerX = loc[0] + v.getPaddingLeft() +
+        int viewExtraPaddingLeft = extraPadding != null ? extraPadding.x : 0;
+        int viewExtraPaddingTop = extraPadding != null ? extraPadding.y : 0;
+        int dragLayerX = loc[0] + v.getPaddingLeft() + viewExtraPaddingLeft +
                 (int) ((initialDragViewScale * bmp.getWidth() - bmp.getWidth()) / 2);
-        int dragLayerY = loc[1] + v.getPaddingTop() +
+        int dragLayerY = loc[1] + v.getPaddingTop() + viewExtraPaddingTop +
                 (int) ((initialDragViewScale * bmp.getHeight() - bmp.getHeight()) / 2);
 
-        startDrag(bmp, dragLayerX, dragLayerY, source, dragInfo, dragAction, null, dragRegion,
-                initialDragViewScale);
+        startDrag(bmp, dragLayerX, dragLayerY, source, dragInfo, dragAction, null,
+                null, initialDragViewScale);
 
         if (dragAction == DRAG_ACTION_MOVE) {
             v.setVisibility(View.GONE);
@@ -326,18 +328,19 @@ public class DragController {
         }
         endDrag();
     }
-    public void onAppsRemoved(ArrayList<String> packageNames) {
+    public void onAppsRemoved(ArrayList<ApplicationInfo> appInfos) {
         // Cancel the current drag if we are removing an app that we are dragging
         if (mDragObject != null) {
             Object rawDragInfo = mDragObject.dragInfo;
             if (rawDragInfo instanceof ShortcutInfo) {
                 ShortcutInfo dragInfo = (ShortcutInfo) rawDragInfo;
-                for (String pn : packageNames) {
+                for (ApplicationInfo info : appInfos) {
                     // Added null checks to prevent NPE we've seen in the wild
                     if (dragInfo != null &&
                         dragInfo.intent != null) {
-                        boolean isSamePackage = dragInfo.getPackageName().equals(pn);
-                        if (isSamePackage) {
+                        boolean isSameComponent =
+                                dragInfo.intent.getComponent().equals(info.componentName);
+                        if (isSameComponent) {
                             cancelDrag();
                             return;
                         }

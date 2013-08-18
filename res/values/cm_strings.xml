@@ -161,6 +161,7 @@
     <string name="preferences_interface_general_lock_workspace_summary">Lock shortcuts and folders positions in the homescreen, dock and apps and widgets drawer</string>
     <string name="preferences_interface_general_fullscreen_title">Fullscreen mode</string>
     <string name="preferences_interface_general_fullscreen_summary">Hide the status bar to extend the homescreen</string>
+    <string name="folder_empty_contents_title">No items found</string>
 
     <!-- Effects -->
     <string name="effects_standard">Standard</string>
@@ -179,4 +180,12 @@
     <string name="effects_accordion">Accordion</string>
     <string name="effects_carousel_left">Carousel left</string>
     <string name="effects_carousel_right">Carousel right</string>
+
+    <!-- Live folder cling -->
+    <string name="live_folder_cling_title">Live folders</string>
+    <!-- The description of how to create a folder [CHAR_LIMIT=none] -->
+    <string name="live_folder_cling_create_folder">Live folders allow app developers to create folders with dynamic content.
+    Folder contents can be removed with a long press on a single entry. Unlike normal folders, items can only be added by
+    the appplication creating the folder</string>
+
 </resources>

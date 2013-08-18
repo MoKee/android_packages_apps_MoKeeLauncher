@@ -1,5 +1,9 @@
 /*
  * Copyright (C) 2008 The Android Open Source Project
+ * Copyright (C) 2013 The Linux Foundation. All rights reserved.
+ *
+ * Not a Contribution, Apache license notifications and license are retained
+ * for attribution purposes only.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,11 +21,16 @@
 package com.mokee.launcher;
 
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.mokee.launcher.preference.PreferencesProvider;
@@ -31,11 +40,22 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.json.*;
+
 public class InstallShortcutReceiver extends BroadcastReceiver {
     public static final String ACTION_INSTALL_SHORTCUT =
             "com.android.launcher.action.INSTALL_SHORTCUT";
     public static final String NEW_APPS_PAGE_KEY = "apps.new.page";
     public static final String NEW_APPS_LIST_KEY = "apps.new.list";
+
+    public static final String DATA_INTENT_KEY = "intent.data";
+    public static final String LAUNCH_INTENT_KEY = "intent.launch";
+    public static final String NAME_KEY = "name";
+    public static final String ICON_KEY = "icon";
+    public static final String ICON_RESOURCE_NAME_KEY = "iconResource";
+    public static final String ICON_RESOURCE_PACKAGE_NAME_KEY = "iconResourcePackage";
+    // The set of shortcuts that are pending install
+    public static final String APPS_PENDING_INSTALL = "apps_to_install";
 
     public static final int NEW_SHORTCUT_BOUNCE_DURATION = 450;
     public static final int NEW_SHORTCUT_STAGGER_DELAY = 75;
@@ -44,13 +64,103 @@ public class InstallShortcutReceiver extends BroadcastReceiver {
     private static final int INSTALL_SHORTCUT_IS_DUPLICATE = -1;
     private static final int INSTALL_SHORTCUT_NO_SPACE = -2;
 
+    private static final String ACTION_INSTALL_SHORTCUT_SUCCESSFUL =
+            "com.android.launcher.action.INSTALL_SHORTCUT_SUCCESSFUL";
+    private static final String EXTRA_RESPONSE_PACKAGENAME = "response_packagename";
+    private static final String EXTRA_SHORTCUT_PACKAGENAME = "shortcut_packagename";
+
     // A mime-type representing shortcut data
     public static final String SHORTCUT_MIMETYPE =
             "com.mokee.launcher/shortcut";
 
-    // The set of shortcuts that are pending install
-    private static ArrayList<PendingInstallShortcutInfo> mInstallQueue =
-            new ArrayList<PendingInstallShortcutInfo>();
+    private static Object sLock = new Object();
+
+    private static void addToStringSet(SharedPreferences sharedPrefs,
+            SharedPreferences.Editor editor, String key, String value) {
+        Set<String> strings = sharedPrefs.getStringSet(key, null);
+        if (strings == null) {
+            strings = new HashSet<String>(0);
+        } else {
+            strings = new HashSet<String>(strings);
+        }
+        strings.add(value);
+        editor.putStringSet(key, strings);
+    }
+
+    private static void addToInstallQueue(
+            SharedPreferences sharedPrefs, PendingInstallShortcutInfo info) {
+        synchronized(sLock) {
+            try {
+                JSONStringer json = new JSONStringer()
+                    .object()
+                    .key(DATA_INTENT_KEY).value(info.data.toUri(0))
+                    .key(LAUNCH_INTENT_KEY).value(info.launchIntent.toUri(0))
+                    .key(NAME_KEY).value(info.name);
+                if (info.icon != null) {
+                    byte[] iconByteArray = ItemInfo.flattenBitmap(info.icon);
+                    json = json.key(ICON_KEY).value(
+                        Base64.encodeToString(
+                            iconByteArray, 0, iconByteArray.length, Base64.DEFAULT));
+                }
+                if (info.iconResource != null) {
+                    json = json.key(ICON_RESOURCE_NAME_KEY).value(info.iconResource.resourceName);
+                    json = json.key(ICON_RESOURCE_PACKAGE_NAME_KEY)
+                        .value(info.iconResource.packageName);
+                }
+                json = json.endObject();
+                SharedPreferences.Editor editor = sharedPrefs.edit();
+                addToStringSet(sharedPrefs, editor, APPS_PENDING_INSTALL, json.toString());
+                editor.commit();
+            } catch (org.json.JSONException e) {
+                Log.d("InstallShortcutReceiver", "Exception when adding shortcut: " + e);
+            }
+        }
+    }
+
+    private static ArrayList<PendingInstallShortcutInfo> getAndClearInstallQueue(
+            SharedPreferences sharedPrefs) {
+        synchronized(sLock) {
+            Set<String> strings = sharedPrefs.getStringSet(APPS_PENDING_INSTALL, null);
+            if (strings == null) {
+                return new ArrayList<PendingInstallShortcutInfo>();
+            }
+            ArrayList<PendingInstallShortcutInfo> infos =
+                new ArrayList<PendingInstallShortcutInfo>();
+            for (String json : strings) {
+                try {
+                    JSONObject object = (JSONObject) new JSONTokener(json).nextValue();
+                    Intent data = Intent.parseUri(object.getString(DATA_INTENT_KEY), 0);
+                    Intent launchIntent = Intent.parseUri(object.getString(LAUNCH_INTENT_KEY), 0);
+                    String name = object.getString(NAME_KEY);
+                    String iconBase64 = object.optString(ICON_KEY);
+                    String iconResourceName = object.optString(ICON_RESOURCE_NAME_KEY);
+                    String iconResourcePackageName =
+                        object.optString(ICON_RESOURCE_PACKAGE_NAME_KEY);
+                    if (iconBase64 != null && !iconBase64.isEmpty()) {
+                        byte[] iconArray = Base64.decode(iconBase64, Base64.DEFAULT);
+                        Bitmap b = BitmapFactory.decodeByteArray(iconArray, 0, iconArray.length);
+                        data.putExtra(Intent.EXTRA_SHORTCUT_ICON, b);
+                    } else if (iconResourceName != null && !iconResourceName.isEmpty()) {
+                        Intent.ShortcutIconResource iconResource =
+                            new Intent.ShortcutIconResource();
+                        iconResource.resourceName = iconResourceName;
+                        iconResource.packageName = iconResourcePackageName;
+                        data.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, iconResource);
+                    }
+                    data.putExtra(Intent.EXTRA_SHORTCUT_INTENT, launchIntent);
+                    PendingInstallShortcutInfo info =
+                        new PendingInstallShortcutInfo(data, name, launchIntent);
+                    infos.add(info);
+                } catch (org.json.JSONException e) {
+                    Log.d("InstallShortcutReceiver", "Exception reading shortcut to add: " + e);
+                } catch (java.net.URISyntaxException e) {
+                    Log.d("InstallShortcutReceiver", "Exception reading shortcut to add: " + e);
+                }
+            }
+            sharedPrefs.edit().putStringSet(APPS_PENDING_INSTALL, new HashSet<String>()).commit();
+            return infos;
+        }
+    }
 
     // Determines whether to defer installing shortcuts immediately until
     // processAllPendingInstalls() is called.
@@ -60,6 +170,8 @@ public class InstallShortcutReceiver extends BroadcastReceiver {
         Intent data;
         Intent launchIntent;
         String name;
+        Bitmap icon;
+        Intent.ShortcutIconResource iconResource;
 
         public PendingInstallShortcutInfo(Intent rawData, String shortcutName,
                 Intent shortcutIntent) {
@@ -90,13 +202,21 @@ public class InstallShortcutReceiver extends BroadcastReceiver {
                 return;
             }
         }
+        Bitmap icon = data.getParcelableExtra(Intent.EXTRA_SHORTCUT_ICON);
+        Intent.ShortcutIconResource iconResource =
+            data.getParcelableExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE);
+
         // Queue the item up for adding if launcher has not loaded properly yet
         boolean launcherNotLoaded = LauncherModel.getWorkspaceCellCountX() <= 0 ||
                 LauncherModel.getWorkspaceCellCountY() <= 0;
 
         PendingInstallShortcutInfo info = new PendingInstallShortcutInfo(data, name, intent);
+        info.icon = icon;
+        info.iconResource = iconResource;
         if (mUseInstallQueue || launcherNotLoaded) {
-            mInstallQueue.add(info);
+            String spKey = LauncherApplication.getSharedPreferencesKey();
+            SharedPreferences sp = context.getSharedPreferences(spKey, Context.MODE_PRIVATE);
+            addToInstallQueue(sp, info);
         } else {
             processInstallShortcut(context, info);
         }
@@ -110,10 +230,12 @@ public class InstallShortcutReceiver extends BroadcastReceiver {
         flushInstallQueue(context);
     }
     static void flushInstallQueue(Context context) {
-        Iterator<PendingInstallShortcutInfo> iter = mInstallQueue.iterator();
+        String spKey = LauncherApplication.getSharedPreferencesKey();
+        SharedPreferences sp = context.getSharedPreferences(spKey, Context.MODE_PRIVATE);
+        ArrayList<PendingInstallShortcutInfo> installQueue = getAndClearInstallQueue(sp);
+        Iterator<PendingInstallShortcutInfo> iter = installQueue.iterator();
         while (iter.hasNext()) {
             processInstallShortcut(context, iter.next());
-            iter.remove();
         }
     }
 
@@ -131,6 +253,10 @@ public class InstallShortcutReceiver extends BroadcastReceiver {
         final int[] result = {INSTALL_SHORTCUT_SUCCESSFUL};
         boolean found = false;
         synchronized (app) {
+            // Flush the LauncherModel worker thread, so that if we just did another
+            // processInstallShortcut, we give it time for its shortcut to get added to the
+            // database (getItemsInLocalCoordinates reads the database)
+            app.getModel().flushWorkerThread();
             final ArrayList<ItemInfo> items = LauncherModel.getItemsInLocalCoordinates(context);
             final boolean exists = LauncherModel.shortcutExists(context, intent);
 
@@ -159,11 +285,18 @@ public class InstallShortcutReceiver extends BroadcastReceiver {
                 Toast.makeText(context, context.getString(R.string.shortcut_duplicate, name),
                         Toast.LENGTH_SHORT).show();
             }
+        } else {
+            // When the shortcut put successful, broadcast an intent with package name
+            // So the application can use it to show a toast.
+            String packageName = intent.getStringExtra(EXTRA_SHORTCUT_PACKAGENAME);
+            Intent responseIntent = new Intent(ACTION_INSTALL_SHORTCUT_SUCCESSFUL);
+            responseIntent.putExtra(EXTRA_RESPONSE_PACKAGENAME, packageName);
+            context.sendBroadcast(responseIntent);
         }
     }
 
     private static boolean installShortcut(Context context, Intent data, ArrayList<ItemInfo> items,
-            Intent intent, final int screen, boolean shortcutExists,
+            final Intent intent, final int screen, boolean shortcutExists,
             final SharedPreferences sharedPrefs, int[] result) {
         int[] tmpCoordinates = new int[2];
         if (findEmptyCell(items, tmpCoordinates, screen)) {
@@ -181,24 +314,20 @@ public class InstallShortcutReceiver extends BroadcastReceiver {
                 // different places)
                 boolean duplicate = data.getBooleanExtra(Launcher.EXTRA_SHORTCUT_DUPLICATE, true);
                 if (duplicate || !shortcutExists) {
-                    // If the new app is going to fall into the same page as before, then just
-                    // continue adding to the current page
-                    int newAppsScreen = sharedPrefs.getInt(NEW_APPS_PAGE_KEY, screen);
-                    Set<String> newApps = new HashSet<String>();
-                    if (newAppsScreen == screen) {
-                        newApps = sharedPrefs.getStringSet(NEW_APPS_LIST_KEY, newApps);
-                    }
-                    synchronized (newApps) {
-                        newApps.add(intent.toUri(0));
-                    }
-                    final Set<String> savedNewApps = newApps;
                     new Thread("setNewAppsThread") {
                         public void run() {
-                            synchronized (savedNewApps) {
-                                sharedPrefs.edit()
-                                           .putInt(NEW_APPS_PAGE_KEY, screen)
-                                           .putStringSet(NEW_APPS_LIST_KEY, savedNewApps)
-                                           .commit();
+                            synchronized (sLock) {
+                                // If the new app is going to fall into the same page as before,
+                                // then just continue adding to the current page
+                                final int newAppsScreen = sharedPrefs.getInt(
+                                        NEW_APPS_PAGE_KEY, screen);
+                                SharedPreferences.Editor editor = sharedPrefs.edit();
+                                if (newAppsScreen == screen) {
+                                    addToStringSet(sharedPrefs,
+                                        editor, NEW_APPS_LIST_KEY, intent.toUri(0));
+                                }
+                                editor.putInt(NEW_APPS_PAGE_KEY, screen);
+                                editor.commit();
                             }
                         }
                     }.start();

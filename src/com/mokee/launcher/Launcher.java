@@ -68,6 +68,7 @@ import android.os.Message;
 import android.os.StrictMode;
 import android.os.SystemClock;
 import android.os.UserHandle;
+import android.os.UserManager;
 import android.provider.Settings;
 import android.speech.RecognizerIntent;
 import android.text.Selection;
@@ -137,6 +138,7 @@ public final class Launcher extends Activity
     static final boolean PROFILE_STARTUP = false;
     static final boolean DEBUG_WIDGETS = false;
     static final boolean DEBUG_STRICT_MODE = false;
+    static final boolean DEBUG_RESUME_TIME = false;
 
     private static final int MENU_GROUP_WALLPAPER = 1;
     private static final int MENU_WALLPAPER_SETTINGS = Menu.FIRST + 1;
@@ -436,7 +438,8 @@ public final class Launcher extends Activity
 
         // Update customization drawer _after_ restoring the states
         if (mAppsCustomizeContent != null) {
-            mAppsCustomizeContent.onPackagesUpdated();
+            mAppsCustomizeContent.onPackagesUpdated(
+                LauncherModel.getSortedWidgetsAndShortcuts(this));
         }
 
         if (PROFILE_STARTUP) {
@@ -811,12 +814,29 @@ public final class Launcher extends Activity
             mRestoring = false;
             mOnResumeNeedsLoad = false;
         }
-        // We might have postponed some bind calls until onResume (see waitUntilResume) --
-        // execute them here
-        for (int i = 0; i < mOnResumeCallbacks.size(); i++) {
-            mOnResumeCallbacks.get(i).run();
+        if (mOnResumeCallbacks.size() > 0) {
+            // We might have postponed some bind calls until onResume (see waitUntilResume) --
+            // execute them here
+            long startTimeCallbacks = 0;
+            if (DEBUG_RESUME_TIME) {
+                startTimeCallbacks = System.currentTimeMillis();
+            }
+
+            if (mAppsCustomizeContent != null) {
+                mAppsCustomizeContent.setBulkBind(true);
+            }
+            for (int i = 0; i < mOnResumeCallbacks.size(); i++) {
+                mOnResumeCallbacks.get(i).run();
+            }
+            if (mAppsCustomizeContent != null) {
+                mAppsCustomizeContent.setBulkBind(false);
+            }
+            mOnResumeCallbacks.clear();
+            if (DEBUG_RESUME_TIME) {
+                Log.d(TAG, "Time spent processing callbacks in onResume: " +
+                    (System.currentTimeMillis() - startTimeCallbacks));
+            }
         }
-        mOnResumeCallbacks.clear();
 
         // Reset the pressed state of icons that were locked in the press state while activities
         // were launching
@@ -1503,7 +1523,11 @@ public final class Launcher extends Activity
                         final ViewTreeObserver.OnDrawListener listener = this;
                         mWorkspace.post(new Runnable() {
                                 public void run() {
-                                    mWorkspace.getViewTreeObserver().removeOnDrawListener(listener);
+                                    if (mWorkspace != null &&
+                                            mWorkspace.getViewTreeObserver() != null) {
+                                        mWorkspace.getViewTreeObserver().
+                                                removeOnDrawListener(listener);
+                                    }
                                 }
                             });
                         return;
@@ -3715,14 +3739,22 @@ public final class Launcher extends Activity
      * @return true if we are currently paused.  The caller might be able to
      * skip some work in that case since we will come back again.
      */
-    private boolean waitUntilResume(Runnable run) {
+    private boolean waitUntilResume(Runnable run, boolean deletePreviousRunnables) {
         if (mPaused) {
             Log.i(TAG, "Deferring update until onResume");
+            if (deletePreviousRunnables) {
+                while (mOnResumeCallbacks.remove(run)) {
+                }
+            }
             mOnResumeCallbacks.add(run);
             return true;
         } else {
             return false;
         }
+    }
+
+    private boolean waitUntilResume(Runnable run) {
+        return waitUntilResume(run, false);
     }
 
     /**
@@ -4001,8 +4033,12 @@ public final class Launcher extends Activity
         for (ComponentName receiver : receivers.keySet()) {
             intent.setComponent(receiver);
             ArrayList<Long> ids = receivers.get(receiver);
+            long[] receiverIds = new long[ids.size()];
+            for (int i = 0; i < ids.size(); i++) {
+                receiverIds[i] = ids.get(i);
+            }
             intent.putExtra(LiveFolder.Constants.EXISTING_FOLDER_IDS_EXTRA,
-                    ids.toArray(new Long[ids.size()]));
+                    receiverIds);
             sendBroadcastAsUser(intent, UserHandle.CURRENT_OR_SELF);
         }
     }
@@ -4163,29 +4199,59 @@ public final class Launcher extends Activity
     }
 
     /**
-     * A package was uninstalled.
+     * A package was uninstalled.  We take both the super set of packageNames
+     * in addition to specific applications to remove, the reason being that
+     * this can be called when a package is updated as well.  In that scenario,
+     * we only remove specific components from the workspace, where as
+     * package-removal should clear all items by package name.
      *
      * Implementation of the method from LauncherModel.Callbacks.
      */
-    public void bindAppsRemoved(ArrayList<String> packageNames, boolean permanent) {
-        if (permanent) {
-            mWorkspace.removeItems(packageNames);
+    public void bindComponentsRemoved(final ArrayList<String> packageNames,
+                                      final ArrayList<ApplicationInfo> appInfos,
+                                      final boolean matchPackageNamesOnly) {
+        if (waitUntilResume(new Runnable() {
+            public void run() {
+                bindComponentsRemoved(packageNames, appInfos, matchPackageNamesOnly);
+            }
+        })) {
+            return;
+        }
+
+        if (matchPackageNamesOnly) {
+            mWorkspace.removeItemsByPackageName(packageNames);
+        } else {
+            mWorkspace.removeItemsByApplicationInfo(appInfos);
         }
 
         if (mAppsCustomizeContent != null) {
-            mAppsCustomizeContent.removeApps(packageNames);
+            mAppsCustomizeContent.removeApps(appInfos);
         }
 
         // Notify the drag controller
-        mDragController.onAppsRemoved(packageNames);
+        mDragController.onAppsRemoved(appInfos);
     }
 
     /**
      * A number of packages were updated.
      */
-    public void bindPackagesUpdated() {
+
+    private ArrayList<Object> mWidgetsAndShortcuts;
+    private Runnable mBindPackagesUpdatedRunnable = new Runnable() {
+            public void run() {
+                bindPackagesUpdated(mWidgetsAndShortcuts);
+                mWidgetsAndShortcuts = null;
+            }
+        };
+
+    public void bindPackagesUpdated(final ArrayList<Object> widgetsAndShortcuts) {
+        if (waitUntilResume(mBindPackagesUpdatedRunnable, true)) {
+            mWidgetsAndShortcuts = widgetsAndShortcuts;
+            return;
+        }
+
         if (mAppsCustomizeContent != null) {
-            mAppsCustomizeContent.onPackagesUpdated();
+            mAppsCustomizeContent.onPackagesUpdated(widgetsAndShortcuts);
         }
     }
 
@@ -4515,8 +4581,21 @@ public final class Launcher extends Activity
     /* Cling related */
     private boolean isClingsEnabled() {
         // disable clings when running in a test harness
-        return !ActivityManager.isRunningInTestHarness();
+        if(ActivityManager.isRunningInTestHarness()) return false;
 
+        // Restricted secondary users (child mode) will potentially have very few apps
+        // seeded when they start up for the first time. Clings won't work well with that
+        boolean supportsLimitedUsers =
+                android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR2;
+        Account[] accounts = AccountManager.get(this).getAccounts();
+        if (supportsLimitedUsers && accounts.length == 0) {
+            UserManager um = (UserManager) getSystemService(Context.USER_SERVICE);
+            Bundle restrictions = um.getUserRestrictions();
+            if (restrictions.getBoolean(UserManager.DISALLOW_MODIFY_ACCOUNTS, false)) {
+               return false;
+            }
+        }
+        return true;
     }
 
     private Cling initCling(int clingId, int[] positionData, boolean animate, int delay) {
@@ -4643,11 +4722,30 @@ public final class Launcher extends Activity
             removeCling(R.id.all_apps_sort_cling);
         }
     }
-    public Cling showFirstRunFoldersCling() {
+    public Cling showFirstRunFoldersCling(boolean isLiveFolder) {
+        String key = null;
+        if (isLiveFolder) {
+            key = Cling.LIVE_FOLDER_CLING_DISMISSED_KEY;
+        } else {
+            key = Cling.FOLDER_CLING_DISMISSED_KEY;
+        }
         // Enable the clings only if they have not been dismissed before
         if (isClingsEnabled() &&
-                !mSharedPrefs.getBoolean(Cling.FOLDER_CLING_DISMISSED_KEY, false)) {
-            return initCling(R.id.folder_cling, null, true, 0);
+                !mSharedPrefs.getBoolean(key, false)) {
+            Cling cling = initCling(R.id.folder_cling, null, true, 0);
+            cling.findViewById(R.id.cling_dismiss).setTag(isLiveFolder);
+            int titleRes = 0;
+            int textRes = 0;
+            if (isLiveFolder) {
+                titleRes = R.string.live_folder_cling_title;
+                textRes = R.string.live_folder_cling_create_folder;
+            } else {
+                titleRes = R.string.folder_cling_title;
+                textRes = R.string.folder_cling_create_folder;
+            }
+            ((TextView) cling.findViewById(R.id.folder_cling_title)).setText(titleRes);
+            ((TextView) cling.findViewById(R.id.folder_cling_text)).setText(textRes);
+            return cling;
         } else {
             removeCling(R.id.folder_cling);
             return null;
@@ -4670,8 +4768,17 @@ public final class Launcher extends Activity
         dismissCling(cling, Cling.ALLAPPS_SORT_CLING_DISMISSED_KEY, DISMISS_CLING_DURATION);
     }
     public void dismissFolderCling(View v) {
-        Cling cling = (Cling) findViewById(R.id.folder_cling);
-        dismissCling(cling, Cling.FOLDER_CLING_DISMISSED_KEY, DISMISS_CLING_DURATION);
+        if (v != null && v.getTag() != null) {
+            Cling cling = (Cling) findViewById(R.id.folder_cling);
+            Boolean isLiveFolder = (Boolean) v.getTag();
+            String key = null;
+            if (isLiveFolder) {
+                key = Cling.LIVE_FOLDER_CLING_DISMISSED_KEY;
+            } else {
+                key = Cling.FOLDER_CLING_DISMISSED_KEY;
+            }
+            dismissCling(cling, key, DISMISS_CLING_DURATION);
+        }
     }
 
     public boolean preferencesChanged() {

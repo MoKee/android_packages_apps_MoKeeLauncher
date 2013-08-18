@@ -1,4 +1,4 @@
-package com.cyanogenmod.trebuchet;
+package com.mokee.launcher;
 
 import android.appwidget.AppWidgetProviderInfo;
 import android.content.ComponentName;
@@ -25,7 +25,7 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.cyanogenmod.trebuchet.R;
+import com.mokee.launcher.R;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

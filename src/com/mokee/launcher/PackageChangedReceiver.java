@@ -1,4 +1,4 @@
-package com.cyanogenmod.trebuchet;
+package com.mokee.launcher;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

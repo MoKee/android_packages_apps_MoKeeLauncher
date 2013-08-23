@@ -4860,7 +4860,6 @@ public class Workspace extends PagedView
                 mLauncher.showAllApps(true);
                 break;
             case 4:
-                disableScrollingIndicator();
                 mLauncher.showPreviewLayout(true);
                 break;
             case 5:

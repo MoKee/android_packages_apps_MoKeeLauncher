@@ -1889,10 +1889,12 @@ public final class Launcher extends Activity
             .setIcon(android.R.drawable.ic_menu_gallery)
             .setAlphabeticShortcut('W');
         menu.add(0, MENU_LOCK_WORKSPACE, 0, !mLockWorkspace ? R.string.menu_lock_workspace : R.string.menu_unlock_workspace)
-            .setAlphabeticShortcut('L');	
+            .setAlphabeticShortcut('L');
+
         menu.add(0, MENU_PREVIEWS, 0, R.string.menu_preview)
                 .setIcon(R.drawable.ic_home_all_apps_holo_dark)
                 .setAlphabeticShortcut('V');
+
         menu.add(0, MENU_MANAGE_APPS, 0, R.string.menu_manage_apps)
             .setIcon(android.R.drawable.ic_menu_manage)
             .setIntent(manageApps)
@@ -3174,7 +3176,7 @@ public final class Launcher extends Activity
                     showHotseat(false);
                     mDockDivider.setVisibility(mShowDockDivider ? View.VISIBLE : View.GONE);
                 }
-				
+
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     updateWallpaperVisibility(true);
@@ -3249,6 +3251,7 @@ public final class Launcher extends Activity
         if(mState == State.WORKSPACE) {
             mState = State.PREVIEW;
             showWorkspacePreviews(animated);	
+            mWorkspace.hideScrollingIndicator(true);
             mDockDivider.setVisibility(View.GONE);
             hideHotseat(false);
             mPreviewLayout.requestFocus();
@@ -3270,7 +3273,6 @@ public final class Launcher extends Activity
             } else {
                 hideAppsCustomizeHelper(State.WORKSPACE, animated, onCompleteRunnable);
             }
-            mDockDivider.setVisibility(mShowDockDivider ? View.VISIBLE : View.GONE);
             // Show the search bar (only animate if we were showing the drop target bar in spring
             // loaded mode)
             if (mSearchDropTargetBar != null) {
@@ -4377,7 +4379,7 @@ public final class Launcher extends Activity
 
             // toView should appear right at the end of the workspace shrink
             // animation
-            mStateAnimation = new AnimatorSet();
+            mStateAnimation = LauncherAnimUtils.createAnimatorSet();
             mStateAnimation.play(scaleAnim).after(startDelay);
             mStateAnimation.play(alphaAnim).after(startDelay);
 
@@ -4491,17 +4493,17 @@ public final class Launcher extends Activity
             dispatchOnLauncherTransitionPrepare(toView, animated, false);
             dispatchOnLauncherTransitionStart(toView, animated, false);
             dispatchOnLauncherTransitionEnd(toView, animated, false);
-            //updateWallpaperVisibility(false);
         }
     }
 
     private void hideWorkspacePreviews(final boolean animated) {
-        if(mPreviewLayout != null) {
+        if (mPreviewLayout != null) {
             if(mStateAnimation != null) {
+                mStateAnimation.setDuration(0);
                 mStateAnimation.cancel();
                 mStateAnimation = null;
             }
-            
+
             Resources res = getResources();
 
             final int duration = res.getInteger(R.integer.config_previewsZoomOutTime);
@@ -4538,13 +4540,20 @@ public final class Launcher extends Activity
                         dispatchOnLauncherTransitionStep(toView, t);
                     }
                 });
-    
-                mStateAnimation = new AnimatorSet();
-    
+
+                mStateAnimation = LauncherAnimUtils.createAnimatorSet();
+
                 dispatchOnLauncherTransitionPrepare(fromView, animated, true);
                 dispatchOnLauncherTransitionPrepare(toView, animated, true);
+                mWorkspace.pauseScrolling();
 
                 mStateAnimation.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+                        showHotseat(false);
+                        mDockDivider.setVisibility(mShowDockDivider ? View.VISIBLE : View.GONE);
+                    }
+
                     @Override
                     public void onAnimationEnd(Animator animation) {
                         updateWallpaperVisibility(true);
@@ -4554,6 +4563,8 @@ public final class Launcher extends Activity
                         if (mWorkspace != null) {
                             mWorkspace.hideScrollingIndicator(false);
                         }
+                        mWorkspace.updateCurrentPageScroll();
+                        mWorkspace.resumeScrolling();
                     }
 
                 });
@@ -4569,14 +4580,18 @@ public final class Launcher extends Activity
                 dispatchOnLauncherTransitionStart(fromView, animated, true);
                 dispatchOnLauncherTransitionStart(toView, animated, true);
                 LauncherAnimUtils.startAnimationAfterNextDraw(mStateAnimation, toView);
-
-
             } else {
                 hidePreviewLayout();
+                dispatchOnLauncherTransitionPrepare(fromView, animated, true);
+                dispatchOnLauncherTransitionStart(fromView, animated, true);
+                dispatchOnLauncherTransitionEnd(fromView, animated, true);
+                dispatchOnLauncherTransitionPrepare(toView, animated, true);
+                dispatchOnLauncherTransitionStart(toView, animated, true);
+                dispatchOnLauncherTransitionEnd(toView, animated, true);
+                mWorkspace.hideScrollingIndicator(false);
             }
         }
     }
-
 
     /* Cling related */
     private boolean isClingsEnabled() {

@@ -1,58 +1,26 @@
-package com.mokee.multitouch.controller;
 
-/**
- * MultiTouchController.java
- * 
- * Author: Luke Hutchison (luke.hutch@mit.edu)
- *   Please drop me an email if you use this code so I can list your project here!
- * 
- * Usage:
- *   <code>
- *   public class MyMTView extends View implements MultiTouchObjectCanvas<PinchWidgetType> {
+/*
+ * Copyright (C) 2013 The MoKee OpenSource Project
  *
- *       private MultiTouchController<PinchWidgetType> multiTouchController = new MultiTouchController<PinchWidgetType>(this);
- *  
- *       // Pass touch events to the MT controller
- *       public boolean onTouchEvent(MotionEvent event) {
- *           return multiTouchController.onTouchEvent(event);
- *       }
- *     
- *       // ... then implement the MultiTouchObjectCanvas interface here, see details in the comments of that interface.
- *   }
- *   </code>
- * 
- * Changelog:
- *   2010-06-09 v1.5.1  Some API changes to make it possible to selectively update or not update scale / rotation.
- *                      Fixed anisotropic zoom.  Cleaned up rotation code.  Added more comments.  Better var names. (LH)
- *   2010-06-09 v1.4    Added ability to track pinch rotation (Mickael Despesse, author of "Face Frenzy") and anisotropic pinch-zoom (LH)
- *   2010-06-09 v1.3.3  Bugfixes for Android-2.1; added optional debug info (LH)
- *   2010-06-09 v1.3    Ported to Android-2.2 (handle ACTION_POINTER_* actions); fixed several bugs; refactoring; documentation (LH) 
- *   2010-05-17 v1.2.1  Dual-licensed under Apache and GPL licenses
- *   2010-02-18 v1.2    Support for compilation under Android 1.5/1.6 using introspection (mmin, author of handyCalc)
- *   2010-01-08 v1.1.1  Bugfixes to Cyanogen's patch that only showed up in more complex uses of controller (LH) 
- *   2010-01-06 v1.1    Modified for official level 5 MT API (Cyanogen)
- *   2009-01-25 v1.0    Original MT controller, released for hacked G1 kernel (LH) 
- * 
- * Planned features:
- * - Add inertia (flick-pinch-zoom or flick-scroll)
- * 
- * Known usages:
- * - Mickael Despesse's "Face Frenzy" face distortion app, to be published to the Market soon
- * - Yuan Chin's fork of ADW Launcher to support multitouch
- * - David Byrne's fractal viewing app Fractoid
- * - mmin's handyCalc calculator
- * - My own "MultiTouch Visualizer 2" in the Market
- * - Formerly: The browser in cyanogenmod (and before that, JesusFreke), and other firmwares like dwang5.  This usage has been
- *   replaced with official pinch/zoom in Maps, Browser and Gallery[3D] as of API level 5.
- * 
- * License:
- *   Dual-licensed under the Apache License v2 and the GPL v2.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
-import java.lang.reflect.Method;
+package com.mokee.multitouch.controller;
 
 import android.util.Log;
 import android.view.MotionEvent;
+
+import java.lang.reflect.Method;
 
 /**
  * A class that simplifies the implementation of multitouch in applications. Subclass this and read the fields here as needed in subclasses.

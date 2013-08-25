@@ -31,7 +31,7 @@ import android.text.TextUtils;
 
 import java.util.HashMap;
 
-import com.cyanogenmod.trebuchet.preference.PreferencesProvider;
+import com.mokee.launcher.preference.PreferencesProvider;
 
 /**
  * Cache of application icons.  Icons can be made from any thread.

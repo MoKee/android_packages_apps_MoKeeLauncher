@@ -118,6 +118,12 @@
     <string name="preferences_interface_general_lock_workspace_summary">锁定所有在主屏幕与底座上的图标和文件夹的位置</string>
     <string name="preferences_interface_general_fullscreen_title">全屏模式</string>
     <string name="preferences_interface_general_fullscreen_summary">隐藏状态栏以便扩展主屏幕</string>
+    <string name="folder_empty_contents_title">没有找到项目</string>
+    <string name="preferences_interface_general_iconpack_title">图标库</string>
+    <string name="preferences_interface_general_iconpack_summary">替换默认的应用程序图标</string>
+    <string name="dialog_pick_iconpack_title">选择图标库</string>
+    <string name="default_iconpack_title">默认图标库</string>
+    <string name="no_iconpacks_summary">未安装图标库</string>
     <string name="effects_standard">标准</string>
     <string name="effects_tablet">平板</string>
     <string name="effects_zoom_in">放大</string>

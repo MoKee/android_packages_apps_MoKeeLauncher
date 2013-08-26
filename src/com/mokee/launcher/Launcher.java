@@ -3270,6 +3270,7 @@ public final class Launcher extends Activity
             } else {
                 hideAppsCustomizeHelper(State.WORKSPACE, animated, onCompleteRunnable);
             }
+            mDockDivider.setVisibility(mShowDockDivider ? View.VISIBLE : View.GONE);
             // Show the search bar (only animate if we were showing the drop target bar in spring
             // loaded mode)
             if (mSearchDropTargetBar != null) {

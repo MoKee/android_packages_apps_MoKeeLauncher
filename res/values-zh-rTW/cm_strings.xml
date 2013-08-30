@@ -27,7 +27,7 @@
     <string name="menu_apps_filter_downloaded">已下載</string>
     <string name="menu_hidden_apps_delete">重置</string>
     <string name="all_apps_sort_cling_title">整理您的程序</string>
-    <string name="all_apps_sort_cling_add_item">按住應用程序標籤 & 選擇您的排列方式。</string>
+    <string name="all_apps_sort_cling_add_item">按住應用程序標籤 &amp; 選擇您的排列方式。</string>
     <string name="hidden_apps_title">隱藏應用</string>
     <string name="workspace_locked">主螢幕已鎖定，請到設置內解鎖後再嘗試更改</string>
     <string name="preferences_title">啟動器選項</string>

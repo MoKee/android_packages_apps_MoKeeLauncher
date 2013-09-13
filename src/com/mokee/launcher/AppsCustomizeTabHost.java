@@ -506,7 +506,7 @@ public class AppsCustomizeTabHost extends TabHost implements LauncherTransitiona
     private void updateAppsCustomizeTabHostAlpha() {
         final String sbConfig = Settings.System.getString(mContext
                 .getContentResolver(),
-                Settings.System.STATUS_BAR_ALPHA_CONFIG);
+                Settings.System.STATUS_BAR_ALPHA);
         if (sbConfig != null) {
             String split[] = sbConfig.split(";");
             float tmpAlphaValue = Integer.parseInt(split[0]) / 255;

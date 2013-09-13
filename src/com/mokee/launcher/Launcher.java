@@ -3098,7 +3098,7 @@ public final class Launcher extends Activity
                     }
 
                     ContentResolver resolver = getContentResolver();
-                    String settingValue = Settings.System.getString(resolver, Settings.System.NAVIGATION_BAR_ALPHA_CONFIG);
+                    String settingValue = Settings.System.getString(resolver, Settings.System.NAVIGATION_BAR_ALPHA);
                     if (settingValue != null) {
                         String alphas[] = settingValue.split(";");
                         if (Float.parseFloat(alphas[0]) == 1) {

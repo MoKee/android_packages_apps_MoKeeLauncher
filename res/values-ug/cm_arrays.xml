@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2012-2013 The MoKee OpenSource Project
+<!-- Copyright (C) 2012-2013 The CyanogenMod Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -15,16 +15,16 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string-array name="preferences_interface_homescreen_indicator_position_entries">
-        <item>Над нижней панелью</item>
-        <item>Вверху экрана</item>
-        <item>Внизу экрана</item>
+        <item>لەڭگەر ئۈستى</item>
+        <item>ئۈستى</item>
+        <item>ئاستى</item>
     </string-array>
     <string-array name="preferences_interface_drawer_indicator_position_entries">
-        <item>Вверху или слева</item>
-        <item>Внизу или справа</item>
+        <item>ئۈستى/سول</item>
+        <item>ئاستى/ئوڭ</item>
     </string-array>
     <string-array name="preferences_interface_drawer_orientation_entries">
-        <item>Горизонтальная</item>
-        <item>Вертикальная</item>
+        <item>توغرىسىغا</item>
+        <item>بويىغا</item>
     </string-array>
 </resources>

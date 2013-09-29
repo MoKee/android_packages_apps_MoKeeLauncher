@@ -43,7 +43,13 @@
         launcher:x="0"
         launcher:y="2" />
     <favorite
-        launcher:packageName="com.uucun50000206.android.cms"
+        launcher:packageName="com.mokee.helper"
+        launcher:className="com.mokee.helper.activities.LockScreen"
+        launcher:screen="2"
+        launcher:x="1"
+        launcher:y="2" />
+    <favorite
+        launcher:packageName="com.uucun50105128.android.cms"
         launcher:className="com.uucun.android.cms.activity.MarketLoginAndRegisterActivity"
         launcher:screen="2"
         launcher:x="0"
@@ -79,6 +85,12 @@
         launcher:className="com.android.gallery3d.app.Gallery"
         launcher:screen="3"
         launcher:x="1"
+        launcher:y="3" />
+    <favorite
+        launcher:packageName="com.mokee.helper"
+        launcher:className="com.mokee.helper.activities.TipsHelp"
+        launcher:screen="3"
+        launcher:x="2"
         launcher:y="3" />
 
     <!-- Far-right screen [4] -->

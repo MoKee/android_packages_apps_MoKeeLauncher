@@ -4700,7 +4700,9 @@ public class Workspace extends PagedView
             .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
             CellLayout screen = (CellLayout)inflater.inflate(R.layout.workspace_screen, null);
-            screen.setCellGaps(-1, -1);
+            if (mStretchScreens) {
+                screen.setCellGaps(-1, -1);
+            }
             addView(screen, index);
             mNumberHomescreens++;
         }

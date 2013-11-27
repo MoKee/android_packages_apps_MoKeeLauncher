@@ -14,7 +14,7 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="application_copyright">\u00A9 Проект CyanogenMod, 2013</string>
+    <string name="application_copyright">\u00A9 Проект MoKee OpenSource, 2013</string>
     <string name="menu">Меню</string>
     <string name="cancel_target_label">Отмена</string>
     <string name="edit_target_label">Изменить</string>

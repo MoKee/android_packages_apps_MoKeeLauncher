@@ -14,7 +14,7 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="application_copyright">Autorinės teisės \u00A9 2013 CyanogenMod projektas</string>
+    <string name="application_copyright">Autorinės teisės \u00A9 2013 MoKee OpenSource projektas</string>
     <string name="menu">Meniu</string>
     <string name="cancel_target_label">Atšaukti</string>
     <string name="edit_target_label">Keisti</string>

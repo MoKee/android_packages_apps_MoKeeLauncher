@@ -2742,6 +2742,11 @@ public class Workspace extends PagedView
         // If it's an external drop (e.g. from All Apps), check if it should be accepted
         CellLayout dropTargetLayout = mDropToLayout;
         if (d.dragSource != this) {
+            // Don't accept if homescreen is locked
+            if (mLauncher.getLockWorkspace()) {
+                Toast.makeText(mLauncher, mLauncher.getString(R.string.workspace_locked), Toast.LENGTH_SHORT).show();
+                return false;
+            }
             // Don't accept the drop if we're not over a screen at time of drop
             if (dropTargetLayout == null) {
                 return false;

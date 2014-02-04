@@ -64,7 +64,7 @@
 
     <application
         android:name="com.android.launcher3.LauncherApplication"
-        android:label="@string/cm_application_name"
+        android:label="@string/mk_application_name"
         android:icon="@mipmap/ic_launcher_home"
         android:hardwareAccelerated="true"
         android:largeHeap="@bool/config_largeHeap"

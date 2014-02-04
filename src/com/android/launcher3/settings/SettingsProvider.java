@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 The CyanogenMod Project
+ * Copyright (C) 2013 The MoKee OpenSource Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 public final class SettingsProvider {
-    public static final String SETTINGS_KEY = "com.cyanogenmod.trebuchet_preferences";
+    public static final String SETTINGS_KEY = "com.mokee.launcher_preferences";
 
     public static final String SETTINGS_CHANGED = "settings_changed";
 

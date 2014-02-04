@@ -34,11 +34,11 @@ LOCAL_PROTOC_FLAGS := --proto_path=$(LOCAL_PATH)/protos/
 
 LOCAL_SDK_VERSION := 19
 
-LOCAL_PACKAGE_NAME := Trebuchet
+LOCAL_PACKAGE_NAME := MoKeeLauncher
 LOCAL_PRIVILEGED_MODULE := true
 #LOCAL_CERTIFICATE := shared
 
-LOCAL_AAPT_FLAGS := --rename-manifest-package com.cyanogenmod.trebuchet
+LOCAL_AAPT_FLAGS := --rename-manifest-package com.mokee.launcher
 
 LOCAL_OVERRIDES_PACKAGES := Launcher3
 

@@ -70,6 +70,6 @@
 
     <!-- The title text for the all apps cling [CHAR_LIMIT=60] -->
     <string name="all_apps_cling_cm">自定义你的抽屉</string>
-    <!-- The description of how to access Trebuchet settings [CHAR_LIMIT=160] -->
+    <!-- The description of how to access MoKeeLauncher settings [CHAR_LIMIT=160] -->
     <string name="all_apps_cling_summary">点击页面指示器来查看其他配置设置</string>
 </resources>

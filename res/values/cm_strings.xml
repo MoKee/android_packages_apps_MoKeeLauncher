@@ -18,7 +18,7 @@
     <!-- Application name -->
     <string name="mk_application_name" translatable="false">MoKeeLauncher</string>
     <!-- App copyright -->
-    <string name="application_copyright" translatable="false">Copyright \u00A9 2014 The MoKee OpenSource Project</string>
+    <string name="application_copyright">Copyright \u00A9 2014 The MoKee OpenSource Project</string>
     <!-- App version -->
     <string name="application_version" translatable="false">1.0</string>
 

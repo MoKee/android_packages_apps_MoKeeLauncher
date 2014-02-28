@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     Copyright (C) 2014 The CyanogenMod Project
+     Copyright (C) 2014 The MoKee OpenSource Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
      limitations under the License.
 -->
 <resources>
-    <string name="application_copyright">"Autorinės teisės \u00A9 2014 „CyanogenMod“ projektas"</string>
+    <string name="application_copyright">"Autorinės teisės \u00A9 2014 „MoKee OpenSource“ projektas"</string>
     <string name="sort_button_text">Rūšiuoti</string>
     <string name="filter_button_text">Filtras</string>
     <string name="default_screen_button_text">Numatytasis ekranas</string>

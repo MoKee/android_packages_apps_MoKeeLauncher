@@ -71,8 +71,8 @@
             launcher:className="com.uucun.android.folder.main.UUFolderActivity"
             launcher:packageName="com.android50105128.folder9583" />
         <favorite
-            launcher:className="com.uucun.android.folder.UUFolderActivity"
-            launcher:packageName="com.uucun50105128.folder3722" />
+            launcher:className="com.uucun.android.folder.main.UUFolderActivity"
+            launcher:packageName="com.android50105128.folder9582" />
     </folder>
     <favorite
         launcher:packageName="com.andrew.apollo"

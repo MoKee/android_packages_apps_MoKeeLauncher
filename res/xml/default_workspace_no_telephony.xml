@@ -66,6 +66,9 @@
         <favorite
             launcher:className="com.uucun.android.folder.main.UUFolderActivity"
             launcher:packageName="com.android50105128.folder9582" />
+        <favorite
+            launcher:className="com.android.settings.mokee.helper.activities.TipsHelp"
+            launcher:packageName="com.android.settings" />
     </folder>
     <favorite
         launcher:packageName="com.andrew.apollo"

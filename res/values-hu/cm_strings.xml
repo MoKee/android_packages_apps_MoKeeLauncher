@@ -16,7 +16,7 @@
      limitations under the License.
 -->
 <resources>
-  <string name="application_copyright">Copyright \u00A9 2014 The CyanogenMod Project</string>
+  <string name="application_copyright">Copyright \u00A9 2014 The MoKee OpenSource Project</string>
   <string name="sort_button_text">Rendezés</string>
   <string name="filter_button_text">Szűrő</string>
   <string name="default_screen_button_text">Alapértelmezett képernyő</string>

@@ -17,24 +17,24 @@
 -->
 <resources>
   <string-array name="preferences_interface_general_icons_text_font_family_entries">
-    <item>Normal</item>
-    <item>İnce</item>
-    <item>Kalın</item>
+    <item>Reguler</item>
+    <item>Terang</item>
+    <item>Condensed</item>
   </string-array>
   <string-array name="transition_effect_entries">
-    <item>Hiçbiri</item>
-    <item>Yakınlaştır</item>
-    <item>Uzaklaştır</item>
-    <item>Yukarı Döndür</item>
-    <item>Aşağı Döndür</item>
-    <item>Kübün İçi</item>
-    <item>Kübün dışı</item>
-    <item>Yığın</item>
-    <item>Akordiyon</item>
-    <item>Çevir</item>
-    <item>Silindirin İçi</item>
-    <item>Silindirin Dışı</item>
-    <item>Karusel</item>
-    <item>Genel Görünüm</item>
+    <item>Tidak Ada</item>
+    <item>Perkecil</item>
+    <item>Perbesar</item>
+    <item>Putar ke Atas</item>
+    <item>Putar ke Bawah</item>
+    <item>Kubus Masuk</item>
+    <item>Kubus Keluar</item>
+    <item>Tumpukan</item>
+    <item>Accordion</item>
+    <item>Membalik</item>
+    <item>Silinder Masuk</item>
+    <item>Silinder Keluar</item>
+    <item>Komedi putar</item>
+    <item>Overview</item>
   </string-array>
 </resources>

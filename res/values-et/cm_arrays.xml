@@ -17,24 +17,24 @@
 -->
 <resources>
   <string-array name="preferences_interface_general_icons_text_font_family_entries">
-    <item>Normal</item>
-    <item>İnce</item>
-    <item>Kalın</item>
+    <item>Regulaarne</item>
+    <item>Kerge</item>
+    <item>Lühendatud</item>
   </string-array>
   <string-array name="transition_effect_entries">
-    <item>Hiçbiri</item>
-    <item>Yakınlaştır</item>
-    <item>Uzaklaştır</item>
-    <item>Yukarı Döndür</item>
-    <item>Aşağı Döndür</item>
-    <item>Kübün İçi</item>
-    <item>Kübün dışı</item>
-    <item>Yığın</item>
-    <item>Akordiyon</item>
-    <item>Çevir</item>
-    <item>Silindirin İçi</item>
-    <item>Silindirin Dışı</item>
-    <item>Karusel</item>
-    <item>Genel Görünüm</item>
+    <item>Puudub</item>
+    <item>Suumi Sisse</item>
+    <item>Suumi Välja</item>
+    <item>Pööra Üles</item>
+    <item>Pööra Alla</item>
+    <item>Kuubik Sisse</item>
+    <item>Kuubik Välja</item>
+    <item>Kihid</item>
+    <item>Akordion</item>
+    <item>Pööra ümber</item>
+    <item>Silinder Sisse</item>
+    <item>Silinder Välja</item>
+    <item>Karussell</item>
+    <item>Ülevaade</item>
   </string-array>
 </resources>

@@ -17,24 +17,24 @@
 -->
 <resources>
   <string-array name="preferences_interface_general_icons_text_font_family_entries">
-    <item>Normal</item>
-    <item>İnce</item>
-    <item>Kalın</item>
+    <item>විධිමත්</item>
+    <item>සැහැල්ලු</item>
+    <item>ඝනීභූත</item>
   </string-array>
   <string-array name="transition_effect_entries">
-    <item>Hiçbiri</item>
-    <item>Yakınlaştır</item>
-    <item>Uzaklaştır</item>
-    <item>Yukarı Döndür</item>
-    <item>Aşağı Döndür</item>
-    <item>Kübün İçi</item>
-    <item>Kübün dışı</item>
-    <item>Yığın</item>
-    <item>Akordiyon</item>
-    <item>Çevir</item>
-    <item>Silindirin İçi</item>
-    <item>Silindirin Dışı</item>
-    <item>Karusel</item>
-    <item>Genel Görünüm</item>
+    <item>කිසිවක් නැත</item>
+    <item>ඇතුලට විශාලනය</item>
+    <item>පිටතට විශාලනය</item>
+    <item>ඉහළට භ්‍රමණය</item>
+    <item>පහළට භ්‍රමණය</item>
+    <item>ඇතුලට ඝනකය</item>
+    <item>පිටතට ඝනකය</item>
+    <item>අට්ටි ගැසීම</item>
+    <item>එකෝඩින්</item>
+    <item>පෙරළීම</item>
+    <item>ඇතුලට සිලින්ඩරය</item>
+    <item>පිටතට සිලින්ඩරය</item>
+    <item>බීමත්වූ</item>
+    <item>දළ විශ්ලේෂණය</item>
   </string-array>
 </resources>

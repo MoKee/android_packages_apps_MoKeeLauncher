@@ -23,18 +23,18 @@
   </string-array>
   <string-array name="transition_effect_entries">
     <item>なし</item>
-    <item>ズームイン</item>
-    <item>ズームアウト</item>
-    <item>上回転</item>
-    <item>下回転</item>
-    <item>キューブイン</item>
-    <item>キューブアウト</item>
+    <item>Zoom In</item>
+    <item>Zoom Out</item>
+    <item>Rotate Up</item>
+    <item>Rotate Down</item>
+    <item>Cube In</item>
+    <item>Cube Out</item>
     <item>スタック</item>
-    <item>アコーディオン</item>
-    <item>フリップ</item>
+    <item>Accordion</item>
+    <item>Flip</item>
     <item>シリンダーイン</item>
-    <item>シリンダーアウト</item>
-    <item>カルーセル</item>
-    <item>オーバービュー</item>
+    <item>Cylinder Out</item>
+    <item>Carousel</item>
+    <item>Overview</item>
   </string-array>
 </resources>

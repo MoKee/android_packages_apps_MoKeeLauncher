@@ -136,6 +136,10 @@ public class AppsCustomizeLayout extends FrameLayout implements LauncherTransiti
 
     @Override
     public View getContent() {
+        View appsCustomizeContent = mAppsCustomizePane.getContent();
+        if (appsCustomizeContent != null) {
+            return appsCustomizeContent;
+        }
         return mContent;
     }
 
@@ -171,12 +175,12 @@ public class AppsCustomizeLayout extends FrameLayout implements LauncherTransiti
         }
 
         // Dismiss the workspace cling
-        l.dismissWorkspaceCling(null);
+        l.getLauncherClings().dismissWorkspaceCling(null);
     }
 
     @Override
     public void onLauncherTransitionStep(Launcher l, float t) {
-        // Do nothing
+        mAppsCustomizePane.onLauncherTransitionStep(l, t);
     }
 
     @Override

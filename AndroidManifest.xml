@@ -25,12 +25,12 @@
 
     <original-package android:name="com.android.launcher3" />
 
-    <uses-sdk android:minSdkVersion="17" android:targetSdkVersion="19" />
+    <uses-sdk android:targetSdkVersion="19" android:minSdkVersion="16"/>
 
     <permission
         android:name="com.android.launcher3.permission.PRELOAD_WORKSPACE"
         android:permissionGroup="android.permission-group.SYSTEM_TOOLS"
-        android:protectionLevel="system|signature" />
+        android:protectionLevel="signatureOrSystem" />
     <permission
         android:name="com.android.launcher3.permission.READ_SETTINGS"
         android:permissionGroup="android.permission-group.SYSTEM_TOOLS"
@@ -40,7 +40,7 @@
     <permission
         android:name="com.android.launcher3.permission.WRITE_SETTINGS"
         android:permissionGroup="android.permission-group.SYSTEM_TOOLS"
-        android:protectionLevel="dangerous"
+        android:protectionLevel="signatureOrSystem"
         android:label="@string/permlab_write_settings"
         android:description="@string/permdesc_write_settings"/>
 
@@ -94,14 +94,22 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".settings.HiddenAppsActivity"
+        <activity android:name=".settings.HiddenAppsActivity"
             android:label="@string/hidden_apps_title"
             android:exported="false">
             <intent-filter>
                 <action android:name=".settings.HiddenAppsActivity" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.android.launcher3.LauncherWallpaperPickerActivity"
+            android:theme="@style/Theme.WallpaperCropper"
+            android:label="@string/pick_wallpaper"
+            android:icon="@mipmap/ic_launcher_wallpaper"
+            android:finishOnCloseSystemDialogs="true"
+            android:process=":wallpaper_chooser">
         </activity>
 
         <activity
@@ -143,6 +151,13 @@
             android:permission="com.android.launcher3.permission.PRELOAD_WORKSPACE">
             <intent-filter>
                 <action android:name="com.android.launcher3.action.PRELOAD_WORKSPACE" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name="com.android.launcher3.WallpaperChangedReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.WALLPAPER_CHANGED" />
             </intent-filter>
         </receiver>
 

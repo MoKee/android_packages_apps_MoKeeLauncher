@@ -13,6 +13,8 @@ import com.android.launcher3.list.SettingsPinnedHeaderAdapter;
 
 public class OverviewSettingsPanel {
     public static final String ANDROID_SETTINGS = "com.android.settings";
+    public static final String ANDROID_PROTECTED_APPS =
+            "com.android.settings.applications.ProtectedAppsActivity";
     public static final String THEME_SETTINGS =
             "com.android.settings.Settings$ThemeSettingsActivity";
     public static final int HOME_SETTINGS_POSITION = 0;
@@ -22,6 +24,7 @@ public class OverviewSettingsPanel {
     private View mOverviewPanel;
     private SettingsPinnedHeaderAdapter mSettingsAdapter;
     private PinnedHeaderListView mListView;
+    private String[] mValues;
 
     OverviewSettingsPanel(Launcher launcher, View overviewPanel) {
         mLauncher = launcher;
@@ -38,15 +41,30 @@ public class OverviewSettingsPanel {
         String[] headers = new String[] {
                 res.getString(R.string.home_screen_settings),
                 res.getString(R.string.drawer_settings)};
-        String[] values = new String[] {
-                res.getString(R.string.home_screen_search_text),
-                res.getString(R.string.scroll_effect_text),
-                res.getString(R.string.larger_icons_text),
-                res.getString(R.string.hide_icon_labels)};
+
+        String[] values;
+        if(mLauncher.isGelIntegrationSupported()) {
+            values = new String[]{
+                    res.getString(R.string.home_screen_search_text),
+                    res.getString(R.string.search_screen_left_text),
+                    res.getString(R.string.scroll_effect_text),
+                    res.getString(R.string.larger_icons_text),
+                    res.getString(R.string.hide_icon_labels)};
+        } else {
+            values = new String[]{
+                    res.getString(R.string.home_screen_search_text),
+                    res.getString(R.string.scroll_effect_text),
+                    res.getString(R.string.larger_icons_text),
+                    res.getString(R.string.hide_icon_labels)};
+        }
+
+        mValues = values;
+
         String[] valuesDrawer = new String[] {
                 res.getString(R.string.scroll_effect_text),
                 res.getString(R.string.drawer_sorting_text),
-                res.getString(R.string.hide_icon_labels)};
+                res.getString(R.string.hide_icon_labels),
+                res.getString(R.string.protected_app_settings)};
 
         mSettingsAdapter = new SettingsPinnedHeaderAdapter(mLauncher);
         mSettingsAdapter.setHeaders(headers);
@@ -159,13 +177,8 @@ public class OverviewSettingsPanel {
             mSettingsAdapter.changeCursor(0, createCursor(res
                     .getString(R.string.home_screen_settings), new String[]{}));
         } else {
-            String[] values = new String[] {
-                    res.getString(R.string.home_screen_search_text),
-                    res.getString(R.string.scroll_effect_text),
-                    res.getString(R.string.larger_icons_text),
-                    res.getString(R.string.hide_icon_labels)};
             mSettingsAdapter.changeCursor(0, createCursor(res
-                    .getString(R.string.home_screen_settings), values));
+                    .getString(R.string.home_screen_settings), mValues));
         }
 
         // Make sure overview panel is drawn above apps customize and collapsed

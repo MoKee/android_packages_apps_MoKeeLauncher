@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * A singleton wrapper class for GEL Integration.
  * Requires EdgeGestureManager functionality that is only available
- * in CyanogenMod.
+ * in MoKee OpenSourc.
  */
 public class GelIntegrationHelper {
     // The Intent for the search activity (resolves to Google Now when installed)

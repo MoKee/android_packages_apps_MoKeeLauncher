@@ -588,8 +588,8 @@ public class Launcher extends Activity
         ComponentName globalSearchActivity = searchManager.getGlobalSearchActivity();
 
         // Currently the only custom content available is the GEL launcher integration,
-        // only supported on CyanogenMod.
-        return globalSearchActivity != null && isCM();
+        // only supported on MoKee OpenSource.
+        return globalSearchActivity != null && isMK();
     }
 
     public boolean isGelIntegrationEnabled() {
@@ -603,11 +603,11 @@ public class Launcher extends Activity
     }
 
     /**
-     * Check if the device running this application is running CyanogenMod.
-     * @return true if this device is running CM.
+     * Check if the device running this application is running MoKee OpenSource.
+     * @return true if this device is running MK.
      */
-    protected boolean isCM() {
-        return getPackageManager().hasSystemFeature("com.cyanogenmod.android");
+    protected boolean isMK() {
+        return getPackageManager().hasSystemFeature("com.mokee.android");
     }
 
     /**

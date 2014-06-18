@@ -40,9 +40,9 @@ import org.mokee.launcher.home.HomeWrapper;
 
 import java.lang.Override;
 
-public class TrebuchetLauncher extends Launcher {
+public class MoKeeLauncher extends Launcher {
 
-    private static final String TAG = "TrebuchetLauncher";
+    private static final String TAG = "MoKeeLauncher";
 
     private static final boolean DEBUG = false;
     private static final float MIN_PROGRESS = 0;

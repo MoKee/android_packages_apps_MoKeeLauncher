@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 The CyanogenMod Project
+ * Copyright (C) 2014 The MoKee OpenSource Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.cyanogenmod.trebuchet;
+package org.mokee.launcher;
 
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -35,8 +35,8 @@ import com.android.launcher.home.Home;
 import com.android.launcher3.Launcher;
 import com.android.launcher3.R;
 
-import org.cyanogenmod.trebuchet.home.HomeUtils;
-import org.cyanogenmod.trebuchet.home.HomeWrapper;
+import org.mokee.launcher.home.HomeUtils;
+import org.mokee.launcher.home.HomeWrapper;
 
 import java.lang.Override;
 

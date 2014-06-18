@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 The CyanogenMod Project
+ * Copyright (C) 2014 The MoKee OpenSource Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,7 +36,7 @@ import android.view.ViewGroup.LayoutParams;
  *    declares inside its manifest a <code>com.android.launcher.home</code> metadata with the
  *    full qualified that contains this interface<br/>
  *    <pre>
- *    &lt;meta-data android:name="com.android.launcher.home" value="org.cyanogenmod.launcher.home.HomeStub"/&gt;
+ *    &lt;meta-data android:name="com.android.launcher.home" value="org.mokee.launcher.home.HomeStub"/&gt;
  *    </pre>
  *  </li>
  *  <li>

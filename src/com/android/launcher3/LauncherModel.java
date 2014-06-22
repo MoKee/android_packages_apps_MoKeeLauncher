@@ -2404,7 +2404,7 @@ public class LauncherModel extends BroadcastReceiver {
             ArrayList<ComponentName> mHiddenApps = new ArrayList<ComponentName>();
             ArrayList<String> mHiddenAppsPackages = new ArrayList<String>();
             Context context = mApp.getContext();
-            // Since Trebuchet is compiled using the SDK we have to hardcode this string
+            // Since MoKeeLauncher is compiled using the SDK we have to hardcode this string
             String protectedComponents = Settings.Secure.getString(context.getContentResolver(),
                     SETTINGS_PROTECTED_COMPONENTS);
             protectedComponents = protectedComponents == null ? "" : protectedComponents;

@@ -38,7 +38,7 @@ public class GelIntegrationHelper {
 
     /**
      * 1. Registers an EdgeGestureActivationListener with the EdgeGestureManager so that
-     *    the user can return to Trebuchet when they swipe from the right edge of the device.
+     *    the user can return to MoKeeLauncher when they swipe from the right edge of the device.
      * 2. Starts the Google Now Activity with an exit_out_right transition animation so that
      *    the new Activity appears to slide in as another screen (similar to GEL).
      */

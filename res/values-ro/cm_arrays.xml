@@ -16,10 +16,20 @@
      limitations under the License.
 -->
 <resources>
-  <string name="scrolling_page_outlines">Межі сторінок</string>
-  <string name="scrolling_fade_adjacent">Затемняти краї при гортанні</string>
-  <string name="hidden_apps_title">Приховані програми</string>
-  <string name="sort_mode_title">По назві</string>
-  <string name="sort_mode_launch_count">По частоті використання</string>
-  <string name="sort_mode_install_time">По часу встановлення</string>
+  <string-array name="transition_effect_entries">
+    <item>Nimic</item>
+    <item>Zoom in</item>
+    <item>Zoom out</item>
+    <item>Rotire în sus</item>
+    <item>Rotire în jos</item>
+    <item>Cub interior</item>
+    <item>Cub exterior</item>
+    <item>Stivă</item>
+    <item>Acordeon</item>
+    <item>Flip</item>
+    <item>Cilindru interor</item>
+    <item>Cilindru exterior</item>
+    <item>Carusel</item>
+    <item>Privire de ansamblu</item>
+  </string-array>
 </resources>

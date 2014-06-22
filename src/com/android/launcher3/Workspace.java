@@ -1308,7 +1308,7 @@ public class Workspace extends SmoothPagedView
         if (hasCustomContent() && whichPage == customPageIndex && !mCustomContentShowing) {
             if(!isInOverviewMode()) {
                 mCustomContentShowing = true;
-                // Start Google Now and register the gesture to return to Trebuchet
+                // Start Google Now and register the gesture to return to MoKeeLauncher
                 mLauncher.onCustomContentLaunch();
             }
         }

@@ -78,7 +78,7 @@ public class HomeUtils {
         }
 
         // FIXME For now we only support known Home apps. Remove this checks when
-        // Trebuchet allows Home apps through the full Home Host Protocol
+        // MoKeeLauncher allows Home apps through the full Home Host Protocol
         if (installedHomePackages.size() > 0) {
             for (String pkg : WELL_KNOWN_HOME_APP_PKGS) {
                 int i = installedHomePackages.size() - 1;

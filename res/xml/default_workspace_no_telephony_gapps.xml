@@ -55,17 +55,8 @@
     </folder>
     <folder launcher:screen="1" launcher:x="1" launcher:y="3" launcher:title="@string/mokee_title">
         <favorite
-            launcher:className="com.uucun.android.cms.activity.MarketLoginAndRegisterActivity"
-            launcher:packageName="com.uucun50105128.android.cms" />
-        <favorite
             launcher:className="net.discuz.one.activity.SplashActivity"
             launcher:packageName="com.mfunz.bbs" />
-        <favorite
-            launcher:className="com.uucun.android.folder.main.UUFolderActivity"
-            launcher:packageName="com.android50105128.folder9583" />
-        <favorite
-            launcher:className="com.uucun.android.folder.main.UUFolderActivity"
-            launcher:packageName="com.android50105128.folder9582" />
         <favorite
             launcher:className="com.android.settings.mokee.helper.activities.TipsHelp"
             launcher:packageName="com.android.settings" />

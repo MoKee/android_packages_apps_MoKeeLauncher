@@ -47,6 +47,6 @@
   <string name="icon_labels_hide">Anubrir</string>
   <string name="protected_app_settings">Apps protexíes</string>
   <string name="search_screen_left_text">Panel de gueta</string>
-  <string name="search_screen_left_unsupported_toast">Ye necesario tener una aplicación de gueta y CyanogenMod pa poder usar esta carauterística.</string>
+  <string name="search_screen_left_unsupported_toast">Ye necesario tener una aplicación de gueta y MoKee OpenSource pa poder usar esta carauterística.</string>
   <string name="dialog_confirm">Confirmar</string>
 </resources>

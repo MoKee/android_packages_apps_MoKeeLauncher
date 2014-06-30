@@ -47,6 +47,6 @@
   <string name="icon_labels_hide">Skrýt</string>
   <string name="protected_app_settings">Chráněné aplikace</string>
   <string name="search_screen_left_text">Panel vyhledávání</string>
-  <string name="search_screen_left_unsupported_toast">Pro použití této funkce musíte mít nainstalovanou podporovanou aplikaci vyhledávání a CyanogenMod.</string>
+  <string name="search_screen_left_unsupported_toast">Pro použití této funkce musíte mít nainstalovanou podporovanou aplikaci vyhledávání a MoKee OpenSource.</string>
   <string name="dialog_confirm">Potvrdit</string>
 </resources>

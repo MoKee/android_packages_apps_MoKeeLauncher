@@ -47,6 +47,6 @@
   <string name="icon_labels_hide">Peida</string>
   <string name="protected_app_settings">Kaitstud rakendused</string>
   <string name="search_screen_left_text">Otsingupaneel</string>
-  <string name="search_screen_left_unsupported_toast">Teil peab olema toetatud otsingurakendus ja CyanogenMod et kasutada seda võimalust.</string>
+  <string name="search_screen_left_unsupported_toast">Teil peab olema toetatud otsingurakendus ja MoKee OpenSource et kasutada seda võimalust.</string>
   <string name="dialog_confirm">Kinnita</string>
 </resources>

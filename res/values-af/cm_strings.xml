@@ -38,5 +38,5 @@
   <string name="icon_labels_hide">Wegsteek</string>
   <string name="protected_app_settings">Beskermde programme</string>
   <string name="search_screen_left_text">Soek paneel</string>
-  <string name="search_screen_left_unsupported_toast">Jy moet \'n ondersteunde soek program hê en CyanogenMod om hierdie funksie te gebruik.</string>
+  <string name="search_screen_left_unsupported_toast">Jy moet \'n ondersteunde soek program hê en MoKee OpenSource om hierdie funksie te gebruik.</string>
 </resources>

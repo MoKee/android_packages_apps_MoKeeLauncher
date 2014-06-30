@@ -47,6 +47,6 @@
   <string name="icon_labels_hide">Ukryj</string>
   <string name="protected_app_settings">Chronione aplikacje</string>
   <string name="search_screen_left_text">Pasek wyszukiwania</string>
-  <string name="search_screen_left_unsupported_toast">Musisz posiadać aplikację wyszukiwania wspieraną przez CyanogenMod by używać tej funkcji.</string>
+  <string name="search_screen_left_unsupported_toast">Musisz posiadać aplikację wyszukiwania wspieraną przez MoKee OpenSource by używać tej funkcji.</string>
   <string name="dialog_confirm">Potwierdź</string>
 </resources>

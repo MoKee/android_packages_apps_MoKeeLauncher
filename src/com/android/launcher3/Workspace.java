@@ -1339,6 +1339,7 @@ public class Workspace extends SmoothPagedView
         // Don't use all the wallpaper for parallax until you have at least this many pages
         private final int MIN_PARALLAX_PAGE_SPAN = 3;
         int mNumScreens;
+        boolean mCompletedInitialOffset;
 
         public WallpaperOffsetInterpolator() {
             mChoreographer = Choreographer.getInstance();
@@ -1353,7 +1354,8 @@ public class Workspace extends SmoothPagedView
         private void updateOffset(boolean force) {
             if (mWaitingForUpdate || force) {
                 mWaitingForUpdate = false;
-                if (computeScrollOffset() && mWindowToken != null) {
+                if ((!mCompletedInitialOffset || computeScrollOffset()) && mWindowToken != null) {
+                    mCompletedInitialOffset = true;
                     try {
                         mWallpaperManager.setWallpaperOffsets(mWindowToken,
                                 mWallpaperOffset.getCurrX(), 0.5f);
@@ -2174,12 +2176,15 @@ public class Workspace extends SmoothPagedView
     }
 
     public void exitOverviewMode(int snapPage, boolean animated) {
+        ((SlidingUpPanelLayout) mLauncher.getOverviewPanel()).collapsePane();
+
         enableOverviewMode(false, snapPage, animated);
     }
 
     private void enableOverviewMode(boolean enable, int snapPage, boolean animated) {
-        //Check to see if Settings need to taken
+        // Check to see if new Settings need to taken
         reloadSettings();
+        mLauncher.updateGridIfNeeded();
 
         State finalState = Workspace.State.OVERVIEW;
         if (!enable) {
@@ -2357,6 +2362,9 @@ public class Workspace extends SmoothPagedView
 
         if (snapPage == -1) {
             snapPage = getPageNearestToCenterOfScreen();
+        }
+        if (hasCustomContent()) {
+            snapPage = Math.max(1, snapPage);
         }
         snapToPage(snapPage, duration, mZoomInInterpolator);
 

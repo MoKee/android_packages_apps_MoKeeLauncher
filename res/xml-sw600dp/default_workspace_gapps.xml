@@ -62,8 +62,8 @@
         launcher:y="4"
         launcher:title="@string/mokee_title">
         <favorite
-            launcher:className="net.discuz.one.activity.SplashActivity"
-            launcher:packageName="com.mfunz.bbs" />
+            launcher:className="com.android.settings.mokee.helper.activities.MoKeeForum"
+            launcher:packageName="com.android.settings" />
         <favorite
             launcher:className="com.android.settings.mokee.helper.activities.TipsHelp"
             launcher:packageName="com.android.settings" />

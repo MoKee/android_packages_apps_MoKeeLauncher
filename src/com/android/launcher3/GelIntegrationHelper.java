@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * A singleton wrapper class for GEL Integration.
  * Requires EdgeGestureManager functionality that is only available
- * in MoKee OpenSourc.
+ * in MoKee OpenSource.
  */
 public class GelIntegrationHelper {
     private static final String GEL_ACTIVITY = "com.google.android.velvet.ui.VelvetActivity";

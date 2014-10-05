@@ -18,18 +18,18 @@
 <resources>
   <string-array name="transition_effect_entries">
     <item>Heç bir</item>
-    <item>Zoom in</item>
-    <item>Zoom out</item>
-    <item>Rotate up</item>
-    <item>Rotate down</item>
-    <item>Cube in</item>
-    <item>Cube out</item>
-    <item>Stack</item>
-    <item>Accordion</item>
-    <item>Flip</item>
-    <item>Cylinder in</item>
-    <item>Cylinder out</item>
-    <item>Carousel</item>
-    <item>Overview</item>
+    <item>Yaxınlaşdır</item>
+    <item>Uzaqlaşdır</item>
+    <item>Yuxarı döndər</item>
+    <item>Aşağı döndər</item>
+    <item>Kub daxili</item>
+    <item>Kub xarici</item>
+    <item>Yığın</item>
+    <item>Akkordion</item>
+    <item>Çevir</item>
+    <item>Silindir daxili</item>
+    <item>Silindir xarici</item>
+    <item>Karusel</item>
+    <item>İcmal</item>
   </string-array>
 </resources>

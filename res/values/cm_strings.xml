@@ -15,8 +15,6 @@
      limitations under the License.
 -->
 <resources>
-    <!-- Application name -->
-    <string name="cm_application_name" translatable="false">Trebuchet</string>
     <!-- App version -->
     <string name="application_version" translatable="false">1.0</string>
 
@@ -81,7 +79,7 @@
 
     <!-- The title text for the all apps cling [CHAR_LIMIT=60] -->
     <string name="all_apps_cling_cm">Customize your drawer</string>
-    <!-- The description of how to access Trebuchet settings [CHAR_LIMIT=160] -->
+    <!-- The description of how to access MoKeeLauncher settings [CHAR_LIMIT=160] -->
     <string name="all_apps_cling_summary">Tap the page indicator to view additional configuration settings</string>
 
     <!-- Noun, menu item used to reset hidden apps list -->

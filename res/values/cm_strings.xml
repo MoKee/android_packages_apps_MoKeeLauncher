@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     Copyright (C) 2014 The CyanogenMod Project
+     Copyright (C) 2014 The MoKee OpenSource Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -119,7 +119,7 @@
     <!-- Wallpaper scroll effect -->
     <string name="scrolling_wallpaper">Scroll wallpaper</string>
     <!-- Toast message when search screen on left is not supported -->
-    <string name="search_screen_left_unsupported_toast">You must have a supported search app and CyanogenMod to use this feature.</string>
+    <string name="search_screen_left_unsupported_toast">You must have a supported search app and MoKee OpenSource to use this feature.</string>
 
     <!-- Dialog -->
     <string name="dialog_confirm">Confirm</string>

@@ -329,9 +329,16 @@ public class FolderIcon extends FrameLayout implements FolderListener {
         }
         return ((itemType == LauncherSettings.Favorites.ITEM_TYPE_APPLICATION ||
                 itemType == LauncherSettings.Favorites.ITEM_TYPE_SHORTCUT ||
-                itemType == LauncherSettings.Favorites.ITEM_TYPE_FOLDER) &&
+                itemType == LauncherSettings.Favorites.ITEM_TYPE_FOLDER &&
+                canMergeDragFolder((FolderInfo) item)) &&
                 !mFolder.isFull() && item != mInfo && !mInfo.opened &&
                 !hidden);
+    }
+
+    private boolean canMergeDragFolder(FolderInfo info) {
+        int currentCount = mFolder.getInfo().contents.size();
+        int dragFolderCount = info.contents.size();
+        return (currentCount + dragFolderCount) <= mFolder.getMaxItems();
     }
 
     public boolean acceptDrop(Object dragInfo) {
@@ -377,6 +384,8 @@ public class FolderIcon extends FrameLayout implements FolderListener {
                 item = ((AppInfo) mDragInfo).makeShortcut();
                 item.spanX = 1;
                 item.spanY = 1;
+            } else if (mDragInfo instanceof FolderInfo) {
+                return;
             } else {
                 // ShortcutInfo
                 item = (ShortcutInfo) mDragInfo;
@@ -489,6 +498,15 @@ public class FolderIcon extends FrameLayout implements FolderListener {
         if (d.dragInfo instanceof AppInfo) {
             // Came from all apps -- make a copy
             item = ((AppInfo) d.dragInfo).makeShortcut();
+        } else if (d.dragInfo instanceof FolderInfo) {
+            FolderInfo folder = (FolderInfo) d.dragInfo;
+            mFolder.notifyDrop();
+            for (ShortcutInfo fItem : folder.contents) {
+                onDrop(fItem, d.dragView, null, 1.0f, mInfo.contents.size(), d.postAnimationRunnable, d);
+            }
+            mLauncher.removeFolder(folder);
+            LauncherModel.deleteItemFromDatabase(mLauncher, folder);
+            return;
         } else {
             item = (ShortcutInfo) d.dragInfo;
         }
@@ -696,7 +714,7 @@ public class FolderIcon extends FrameLayout implements FolderListener {
             public void onAnimationEnd(Animator animation) {
                 mAnimating = false;
                 if (onCompleteRunnable != null) {
-                    onCompleteRunnable.run();
+                    mLauncher.runOnUiThread(onCompleteRunnable);
                 }
             }
         });

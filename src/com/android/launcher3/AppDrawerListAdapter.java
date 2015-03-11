@@ -17,8 +17,10 @@
 package com.android.launcher3;
 
 import android.content.ComponentName;
+import android.content.Context;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,10 +30,12 @@ import android.widget.LinearLayout;
 import android.widget.SectionIndexer;
 import com.android.launcher3.locale.LocaleSetManager;
 import com.android.launcher3.locale.LocaleUtils;
+import com.android.launcher3.settings.SettingsProvider;
 
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -52,6 +56,10 @@ public class AppDrawerListAdapter extends RecyclerView.Adapter<AppDrawerListAdap
     private LinearLayout.LayoutParams mIconParams;
     private Rect mIconRect;
     private LocaleSetManager mLocaleSetManager;
+
+    private ArrayList<ComponentName> mProtectedApps;
+
+    private boolean mHideIconLabels;
 
     public enum DrawerType {
         Drawer(0),
@@ -89,21 +97,27 @@ public class AppDrawerListAdapter extends RecyclerView.Adapter<AppDrawerListAdap
     public AppDrawerListAdapter(Launcher launcher) {
         mLauncher = launcher;
         mHeaderList = new ArrayList<AppItemIndexedInfo>();
-        mDeviceProfile = LauncherAppState.getInstance().getDynamicGrid().getDeviceProfile();
         mLayoutInflater = LayoutInflater.from(launcher);
 
         mLocaleSetManager = new LocaleSetManager(mLauncher);
         mLocaleSetManager.updateLocaleSet(mLocaleSetManager.getSystemLocaleSet());
         initParams();
+
+        updateProtectedAppsList(mLauncher);
     }
 
     private void initParams() {
+        mDeviceProfile = LauncherAppState.getInstance().getDynamicGrid().getDeviceProfile();
+
+        int width = mDeviceProfile.cellWidthPx + 2 * mDeviceProfile.edgeMarginPx;
         mIconParams = new
-                LinearLayout.LayoutParams(mDeviceProfile.folderCellWidthPx,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
-        LauncherAppState app = LauncherAppState.getInstance();
-        DeviceProfile grid = app.getDynamicGrid().getDeviceProfile();
-        mIconRect = new Rect(0, 0, grid.allAppsIconSizePx, grid.allAppsIconSizePx);
+                LinearLayout.LayoutParams(width, ViewGroup.LayoutParams.WRAP_CONTENT);
+        mIconRect = new Rect(0, 0, mDeviceProfile.allAppsIconSizePx,
+                mDeviceProfile.allAppsIconSizePx);
+
+        mHideIconLabels = SettingsProvider.getBoolean(mLauncher,
+                SettingsProvider.SETTINGS_UI_DRAWER_HIDE_ICON_LABELS,
+                R.bool.preferences_interface_drawer_hide_icon_labels_default);
     }
 
     /**
@@ -169,6 +183,10 @@ public class AppDrawerListAdapter extends RecyclerView.Adapter<AppDrawerListAdap
 
     public void setApps(ArrayList<AppInfo> list) {
         if (!LauncherAppState.isDisableAllApps()) {
+            initParams();
+
+            filterProtectedApps(list);
+
             mHeaderList.clear();
             populateByCharacter(list);
             populateSectionHeaders();
@@ -195,8 +213,10 @@ public class AppDrawerListAdapter extends RecyclerView.Adapter<AppDrawerListAdap
         }
     }
 
-    private void reset() {
+    public void reset() {
         ArrayList<AppInfo> infos = getAllApps();
+
+        mLauncher.mAppDrawer.getLayoutManager().removeAllViews();
         setApps(infos);
     }
 
@@ -331,12 +351,8 @@ public class AppDrawerListAdapter extends RecyclerView.Adapter<AppDrawerListAdap
         for (int i = 0; i < mDeviceProfile.numColumnsBase; i++) {
             AppDrawerIconView icon = (AppDrawerIconView) mLayoutInflater.inflate(
                     R.layout.drawer_icon, holder.mLayout, false);
-            icon.setLayoutParams(mIconParams);
             icon.setOnClickListener(mLauncher);
             icon.setOnLongClickListener(this);
-            int padding = (int) mLauncher.getResources()
-                    .getDimension(R.dimen.vertical_app_drawer_icon_padding);
-            icon.setPadding(padding, padding, padding, padding);
             holder.mLayout.addView(icon);
         }
         return holder;
@@ -367,6 +383,7 @@ public class AppDrawerListAdapter extends RecyclerView.Adapter<AppDrawerListAdap
         final int size = indexedInfo.mInfo.size();
         for (int i = 0; i < holder.mLayout.getChildCount(); i++) {
             AppDrawerIconView icon = (AppDrawerIconView) holder.mLayout.getChildAt(i);
+            icon.setLayoutParams(mIconParams);
             if (i >= size) {
                 icon.setVisibility(View.INVISIBLE);
             } else {
@@ -377,6 +394,7 @@ public class AppDrawerListAdapter extends RecyclerView.Adapter<AppDrawerListAdap
                 d.setBounds(mIconRect);
                 icon.mIcon.setImageDrawable(d);
                 icon.mLabel.setText(info.title);
+                icon.mLabel.setVisibility(mHideIconLabels ? View.INVISIBLE : View.VISIBLE);
             }
         }
         holder.itemView.setTag(indexedInfo);
@@ -518,5 +536,31 @@ public class AppDrawerListAdapter extends RecyclerView.Adapter<AppDrawerListAdap
     @Override
     public int getSectionForPosition(int position) {
         return mSectionHeaders.get(mHeaderList.get(position).mStartString);
+    }
+
+    private void filterProtectedApps(ArrayList<AppInfo> list) {
+        updateProtectedAppsList(mLauncher);
+
+        Iterator<AppInfo> iterator = list.iterator();
+        while (iterator.hasNext()) {
+            AppInfo appInfo = iterator.next();
+            if (mProtectedApps.contains(appInfo.componentName)) {
+                iterator.remove();
+            }
+        }
+    }
+
+    private void updateProtectedAppsList(Context context) {
+        String protectedComponents = Settings.Secure.getString(context.getContentResolver(),
+                LauncherModel.SETTINGS_PROTECTED_COMPONENTS);
+        protectedComponents = protectedComponents == null ? "" : protectedComponents;
+        String [] flattened = protectedComponents.split("\\|");
+        mProtectedApps = new ArrayList<ComponentName>(flattened.length);
+        for (String flat : flattened) {
+            ComponentName cmp = ComponentName.unflattenFromString(flat);
+            if (cmp != null) {
+                mProtectedApps.add(cmp);
+            }
+        }
     }
 }

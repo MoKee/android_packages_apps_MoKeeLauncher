@@ -20,9 +20,11 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.PointF;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -163,7 +165,10 @@ public class AppDrawerScrubber extends LinearLayout {
      * Handles the animations of the scrubber indicator
      */
     private class ScrubberAnimationState implements SeekBar.OnSeekBarChangeListener {
-        private static final long SCRUBBER_DISPLAY_DURATION = 150;
+        private static final long SCRUBBER_DISPLAY_DURATION_IN = 60;
+        private static final long SCRUBBER_DISPLAY_DURATION_OUT = 150;
+        private static final long SCRUBBER_DISPLAY_DELAY_IN = 0;
+        private static final long SCRUBBER_DISPLAY_DELAY_OUT = 200;
         private static final float SCRUBBER_SCALE_START = 0f;
         private static final float SCRUBBER_SCALE_END = 1f;
         private static final float SCRUBBER_ALPHA_START = 0f;
@@ -191,7 +196,7 @@ public class AppDrawerScrubber extends LinearLayout {
             // start from a scratch position when animating in
             mScrubberIndicator.animate().cancel();
             mScrubberIndicator.setPivotX(mScrubberIndicator.getMeasuredWidth() / 2);
-            mScrubberIndicator.setPivotY(mScrubberIndicator.getMeasuredHeight() * 0.8f);
+            mScrubberIndicator.setPivotY(mScrubberIndicator.getMeasuredHeight() * 0.9f);
             mScrubberIndicator.setAlpha(SCRUBBER_ALPHA_START);
             mScrubberIndicator.setScaleX(SCRUBBER_SCALE_START);
             mScrubberIndicator.setScaleY(SCRUBBER_SCALE_START);
@@ -202,7 +207,8 @@ public class AppDrawerScrubber extends LinearLayout {
                 .alpha(SCRUBBER_ALPHA_END)
                 .scaleX(SCRUBBER_SCALE_END)
                 .scaleY(SCRUBBER_SCALE_END)
-                .setDuration(SCRUBBER_DISPLAY_DURATION)
+                .setStartDelay(SCRUBBER_DISPLAY_DELAY_IN)
+                .setDuration(SCRUBBER_DISPLAY_DURATION_IN)
                 .setListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
@@ -221,7 +227,8 @@ public class AppDrawerScrubber extends LinearLayout {
                 .alpha(SCRUBBER_ALPHA_START)
                 .scaleX(SCRUBBER_SCALE_START)
                 .scaleY(SCRUBBER_SCALE_START)
-                .setDuration(SCRUBBER_DISPLAY_DURATION)
+                .setStartDelay(SCRUBBER_DISPLAY_DELAY_OUT)
+                .setDuration(SCRUBBER_DISPLAY_DURATION_OUT)
                 .setListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
@@ -256,8 +263,41 @@ public class AppDrawerScrubber extends LinearLayout {
 
             // get the index of the underlying list
             int adapterIndex = mSectionContainer.getAdapterIndex(mLastIndex, index);
-            mLayoutManager.smoothScrollToPosition(mListView, null,
-                    mAdapter.getPositionForSection(adapterIndex));
+            int itemIndex = mAdapter.getPositionForSection(adapterIndex);
+
+            // get any child's height since all children are the same height
+            int itemHeight = 0;
+            View child = mLayoutManager.getChildAt(0);
+            if (child != null) {
+                itemHeight = child.getMeasuredHeight();
+            }
+
+            if (itemHeight != 0) {
+                // scroll to the item such that there are 2 rows beneath it from the bottom
+                final int itemDiff = 2 * itemHeight;
+                LinearSmoothScroller scroller = new LinearSmoothScroller(mListView.getContext()) {
+                    @Override
+                    protected int getVerticalSnapPreference() {
+                        // position the item against the end of the list view
+                        return SNAP_TO_END;
+                    }
+
+                    @Override
+                    public PointF computeScrollVectorForPosition(int targetPosition) {
+                        return mLayoutManager.computeScrollVectorForPosition(targetPosition);
+                    }
+
+                    @Override
+                    public int calculateDyToMakeVisible(View view, int snapPreference) {
+                        int dy = super.calculateDyToMakeVisible(view, snapPreference);
+                        return dy - itemDiff;
+                    }
+                };
+                scroller.setTargetPosition(itemIndex);
+                mLayoutManager.startSmoothScroll(scroller);
+            }
+
+            mAdapter.setSectionTarget(adapterIndex);
 
             mLastIndex = index;
         }

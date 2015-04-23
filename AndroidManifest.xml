@@ -221,7 +221,7 @@
 
         <receiver android:name="com.android.launcher3.ThemeChangedReceiver" >
             <intent-filter>
-                <action android:name="org.cyanogenmod.intent.action.THEME_CHANGED"/>
+                <action android:name="org.mokee.intent.action.THEME_CHANGED"/>
             </intent-filter>
         </receiver>
 

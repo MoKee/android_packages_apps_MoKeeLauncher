@@ -151,7 +151,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class Launcher extends Activity
         implements View.OnClickListener, OnLongClickListener, LauncherModel.Callbacks,
-                   View.OnTouchListener, PageSwitchListener, LauncherProviderChangeListener {
+                   View.OnTouchListener, PageSwitchListener, LauncherProviderChangeListener,
+                   PopupMenu.OnDismissListener {
     static final String TAG = "Launcher";
     static final boolean LOGD = false;
 
@@ -250,6 +251,11 @@ public class Launcher extends Activity
 
     public static final String USER_HAS_MIGRATED = "launcher.user_migrated_from_old_data";
 
+    @Override
+    public void onDismiss(PopupMenu popupMenu) {
+        mPopupMenu = null;
+    }
+
     /** The different states that Launcher can be in. */
     private enum State { NONE, WORKSPACE, APPS_CUSTOMIZE, APPS_CUSTOMIZE_SPRING_LOADED };
     private State mState = State.WORKSPACE;
@@ -331,6 +337,7 @@ public class Launcher extends Activity
     private boolean mWorkspaceLoading = true;
 
     private boolean mDynamicGridUpdateRequired = false;
+    private boolean mDynamicGridResizeRequired = false;
 
     private boolean mPaused = true;
     private boolean mRestoring;
@@ -341,8 +348,6 @@ public class Launcher extends Activity
     private ArrayList<Runnable> mOnResumeCallbacks = new ArrayList<Runnable>();
 
     private Bundle mSavedInstanceState;
-
-    private Dialog mTransitionEffectDialog;
 
     protected LauncherModel mModel;
     private IconCache mIconCache;
@@ -431,6 +436,8 @@ public class Launcher extends Activity
 
     FocusIndicatorView mFocusHandler;
 
+    private PopupMenu mPopupMenu;
+
     public Animator.AnimatorListener mAnimatorListener = new Animator.AnimatorListener() {
         @Override
         public void onAnimationStart(Animator arg0) {}
@@ -451,7 +458,7 @@ public class Launcher extends Activity
     Runnable mUpdateDynamicGridRunnable = new Runnable() {
         @Override
         public void run() {
-            updateDynamicGrid();
+            updateDynamicGrid(false);
         }
     };
 
@@ -463,7 +470,7 @@ public class Launcher extends Activity
                 return;
             }
 
-            updateDynamicGrid();
+            updateDynamicGrid(false);
         }
     };
 
@@ -1289,43 +1296,6 @@ public class Launcher extends Activity
         return mDrawerType;
     }
 
-    public void onClickSortModeButton(View v) {
-        final PopupMenu popupMenu = new PopupMenu(this, v);
-        final Menu menu = popupMenu.getMenu();
-        popupMenu.inflate(R.menu.apps_customize_sort_mode);
-        switch(mAppsCustomizeContent.getSortMode()) {
-            case Title:
-                menu.findItem(R.id.sort_mode_title).setChecked(true);
-                break;
-            case LaunchCount:
-                menu.findItem(R.id.sort_mode_launch_count).setChecked(true);
-                break;
-            case InstallTime:
-                menu.findItem(R.id.sort_mode_install_time).setChecked(true);
-                break;
-        }
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.sort_mode_title:
-                        mAppsCustomizeContent.setSortMode(AppsCustomizePagedView.SortMode.Title);
-                        break;
-                    case R.id.sort_mode_install_time:
-                        mAppsCustomizeContent.setSortMode(AppsCustomizePagedView.SortMode.InstallTime);
-                        break;
-                    case R.id.sort_mode_launch_count:
-                        mAppsCustomizeContent.setSortMode(AppsCustomizePagedView.SortMode.LaunchCount);
-                        break;
-                }
-                mOverviewSettingsPanel.notifyDataSetInvalidated();
-                SettingsProvider.putInt(getBaseContext(), SettingsProvider.SETTINGS_UI_DRAWER_SORT_MODE,
-                        mAppsCustomizeContent.getSortMode().getValue());
-                return true;
-            }
-        });
-        popupMenu.show();
-    }
-
     public void onClickDynamicGridSizeButton() {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -1354,7 +1324,7 @@ public class Launcher extends Activity
             SettingsProvider.putInt(this,
                     SettingsProvider.SETTINGS_UI_DYNAMIC_GRID_SIZE, size.getValue());
 
-            setUpdateDynamicGrid();
+            setUpdateDynamicGrid(true);
         }
 
         mOverviewSettingsPanel.notifyDataSetInvalidated();
@@ -1431,10 +1401,10 @@ public class Launcher extends Activity
     }
 
     public void onClickTransitionEffectOverflowMenuButton(View v, final boolean drawer) {
-        final PopupMenu popupMenu = new PopupMenu(this, v);
+        mPopupMenu = new PopupMenu(this, v);
 
-        final Menu menu = popupMenu.getMenu();
-        popupMenu.inflate(R.menu.scrolling_settings);
+        final Menu menu = mPopupMenu.getMenu();
+        mPopupMenu.inflate(R.menu.scrolling_settings);
         MenuItem pageOutlines = menu.findItem(R.id.scrolling_page_outlines);
         MenuItem fadeAdjacent = menu.findItem(R.id.scrolling_fade_adjacent);
 
@@ -1455,7 +1425,7 @@ public class Launcher extends Activity
 
         final PagedView pagedView = !drawer ? mWorkspace : mAppsCustomizeContent;
 
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+        mPopupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
@@ -1479,7 +1449,8 @@ public class Launcher extends Activity
             }
         });
 
-        popupMenu.show();
+        mPopupMenu.setOnDismissListener(this);
+        mPopupMenu.show();
     }
 
     protected void startSettings() {
@@ -2250,8 +2221,8 @@ public class Launcher extends Activity
             // also will cancel mWaitingForResult.
             closeSystemDialogs();
 
-            if (mTransitionEffectDialog != null) {
-                mTransitionEffectDialog.cancel();
+            if (mPopupMenu != null) {
+                mPopupMenu.dismiss();
             }
 
             final boolean alreadyOnHome = mHasFocus && ((intent.getFlags() &
@@ -5892,11 +5863,11 @@ public class Launcher extends Activity
         return effect == null ? TransitionEffect.TRANSITION_EFFECT_NONE : effect.getName();
     }
 
-    public void updateDynamicGrid() {
-        updateDynamicGrid(mWorkspace.getRestorePage());
+    public void updateDynamicGrid(boolean resizeGridIfNeeded) {
+        updateDynamicGrid(mWorkspace.getRestorePage(), resizeGridIfNeeded);
     }
 
-    public void updateDynamicGrid(int page) {
+    public void updateDynamicGrid(int page, boolean resizeGridIfNeeded) {
         mSearchDropTargetBar.setupQSB(Launcher.this);
 
         initializeDynamicGrid(true);
@@ -5905,19 +5876,22 @@ public class Launcher extends Activity
 
         // Synchronized reload
         mModel.resetLoadedState(true, true);
-        mModel.startLoader(true, page);
+        int flag = resizeGridIfNeeded ? LauncherModel.LOADER_FLAG_RESIZE_GRID :
+                LauncherModel.LOADER_FLAG_NONE;
+        mModel.startLoader(true, page, flag);
         mWorkspace.updateCustomContentVisibility();
 
         mAppDrawerAdapter.reset();
     }
 
-    public void setUpdateDynamicGrid() {
+    public void setUpdateDynamicGrid(boolean resizeDynamicGrid) {
         mDynamicGridUpdateRequired = true;
+        mDynamicGridResizeRequired = resizeDynamicGrid;
     }
 
     public boolean updateGridIfNeeded() {
         if (mDynamicGridUpdateRequired) {
-            updateDynamicGrid(mWorkspace.getCurrentPage());
+            updateDynamicGrid(mWorkspace.getCurrentPage(), mDynamicGridResizeRequired);
             mDynamicGridUpdateRequired = false;
             return true;
         }

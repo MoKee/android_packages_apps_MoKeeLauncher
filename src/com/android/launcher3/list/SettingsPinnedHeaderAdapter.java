@@ -130,6 +130,14 @@ public class SettingsPinnedHeaderAdapter extends PinnedHeaderListAdapter {
                         ((TextView) v.findViewById(R.id.item_state)).setText(state);
                         break;
                     case 4:
+                        current = SettingsProvider.getBoolean(mContext,
+                                SettingsProvider.SETTINGS_UI_HOMESCREEN_EXPAND_STATUSBAR,
+                                R.bool.preferences_interface_homescreen_expand_statusbar_default);
+                        state = current ? res.getString(R.string.setting_state_on)
+                                : res.getString(R.string.setting_state_off);
+                        ((TextView) v.findViewById(R.id.item_state)).setText(state);
+                        break;
+                    case 5:
                         updateDynamicGridSizeSettingsItem(v);
                         break;
                     default:
@@ -306,6 +314,12 @@ public class SettingsPinnedHeaderAdapter extends PinnedHeaderListAdapter {
                             mLauncher.setUpdateDynamicGrid(false);
                             break;
                         case 4:
+                            onSettingsBooleanChanged(v,
+                                    SettingsProvider.SETTINGS_UI_HOMESCREEN_EXPAND_STATUSBAR,
+                                    R.bool.preferences_interface_homescreen_expand_statusbar_default);
+                            mLauncher.setUpdateDynamicGrid(false);
+                            break;
+                        case 5:
                             mLauncher.onClickDynamicGridSizeButton();
                             break;
 

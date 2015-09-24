@@ -89,8 +89,8 @@
     </folder>
 
     <favorite
-            launcher:packageName="com.cyngn.themestore"
-            launcher:className="com.cyngn.themestore.ui.StoreActivity"
+            launcher:packageName="com.android.settings"
+            launcher:className="com.android.settings.mokee.helper.activities.TipsHelp"
             launcher:screen="1"
             launcher:x="2"
             launcher:y="3" />

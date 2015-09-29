@@ -872,7 +872,8 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
                 !(target instanceof DeleteDropTarget) && !(target instanceof Folder))) {
             // Exit spring loaded mode if we have not successfully dropped or have not handled the
             // drop in Workspace
-            mLauncher.exitSpringLoadedDragMode();
+            mLauncher.exitSpringLoadedDragModeDelayed(true,
+                    Launcher.EXIT_SPRINGLOADED_MODE_SHORT_TIMEOUT, null);
             mLauncher.unlockScreenOrientation(false);
         } else {
             mLauncher.unlockScreenOrientation(false);
@@ -984,6 +985,12 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         cancelAllTasks();
+    }
+
+    @Override
+    public void trimMemory() {
+        super.trimMemory();
+        clearAllWidgetPages();
     }
 
     public void clearAllWidgetPages() {

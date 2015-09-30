@@ -130,9 +130,6 @@
         launcher:x="1"
         launcher:y="3" >
         <favorite
-            launcher:packageName="com.cyngn.gallerynext"
-            launcher:className="com.cyngn.gallerynext.app.GalleryActivity" />
-        <favorite
             launcher:packageName="com.android.gallery3d"
             launcher:className="com.android.gallery3d.app.GalleryActivity" />
     </resolve>
@@ -192,9 +189,6 @@
             launcher:packageName="com.android.browser"
             launcher:className="com.android.browser.BrowserActivity" />
         <favorite
-            launcher:packageName="com.cyngn.browser"
-            launcher:className="com.android.browser.BrowserLauncher" />
-        <favorite
             launcher:packageName="com.android.chrome"
             launcher:className="com.google.android.apps.chrome.Main" />
     </resolve>
@@ -204,9 +198,6 @@
         launcher:screen="4"
         launcher:x="4"
         launcher:y="0" >
-        <favorite
-            launcher:packageName="com.cyngn.cameranext"
-            launcher:className="com.android.camera.CameraLauncher" />
         <favorite
             launcher:packageName="com.android.camera2"
             launcher:className="com.android.camera.CameraLauncher" />

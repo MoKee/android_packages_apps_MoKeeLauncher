@@ -27,7 +27,7 @@ import android.util.Log;
  */
 public class Logger {
 
-    private static final String TAG = "TrebuchetStats";
+    private static final String TAG = "MoKeeLauncherStats";
 
     /**
      * Log a debug message

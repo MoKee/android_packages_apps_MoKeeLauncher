@@ -187,7 +187,7 @@
             android:name="com.android.launcher3.stats.internal.service.AggregationIntentService"
             android:exported="false">
             <intent-filter>
-               <action android:name="com.cyanogenmod.trebuchet.AGGREGATE_AND_TRACK" />
+               <action android:name="com.mokee.launcher.AGGREGATE_AND_TRACK" />
             </intent-filter>
         </service>
 

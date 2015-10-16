@@ -39,7 +39,7 @@ public class LauncherStats {
     public static final String SETTINGS_PACKAGE_NAME = "com.android.settings";
     public static final String ORIGIN_HOMESCREEN = "homescreen";
     public static final String ORIGIN_APPDRAWER = "appdrawer";
-    public static final String ORIGIN_TREB_LONGPRESS = "trebuchet_longpress";
+    public static final String ORIGIN_TREB_LONGPRESS = "launcher_longpress";
     public static final String ORIGIN_CHOOSER = "theme_chooser";
 
     private static void log(String msg) throws IllegalArgumentException {

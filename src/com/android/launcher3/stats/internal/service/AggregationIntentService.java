@@ -45,7 +45,7 @@ import java.util.List;
 /**
  * <pre>
  *     Service that starts on a timer and handles aggregating events and sending them to
- *     CyanogenStats
+ *     MoKeeStats
  * </pre>
  *
  * @see {@link IntentService}
@@ -54,9 +54,9 @@ public class AggregationIntentService extends IntentService {
 
     // Constants
     private static final String TAG = AggregationIntentService.class.getSimpleName();
-    private static final String TRACKING_ID = "com.cyanogenmod.trebuchet";
+    private static final String TRACKING_ID = "com.mokee.launcher";
     public static final String ACTION_AGGREGATE_AND_TRACK =
-            "com.cyanogenmod.trebuchet.AGGREGATE_AND_TRACK";
+            "com.mokee.launcher.AGGREGATE_AND_TRACK";
     private static final List<ITrackingAction> TRACKED_ACTIONS = new ArrayList<ITrackingAction>() {
         {
             add(new CountAction());
@@ -82,7 +82,7 @@ public class AggregationIntentService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        if (!isTrebuchetDefaultLauncher()) {
+        if (!isMoKeeLauncherDefaultLauncher()) {
             // Cancel repeating schedule
             unscheduleService();
             // don't return b/c we still want to upload whatever metrics are left.
@@ -181,7 +181,7 @@ public class AggregationIntentService extends IntentService {
         alarmManager.cancel(pi);
     }
 
-    private boolean isTrebuchetDefaultLauncher() {
+    private boolean isMoKeeLauncherDefaultLauncher() {
         final IntentFilter filter = new IntentFilter(Intent.ACTION_MAIN);
         filter.addCategory(Intent.CATEGORY_HOME);
 
@@ -197,11 +197,11 @@ public class AggregationIntentService extends IntentService {
 
         for (ComponentName activity : activities) {
             if (myPackageName.equals(activity.getPackageName())) {
-                Logger.logd(TAG, "Trebuchet IS default launcher!");
+                Logger.logd(TAG, "MoKeeLauncher IS default launcher!");
                 return true;
             }
         }
-        Logger.logd(TAG, "Trebuchet IS NOT default launcher!");
+        Logger.logd(TAG, "MoKeeLauncher IS NOT default launcher!");
         return false;
     }
 

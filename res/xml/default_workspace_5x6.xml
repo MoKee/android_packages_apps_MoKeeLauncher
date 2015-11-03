@@ -56,17 +56,14 @@
             launcher:className="com.google.android.apps.photos.home.HomeActivity"
             launcher:packageName="com.google.android.apps.photos" />
         <favorite
+            launcher:className="com.google.android.apps.wallet.entrypoint.WalletRootActivity"
+            launcher:packageName="com.google.android.apps.walletnfcrel" />
+        <favorite
             launcher:className="com.android.calendar.AllInOneActivity"
             launcher:packageName="com.google.android.calendar" />
         <favorite
             launcher:className="com.google.android.apps.plus.phone.HomeActivity"
             launcher:packageName="com.google.android.apps.plus" />
-        <favorite
-            launcher:className="com.google.android.apps.wallet.entrypoint.WalletRootActivity"
-            launcher:packageName="com.google.android.apps.walletnfcrel" />
-        <favorite
-            launcher:className="com.google.android.apps.genie.geniewidget.activities.NewsActivity"
-            launcher:packageName="com.google.android.apps.genie.geniewidget" />
     </folder>
 
     <!-- Play Folder -->

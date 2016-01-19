@@ -32,6 +32,7 @@ public final class SettingsProvider {
     public static final String SETTINGS_UI_HOMESCREEN_EXPAND_STATUSBAR = "ui_homescreen_expand_statusbar";
     public static final String SETTINGS_UI_HOMESCREEN_SCROLLING_PAGE_OUTLINES = "ui_homescreen_scrolling_page_outlines";
     public static final String SETTINGS_UI_HOMESCREEN_SCROLLING_FADE_ADJACENT = "ui_homescreen_scrolling_fade_adjacent";
+    public static final String SETTINGS_UI_HOMESCREEN_REMOTE_FOLDER = "ui_homescreen_remote_folder";
     public static final String SETTINGS_UI_DYNAMIC_GRID_SIZE = "ui_dynamic_grid_size";
     public static final String SETTINGS_UI_HOMESCREEN_ROWS = "ui_homescreen_rows";
     public static final String SETTINGS_UI_HOMESCREEN_COLUMNS = "ui_homescreen_columns";

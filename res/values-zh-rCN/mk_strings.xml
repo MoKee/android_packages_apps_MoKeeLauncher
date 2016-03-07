@@ -16,5 +16,7 @@
      limitations under the License.
 -->
 <resources>
+  <!-- Application name -->
+  <!-- Expand status bar anywhere on home screen -->
   <string name="expand_statusbar">通过下滑手势展开通知栏</string>
 </resources>

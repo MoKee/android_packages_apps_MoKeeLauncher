@@ -16,5 +16,7 @@
      limitations under the License.
 -->
 <resources>
+  <!-- Application name -->
+  <!-- Expand status bar anywhere on home screen -->
   <string name="expand_statusbar">在任意位置向下捲動展開狀態列</string>
 </resources>

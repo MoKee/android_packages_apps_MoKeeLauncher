@@ -16,5 +16,7 @@
      limitations under the License.
 -->
 <resources>
+  <!-- Application name -->
+  <!-- Expand status bar anywhere on home screen -->
   <string name="expand_statusbar">Espandi la barra di stato ovunque</string>
 </resources>

@@ -18,4 +18,5 @@
 <resources>
   <!-- Application name -->
   <!-- Expand status bar anywhere on home screen -->
+  <string name="expand_statusbar">Heryerde genişletilmiş durum çubuğu</string>
 </resources>

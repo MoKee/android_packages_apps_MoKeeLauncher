@@ -18,5 +18,5 @@
 <resources>
   <!-- Application name -->
   <!-- Expand status bar anywhere on home screen -->
-  <string name="expand_statusbar">Deschideți bara status oriunde</string>
+  <string name="expand_statusbar">Extinde bara status oriunde</string>
 </resources>

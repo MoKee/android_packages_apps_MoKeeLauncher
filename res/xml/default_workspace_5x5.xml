@@ -183,6 +183,9 @@
         launcher:x="3"
         launcher:y="0" >
         <favorite
+            launcher:packageName="com.mokee.yubrowser"
+            launcher:className="com.mokee.yubrowser.Main" />
+        <favorite
             launcher:packageName="com.android.browser"
             launcher:className="com.android.browser.BrowserActivity" />
         <favorite
